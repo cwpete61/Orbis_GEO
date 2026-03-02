@@ -27,6 +27,19 @@
 - [x] Fine-tune `citability_scorer.py` for industry niches <!-- id: 19 -->
 - [x] Implement batch auditing script for multiple URLs <!-- id: 20 -->
 
+## Phase 6: Local Business (GBP) Integration <!-- id: 18 -->
+**Status**: ✅ Complete
+- [x] Add Google Maps presence check to `brand_scanner.py` <!-- id: 19 -->
+- [x] Implement Local Citation check (Yelp, BBB, Local Directories) <!-- id: 20 -->
+- [x] Update `local-business.json` documentation for GBP linking <!-- id: 21 -->
+- [x] Add "Local Visibility" section to the PDF report generator <!-- id: 22 -->
+
+## Phase 7: Orbis Local Dashboard <!-- id: 23 -->
+**Status**: ✅ Complete
+- [x] Implement Node.js backend to bridge audits to a web UI <!-- id: 24 -->
+- [x] Build premium dark-mode interface for report management <!-- id: 25 -->
+- [x] Enable real-time script logging and PDF download via UI <!-- id: 26 -->
+
 ---
 
 # Project Complete

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbis Local Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ORBIS LOCAL</div>
+            <div class="tagline">Enterprise AI Search Visibility Auditor</div>
+        </header>
+
+        <section class="control-panel glass">
+            <div class="input-group">
+                <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)" value="Orbis Local">
+                <input type="text" id="targetUrl" placeholder="Target URL (https://...)" value="https://google.com">
+            </div>
+
+            <div class="actions">
+                <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
+                <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
+                <button id="openPdf" class="btn success-btn">PDF</button>
+                <button id="clearLogs" class="btn secondary">Clear Logs</button>
+            </div>
+        </section>
+
+        <section class="manual-steps">
+            <h3>Manual Controls</h3>
+            <div class="step-buttons">
+                <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
+                <button onclick="runStep('score')" class="step-btn">2. Score Citability</button>
+                <button onclick="runStep('brand')" class="step-btn">3. Brand Scan</button>
+                <button onclick="runStep('crawlers')" class="step-btn">4. Crawler Check</button>
+                <button onclick="runStep('report')" class="step-btn">5. Generate PDF</button>
+            </div>
+        </section>
+
+        <section class="output-console glass">
+            <div class="console-header">
+                <span>Console Output</span>
+                <div class="status-indicator" id="statusIndicator">Ready</div>
+            </div>
+            <div id="logOutput" class="console-body">
+                Waiting for command...
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
