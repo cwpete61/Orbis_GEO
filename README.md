@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="GEO-SEO Claude Code Skill" width="900"/>
+  <img src="assets/banner.svg" alt="Orbis Local Claude Code Skill" width="900"/>
 </p>
 
 <p align="center">
@@ -72,7 +72,7 @@ Open Claude Code and use these commands:
 
 ---
 
-## Architecture
+## Orbis Local Architecture
 
 ```
 geo-seo-claude/
@@ -84,7 +84,7 @@ geo-seo-claude/
 │   ├── geo-crawlers/             # AI crawler access analysis
 │   ├── geo-llmstxt/              # llms.txt standard analysis & generation
 │   ├── geo-brand-mentions/       # Brand presence on AI-cited platforms
-│   ├── geo-platform-optimizer/   # Platform-specific AI search optimization
+│   ├── geo-platform-optimizer/   # Orbis Local — AI Search Optimization (GEO)
 │   ├── geo-schema/               # Structured data for AI discoverability
 │   ├── geo-technical/            # Technical SEO foundations
 │   ├── geo-content/              # Content quality & E-E-A-T

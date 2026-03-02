@@ -1,9 +1,9 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://orbisgeo.ai/#organization",
-  "name": "Orbis GEO-SEO",
-  "url": "https://orbisgeo.ai",
+  "@id": "https://orbislocal.ai/#organization",
+  "name": "Orbis Local",
+  "url": "https://orbislocal.ai",
   "logo": {
     "@type": "ImageObject",
     "url": "https://orbisgeo.ai/assets/logo.png",
@@ -14,14 +14,16 @@
   "foundingDate": "2025-01-01",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-800-ORBIS-GEO",
+    "telephone": "+1-800-ORBIS-LOCAL",
     "contactType": "customer service",
-    "email": "hello@orbisgeo.ai",
-    "availableLanguage": ["English"]
+    "email": "hello@orbislocal.ai",
+    "availableLanguage": [
+      "English"
+    ]
   },
   "sameAs": [
-    "https://www.linkedin.com/company/orbis-geo-seo",
-    "https://twitter.com/orbisgeoseo"
+    "https://www.linkedin.com/company/orbis-local",
+    "https://twitter.com/orbislocal"
   ],
   "areaServed": "Global",
   "knowsAbout": [

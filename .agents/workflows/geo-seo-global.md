@@ -1,5 +1,5 @@
 ---
-description: Perform a full Orbis GEO-SEO Global Audit for a target URL.
+description: Perform a full Orbis Local Global Audit for a target URL.
 ---
 
 1. Ensure the environment is ready.

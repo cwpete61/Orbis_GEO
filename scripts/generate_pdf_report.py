@@ -312,7 +312,7 @@ def header_footer(canvas, doc):
     # Header text
     canvas.setFont('Helvetica-Bold', 8)
     canvas.setFillColor(PRIMARY)
-    canvas.drawString(50, letter[1] - 35, "ORBIS GEO-SEO ANALYSIS")
+    canvas.drawString(50, letter[1] - 35, "ORBIS LOCAL ANALYSIS")
 
     # Footer
     canvas.setStrokeColor(lightgrey)
@@ -404,8 +404,8 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     # ============================================================
     elements.append(Spacer(1, 100))
 
-    # Orbis GEO-SEO Analysis Report
-    elements.append(Paragraph("Orbis GEO-SEO Analysis Report", styles['ReportTitle']))
+    # Orbis Local Analysis Report
+    elements.append(Paragraph("Orbis Local Analysis Report", styles['ReportTitle']))
     elements.append(Spacer(1, 8))
 
     # Subtitle

@@ -81,7 +81,7 @@ Write exactly ONE paragraph (4-6 sentences) covering:
 Present the overall score prominently with Orbis branding:
 
 ```
-## Orbis GEO-SEO Analysis
+## Orbis Local Analysis
 ## GEO Readiness Score: XX/100 — [Label]
 ```
 
