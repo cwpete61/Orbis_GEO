@@ -20,9 +20,10 @@
 - [x] Validate AI crawler analysis against standard `robots.txt` <!-- id: 12 -->
 
 ## Phase 4: Customization for Orbis <!-- id: 13 -->
-- [ ] Customize `schema/` templates with Orbis-specific metadata <!-- id: 14 -->
-- [ ] Update `geo-report/` markdown templates with Orbis branding <!-- id: 15 -->
-- [ ] Modify `scripts/generate_pdf_report.py` for custom visual styling <!-- id: 16 -->
+**Status**: ✅ Complete
+- [x] Customize `schema/` templates with Orbis-specific metadata <!-- id: 14 -->
+- [x] Update `geo-report/` markdown templates with Orbis branding <!-- id: 15 -->
+- [x] Modify `scripts/generate_pdf_report.py` for custom visual styling <!-- id: 16 -->
 
 ## Phase 5: Advanced Optimization & Scaling <!-- id: 17 -->
 - [ ] Integrate additional brand mention platforms in `brand_scanner.py` <!-- id: 18 -->

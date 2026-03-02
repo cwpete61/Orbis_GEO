@@ -49,20 +49,20 @@ except ImportError:
 
 
 # ============================================================
-# COLOR PALETTE
+# ORBIS BRAND PALETTE
 # ============================================================
-PRIMARY = HexColor("#1a1a2e")       # Dark navy
-SECONDARY = HexColor("#16213e")     # Slightly lighter navy
-ACCENT = HexColor("#0f3460")        # Blue accent
-HIGHLIGHT = HexColor("#e94560")     # Red/coral highlight
-SUCCESS = HexColor("#00b894")       # Green
-WARNING = HexColor("#fdcb6e")       # Yellow/amber
-DANGER = HexColor("#d63031")        # Red
-INFO = HexColor("#0984e3")          # Blue
-LIGHT_BG = HexColor("#f8f9fa")      # Light background
-MEDIUM_BG = HexColor("#e9ecef")     # Medium background
-TEXT_PRIMARY = HexColor("#2d3436")   # Dark text
-TEXT_SECONDARY = HexColor("#636e72") # Grey text
+PRIMARY = HexColor("#130f40")       # Deep Midnight Blue
+SECONDARY = HexColor("#1e272e")     # Anthracite
+ACCENT = HexColor("#686de0")        # Soft Indigo
+HIGHLIGHT = HexColor("#f0932b")     # Vibrant Orange
+SUCCESS = HexColor("#2ecc71")       # Emerald
+WARNING = HexColor("#f1c40f")       # Sunflower
+DANGER = HexColor("#e74c3c")        # Alizarin
+INFO = HexColor("#3498db")          # Peter River
+LIGHT_BG = HexColor("#f5f6fa")      # Anti-Flash White
+MEDIUM_BG = HexColor("#dcdde1")     # Hint of Pensive
+TEXT_PRIMARY = HexColor("#2f3640")   # Electromagnetic
+TEXT_SECONDARY = HexColor("#7f8c8d") # Asbestos
 WHITE = white
 BLACK = black
 
@@ -310,9 +310,9 @@ def header_footer(canvas, doc):
     canvas.line(50, letter[1] - 40, letter[0] - 50, letter[1] - 40)
 
     # Header text
-    canvas.setFont('Helvetica', 8)
-    canvas.setFillColor(TEXT_SECONDARY)
-    canvas.drawString(50, letter[1] - 35, "GEO-SEO Analysis Report")
+    canvas.setFont('Helvetica-Bold', 8)
+    canvas.setFillColor(PRIMARY)
+    canvas.drawString(50, letter[1] - 35, "ORBIS GEO-SEO ANALYSIS")
 
     # Footer
     canvas.setStrokeColor(lightgrey)
@@ -404,8 +404,8 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     # ============================================================
     elements.append(Spacer(1, 100))
 
-    # Title
-    elements.append(Paragraph("GEO Analysis Report", styles['ReportTitle']))
+    # Orbis GEO-SEO Analysis Report
+    elements.append(Paragraph("Orbis GEO-SEO Analysis Report", styles['ReportTitle']))
     elements.append(Spacer(1, 8))
 
     # Subtitle
