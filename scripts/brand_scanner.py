@@ -67,6 +67,33 @@ def check_youtube_presence(brand_name: str) -> dict:
     return result
 
 
+def check_tiktok_presence(brand_name: str) -> dict:
+    """Check brand presence on TikTok."""
+    result = {
+        "platform": "TikTok",
+        "correlation": "High (Growth)",
+        "weight": "20%",
+        "has_account": False,
+        "search_url": f"https://www.tiktok.com/search?q={quote_plus(brand_name)}",
+        "recommendations": [],
+    }
+
+    result["check_instructions"] = [
+        f"Search TikTok for '{brand_name}' and check:",
+        "1. Active official account?",
+        "2. Usage of brand-specific hashtags?",
+        "3. Influencer mentions or user-generated content?",
+    ]
+
+    result["recommendations"] = [
+        "Maintain active presence if audience is < 35",
+        "Utilize vertical video for 'how-to' and 'explainer' content",
+        "Monitor brand-specific hashtags",
+    ]
+
+    return result
+
+
 def check_reddit_presence(brand_name: str) -> dict:
     """Check brand presence on Reddit."""
     result = {
@@ -204,6 +231,8 @@ def check_other_platforms(brand_name: str) -> dict:
         "Quora": f"https://www.quora.com/search?q={quote_plus(brand_name)}",
         "Stack Overflow": f"https://stackoverflow.com/search?q={quote_plus(brand_name)}",
         "GitHub": f"https://github.com/search?q={quote_plus(brand_name)}",
+        "Threads": f"https://www.threads.net/search?q={quote_plus(brand_name)}",
+        "BlueSky": f"https://bsky.app/search?q={quote_plus(brand_name)}",
         "Crunchbase": f"https://www.crunchbase.com/textsearch?q={quote_plus(brand_name)}",
         "Product Hunt": f"https://www.producthunt.com/search?q={quote_plus(brand_name)}",
         "G2": f"https://www.g2.com/search?utf8=&query={quote_plus(brand_name)}",
@@ -243,6 +272,7 @@ def generate_brand_report(brand_name: str, domain: str = None) -> dict:
 
     # Check all platforms
     report["platforms"]["youtube"] = check_youtube_presence(brand_name)
+    report["platforms"]["tiktok"] = check_tiktok_presence(brand_name)
     report["platforms"]["reddit"] = check_reddit_presence(brand_name)
     report["platforms"]["wikipedia"] = check_wikipedia_presence(brand_name)
     report["platforms"]["linkedin"] = check_linkedin_presence(brand_name)
