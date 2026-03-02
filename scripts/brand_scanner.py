@@ -32,6 +32,39 @@ DEFAULT_HEADERS = {
 }
 
 
+def check_google_maps_presence(brand_name: str) -> dict:
+    """Check brand presence on Google Maps."""
+    result = {
+        "platform": "Google Maps (GBP)",
+        "correlation": "Critical (Local AI)",
+        "weight": "30%",
+        "has_profile": False,
+        "is_verified": False,
+        "search_url": f"https://www.google.com/maps/search/{quote_plus(brand_name)}",
+        "recommendations": [],
+    }
+
+    result["check_instructions"] = [
+        f"Search Google Maps for '{brand_name}' and check:",
+        "1. Is there an active Google Business Profile?",
+        "2. Is the profile verified?",
+        "3. Does it have 10+ reviews?",
+        "4. Is the average rating > 4.2?",
+        "5. Is the NAP (Name, Address, Phone) consistent with the website?",
+    ]
+
+    result["recommendations"] = [
+        "Claim and verify your Google Business Profile",
+        "Maintain consistent NAP (Name, Address, Phone) data",
+        "Respond to all reviews within 48 hours",
+        "Add high-quality photos and service descriptions",
+        "Enable messaging and appointments through the profile",
+        "Link to the profile from the website's footer (Schema property)"
+    ]
+
+    return result
+
+
 def check_youtube_presence(brand_name: str) -> dict:
     """Check brand presence on YouTube."""
     result = {
@@ -228,6 +261,9 @@ def check_other_platforms(brand_name: str) -> dict:
     }
 
     platforms = {
+        "Yelp": f"https://www.yelp.com/search?find_desc={quote_plus(brand_name)}",
+        "BBB": f"https://www.bbb.org/search?find_text={quote_plus(brand_name)}",
+        "Yellow Pages": f"https://www.yellowpages.com/search?search_terms={quote_plus(brand_name)}",
         "Quora": f"https://www.quora.com/search?q={quote_plus(brand_name)}",
         "Stack Overflow": f"https://stackoverflow.com/search?q={quote_plus(brand_name)}",
         "GitHub": f"https://github.com/search?q={quote_plus(brand_name)}",
@@ -271,6 +307,7 @@ def generate_brand_report(brand_name: str, domain: str = None) -> dict:
     }
 
     # Check all platforms
+    report["platforms"]["google_maps"] = check_google_maps_presence(brand_name)
     report["platforms"]["youtube"] = check_youtube_presence(brand_name)
     report["platforms"]["tiktok"] = check_tiktok_presence(brand_name)
     report["platforms"]["reddit"] = check_reddit_presence(brand_name)
@@ -280,6 +317,7 @@ def generate_brand_report(brand_name: str, domain: str = None) -> dict:
 
     # Overall recommendations
     report["overall_recommendations"] = [
+        "Priority 0: Google Maps (GBP) — critical for local AI search visibility (Google Search AI Overviews).",
         "Priority 1: YouTube — highest correlation (0.737) with AI citations. Create educational content.",
         "Priority 2: Reddit — build authentic presence in industry subreddits. No marketing speak.",
         "Priority 3: Wikipedia — establish notability through press coverage, then create/improve entry.",
