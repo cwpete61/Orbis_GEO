@@ -14,9 +14,10 @@
 - [x] Verify command registration in Claude Code (`/geo audit`) <!-- id: 8 -->
 
 ## Phase 3: Initial Audits & Baseline <!-- id: 9 -->
-- [ ] Run benchmark audit on a test URL to verify scoring logic <!-- id: 10 -->
-- [ ] Test PDF report generation functionality <!-- id: 11 -->
-- [ ] Validate AI crawler analysis against standard `robots.txt` <!-- id: 12 -->
+**Status**: ✅ Complete
+- [x] Run benchmark audit on a test URL to verify scoring logic <!-- id: 10 -->
+- [x] Test PDF report generation functionality <!-- id: 11 -->
+- [x] Validate AI crawler analysis against standard `robots.txt` <!-- id: 12 -->
 
 ## Phase 4: Customization for Orbis <!-- id: 13 -->
 - [ ] Customize `schema/` templates with Orbis-specific metadata <!-- id: 14 -->
