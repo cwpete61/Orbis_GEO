@@ -8,9 +8,10 @@
 - [x] Install Playwright for screenshot capabilities <!-- id: 4 -->
 
 ## Phase 2: Tool Deployment <!-- id: 5 -->
-- [ ] Manually map and copy `geo-seo-claude` skills to the Claude Code configuration directory (`%USERPROFILE%\.claude\skills`) <!-- id: 6 -->
-- [ ] Deploy specialized agents to `%USERPROFILE%\.claude\agents` <!-- id: 7 -->
-- [ ] Verify command registration in Claude Code (`/geo audit`) <!-- id: 8 -->
+**Status**: ✅ Complete
+- [x] Manually map and copy `geo-seo-claude` skills to the Claude Code configuration directory (`%USERPROFILE%\.claude\skills`) <!-- id: 6 -->
+- [x] Deploy specialized agents to `%USERPROFILE%\.claude\agents` <!-- id: 7 -->
+- [x] Verify command registration in Claude Code (`/geo audit`) <!-- id: 8 -->
 
 ## Phase 3: Initial Audits & Baseline <!-- id: 9 -->
 - [ ] Run benchmark audit on a test URL to verify scoring logic <!-- id: 10 -->
