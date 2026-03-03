@@ -2,343 +2,465 @@
 """
 Brand Mention Scanner — Checks brand presence across AI-cited platforms.
 
-Brand mentions correlate 3x more strongly with AI visibility than backlinks.
-(Ahrefs December 2025 study of 75,000 brands)
+Uses DuckDuckGo search + OpenAI GPT to actively analyze brand presence
+across YouTube, Reddit, Wikipedia, LinkedIn, and other platforms that
+AI models rely on for entity recognition and citation decisions.
 
-Platform importance for AI citations:
-1. YouTube mentions (~0.737 correlation - STRONGEST)
-2. Reddit mentions (high)
-3. Wikipedia presence (high)
-4. LinkedIn presence (moderate)
-5. Domain Rating/backlinks (~0.266 - weak)
+Based on Ahrefs December 2025 study of 75,000 brands:
+- YouTube mentions: ~0.737 correlation (STRONGEST)
+- Reddit mentions: High correlation
+- Wikipedia presence: High correlation
+- LinkedIn presence: Moderate correlation
 """
 
 import sys
 import json
-import re
-from urllib.parse import quote_plus
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv(Path(__file__).parent.parent / ".env")
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
+try:
+    try:
+        from ddgs import DDGS
+    except ImportError:
+        from duckduckgo_search import DDGS
+except ImportError:
+    print("ERROR: Run: pip install ddgs")
+    sys.exit(1)
+
+try:
+    from openai import OpenAI
+except ImportError:
+    print("ERROR: Run: pip install openai")
+    sys.exit(1)
 
 try:
     import requests
-    from bs4 import BeautifulSoup
 except ImportError:
-    print("ERROR: Required packages not installed. Run: pip install requests beautifulsoup4")
+    print("ERROR: Run: pip install requests")
     sys.exit(1)
 
-DEFAULT_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-}
+if not OPENAI_API_KEY:
+    print("ERROR: OPENAI_API_KEY not found. Check your .env file.")
+    sys.exit(1)
+
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 
-def check_google_maps_presence(brand_name: str) -> dict:
-    """Check brand presence on Google Maps."""
-    result = {
-        "platform": "Google Maps (GBP)",
-        "correlation": "Critical (Local AI)",
-        "weight": "30%",
-        "has_profile": False,
-        "is_verified": False,
-        "search_url": f"https://www.google.com/maps/search/{quote_plus(brand_name)}",
-        "recommendations": [],
-    }
-
-    result["check_instructions"] = [
-        f"Search Google Maps for '{brand_name}' and check:",
-        "1. Is there an active Google Business Profile?",
-        "2. Is the profile verified?",
-        "3. Does it have 10+ reviews?",
-        "4. Is the average rating > 4.2?",
-        "5. Is the NAP (Name, Address, Phone) consistent with the website?",
-    ]
-
-    result["recommendations"] = [
-        "Claim and verify your Google Business Profile",
-        "Maintain consistent NAP (Name, Address, Phone) data",
-        "Respond to all reviews within 48 hours",
-        "Add high-quality photos and service descriptions",
-        "Enable messaging and appointments through the profile",
-        "Link to the profile from the website's footer (Schema property)"
-    ]
-
-    return result
+def ddg_search(query: str, max_results: int = 6) -> list[str]:
+    """Perform a DuckDuckGo search and return a list of snippet strings."""
+    snippets = []
+    try:
+        with DDGS() as ddgs:
+            for r in ddgs.text(query, max_results=max_results):
+                title = r.get("title", "")
+                body = r.get("body", "")
+                href = r.get("href", "")
+                snippets.append(f"[{title}] ({href}): {body}")
+    except Exception as e:
+        snippets.append(f"Search failed: {e}")
+    return snippets
 
 
-def check_youtube_presence(brand_name: str) -> dict:
-    """Check brand presence on YouTube."""
-    result = {
+def analyze_with_ai(brand: str, platform: str, snippets: list[str], criteria: str) -> dict:
+    """Use OpenAI to analyze brand presence from search snippets."""
+    snippet_text = "\n".join(snippets) if snippets else "No search results found."
+
+    prompt = f"""You are a GEO (Generative Engine Optimization) analyst evaluating brand presence.
+
+Brand: {brand}
+Platform: {platform}
+
+Search results found:
+{snippet_text}
+
+Evaluate the brand's presence on {platform} based on these search results.
+{criteria}
+
+Respond ONLY with a valid JSON object with this exact structure:
+{{
+  "score": <integer 0-100>,
+  "has_presence": <true/false>,
+  "key_findings": [<string>, <string>, <string>],
+  "sentiment": "<positive|negative|neutral|mixed|unknown>",
+  "summary": "<one sentence summary>"
+}}"""
+
+    try:
+        response = client.chat.completions.create(
+            model=OPENAI_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3,
+            response_format={"type": "json_object"},
+        )
+        result = json.loads(response.choices[0].message.content)
+        return result
+    except Exception as e:
+        return {
+            "score": 10,
+            "has_presence": False,
+            "key_findings": [f"AI analysis failed: {e}"],
+            "sentiment": "unknown",
+            "summary": "Could not analyze this platform due to an API error."
+        }
+
+
+def check_youtube(brand: str) -> dict:
+    """Check YouTube brand presence."""
+    snippets = ddg_search(f'"{brand}" site:youtube.com', max_results=6)
+    snippets += ddg_search(f'{brand} youtube channel review', max_results=4)
+
+    criteria = """Score based on:
+- 90-100: Active channel with 10K+ subscribers, brand mentioned in 20+ videos
+- 70-89: Active channel with 1K+ subscribers, mentioned in 10-19 videos
+- 50-69: Channel exists, mentioned in 5-9 videos
+- 30-49: Channel exists but inactive, mentioned in 1-4 videos
+- 10-29: No channel, 1-2 video mentions only
+- 0-9: No YouTube presence"""
+
+    analysis = analyze_with_ai(brand, "YouTube", snippets, criteria)
+    return {
         "platform": "YouTube",
         "correlation": 0.737,
         "weight": "25%",
-        "has_channel": False,
-        "mentioned_in_videos": False,
-        "search_url": f"https://www.youtube.com/results?search_query={quote_plus(brand_name)}",
-        "recommendations": [],
+        "score": analysis.get("score", 0),
+        "has_channel": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.youtube.com/results?search_query={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Create a YouTube channel if none exists",
+            "Publish educational/tutorial content related to your niche",
+            "Encourage customers to create review/demo videos",
+            "Optimize video titles and descriptions with brand name",
+        ]
     }
 
-    # Note: Actual YouTube API would be used in production
-    # This provides the framework for Claude Code to use WebFetch
-    result["check_instructions"] = [
-        f"Search YouTube for '{brand_name}' and check:",
-        "1. Does the brand have an official YouTube channel?",
-        "2. Are there videos FROM the brand (tutorials, demos, thought leadership)?",
-        "3. Are there videos ABOUT the brand from other creators?",
-        "4. What's the view count on brand-related videos?",
-        "5. Are there positive reviews or demonstrations?",
-    ]
 
-    result["recommendations"] = [
-        "Create a YouTube channel if none exists",
-        "Publish educational/tutorial content related to your niche",
-        "Encourage customers to create review/demo videos",
-        "Optimize video titles and descriptions with brand name",
-        "Add timestamps and chapters to improve AI parseability",
-        "Include transcripts (YouTube auto-generates, but review for accuracy)",
-    ]
+def check_reddit(brand: str) -> dict:
+    """Check Reddit brand presence."""
+    snippets = ddg_search(f'"{brand}" site:reddit.com recommendations', max_results=6)
+    snippets += ddg_search(f'{brand} reddit review discussion', max_results=4)
 
-    return result
+    criteria = """Score based on:
+- 90-100: Frequently recommended in relevant subreddits, predominantly positive, active official presence
+- 70-89: Regularly mentioned, mostly positive sentiment, some official presence
+- 50-69: Mentioned in several threads, mixed sentiment, recognized by community
+- 30-49: Occasional mentions, limited to 1-2 subreddits, no official presence
+- 10-29: Rare mentions, largely unknown on Reddit
+- 0-9: No Reddit presence"""
 
-
-def check_tiktok_presence(brand_name: str) -> dict:
-    """Check brand presence on TikTok."""
-    result = {
-        "platform": "TikTok",
-        "correlation": "High (Growth)",
-        "weight": "20%",
-        "has_account": False,
-        "search_url": f"https://www.tiktok.com/search?q={quote_plus(brand_name)}",
-        "recommendations": [],
-    }
-
-    result["check_instructions"] = [
-        f"Search TikTok for '{brand_name}' and check:",
-        "1. Active official account?",
-        "2. Usage of brand-specific hashtags?",
-        "3. Influencer mentions or user-generated content?",
-    ]
-
-    result["recommendations"] = [
-        "Maintain active presence if audience is < 35",
-        "Utilize vertical video for 'how-to' and 'explainer' content",
-        "Monitor brand-specific hashtags",
-    ]
-
-    return result
-
-
-def check_reddit_presence(brand_name: str) -> dict:
-    """Check brand presence on Reddit."""
-    result = {
+    analysis = analyze_with_ai(brand, "Reddit", snippets, criteria)
+    return {
         "platform": "Reddit",
         "correlation": "High",
         "weight": "25%",
-        "has_subreddit": False,
-        "mentioned_in_discussions": False,
-        "search_url": f"https://www.reddit.com/search/?q={quote_plus(brand_name)}",
-        "recommendations": [],
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.reddit.com/search/?q={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Identify 3-5 subreddits where your target audience is active",
+            "Participate authentically—do not shill",
+            "Monitor and respond to brand mentions",
+            "Create genuinely helpful posts that demonstrate expertise",
+        ]
     }
 
-    result["check_instructions"] = [
-        f"Search Reddit for '{brand_name}' and check:",
-        "1. Does the brand have its own subreddit (r/brandname)?",
-        "2. Is the brand discussed in relevant industry subreddits?",
-        "3. What's the sentiment (positive, negative, neutral)?",
-        "4. Are there recommendation threads mentioning the brand?",
-        "5. Does the brand have an official Reddit presence?",
-        "6. Are mentions recent (within last 6 months)?",
-    ]
 
-    result["recommendations"] = [
-        "Monitor relevant subreddits for brand mentions",
-        "Participate authentically in industry discussions (no spam)",
-        "Create an official Reddit account for customer support",
-        "Share valuable content (not just self-promotion)",
-        "Respond to questions about your product/service category",
-        "Reddit authenticity matters — don't use marketing speak",
-    ]
+def check_wikipedia(brand: str) -> dict:
+    """Check Wikipedia/Wikidata brand presence via API."""
+    has_wiki = False
+    wiki_url = ""
+    wikidata_id = ""
 
-    return result
-
-
-def check_wikipedia_presence(brand_name: str) -> dict:
-    """Check brand/entity presence on Wikipedia and Wikidata."""
-    result = {
-        "platform": "Wikipedia",
-        "correlation": "High",
-        "weight": "20%",
-        "has_wikipedia_page": False,
-        "has_wikidata_entry": False,
-        "cited_in_articles": False,
-        "search_url": f"https://en.wikipedia.org/wiki/Special:Search?search={quote_plus(brand_name)}",
-        "wikidata_url": f"https://www.wikidata.org/w/index.php?search={quote_plus(brand_name)}",
-        "recommendations": [],
-    }
-
-    # Check Wikipedia API
+    # Check Wikipedia API directly
     try:
-        api_url = f"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={quote_plus(brand_name)}&format=json"
-        response = requests.get(api_url, headers=DEFAULT_HEADERS, timeout=15)
-        if response.status_code == 200:
-            data = response.json()
-            search_results = data.get("query", {}).get("search", [])
-            if search_results:
-                # Check if top result is about the brand
-                top_title = search_results[0].get("title", "").lower()
-                if brand_name.lower() in top_title:
-                    result["has_wikipedia_page"] = True
-                result["wikipedia_search_results"] = len(search_results)
+        from urllib.parse import quote_plus
+        api_url = f"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={quote_plus(brand)}&format=json"
+        r = requests.get(api_url, headers={"User-Agent": "GEO-Audit/1.0"}, timeout=10)
+        data = r.json()
+        results = data.get("query", {}).get("search", [])
+        if results and brand.lower() in results[0].get("title", "").lower():
+            has_wiki = True
+            wiki_url = f"https://en.wikipedia.org/wiki/{results[0]['title'].replace(' ', '_')}"
     except Exception:
         pass
 
     # Check Wikidata
     try:
-        wikidata_url = f"https://www.wikidata.org/w/api.php?action=wbsearchentities&search={quote_plus(brand_name)}&language=en&format=json"
-        response = requests.get(wikidata_url, headers=DEFAULT_HEADERS, timeout=15)
-        if response.status_code == 200:
-            data = response.json()
-            entities = data.get("search", [])
-            if entities:
-                result["has_wikidata_entry"] = True
-                result["wikidata_id"] = entities[0].get("id", "")
-                result["wikidata_description"] = entities[0].get("description", "")
+        from urllib.parse import quote_plus
+        wd_url = f"https://www.wikidata.org/w/api.php?action=wbsearchentities&search={quote_plus(brand)}&language=en&format=json"
+        r2 = requests.get(wd_url, headers={"User-Agent": "GEO-Audit/1.0"}, timeout=10)
+        wd = r2.json()
+        entities = wd.get("search", [])
+        if entities:
+            wikidata_id = entities[0].get("id", "")
     except Exception:
         pass
 
-    result["recommendations"] = [
-        "If eligible, create a Wikipedia article (requires notability criteria)",
-        "Ensure Wikidata entry exists with complete structured data",
-        "Add sameAs links in schema markup pointing to Wikipedia/Wikidata",
-        "Get cited in existing Wikipedia articles as a source",
-        "Build notability through press coverage and independent reviews",
-        "Note: Wikipedia has strict notability guidelines — PR coverage helps establish this",
-    ]
+    # Supplement with search snippets
+    snippets = ddg_search(f'"{brand}" site:wikipedia.org', max_results=4)
 
-    return result
+    criteria = f"""The brand "{brand}" {'HAS a Wikipedia article at ' + wiki_url if has_wiki else 'does NOT have a Wikipedia article'}.
+{'It HAS a Wikidata entry: ' + wikidata_id if wikidata_id else 'No Wikidata entry found.'}.
+
+Score based on:
+- 90-100: Detailed Wikipedia article (B-class or higher) + Wikidata entry with complete properties
+- 70-89: Wikipedia article exists + Wikidata entry
+- 50-69: Wikipedia article (stub) or basic Wikidata entry
+- 30-49: No Wikipedia article but mentioned in other articles; Wikidata may exist
+- 10-29: 1-2 passing mentions in Wikipedia
+- 0-9: No Wikipedia or Wikidata presence"""
+
+    analysis = analyze_with_ai(brand, "Wikipedia", snippets, criteria)
+    score = analysis.get("score", 0)
+    # Give a baseline if confirmed Wikipedia page exists
+    if has_wiki and score < 50:
+        score = 60
+
+    return {
+        "platform": "Wikipedia / Wikidata",
+        "correlation": "High",
+        "weight": "20%",
+        "score": score,
+        "has_wikipedia": has_wiki,
+        "wikipedia_url": wiki_url,
+        "wikidata_id": wikidata_id,
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "recommendations": [
+            "Build notability through press coverage first before seeking a Wikipedia article",
+            "Ensure your Wikidata entry (Q-number) is complete even without a full article",
+            "Contribute to industry articles where your brand can be naturally cited",
+        ]
+    }
 
 
-def check_linkedin_presence(brand_name: str) -> dict:
-    """Check brand presence on LinkedIn."""
-    result = {
+def check_linkedin(brand: str) -> dict:
+    """Check LinkedIn brand presence."""
+    snippets = ddg_search(f'"{brand}" site:linkedin.com/company', max_results=5)
+    snippets += ddg_search(f'{brand} company linkedin followers employees', max_results=3)
+
+    criteria = """Score based on:
+- 90-100: Active company page with 10K+ followers, regular thought leadership posts
+- 70-89: Active company page with 5K+ followers, some employee thought leadership
+- 50-69: Company page with 1K+ followers, irregular posting
+- 30-49: Company page exists but sparse/inactive
+- 10-29: Basic company page with minimal information
+- 0-9: No LinkedIn company page"""
+
+    analysis = analyze_with_ai(brand, "LinkedIn", snippets, criteria)
+    return {
         "platform": "LinkedIn",
         "correlation": "Moderate",
         "weight": "15%",
-        "has_company_page": False,
-        "employee_thought_leadership": False,
-        "search_url": f"https://www.linkedin.com/search/results/companies/?keywords={quote_plus(brand_name)}",
-        "recommendations": [],
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "neutral"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.linkedin.com/search/results/companies/?keywords={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Optimize company page with complete information and regular posting",
+            "Encourage leadership to post thought leadership content weekly",
+            "Engage with industry discussions to increase visibility",
+        ]
     }
 
-    result["check_instructions"] = [
-        f"Search LinkedIn for '{brand_name}' and check:",
-        "1. Does the company have a LinkedIn page?",
-        "2. How many followers?",
-        "3. Is the page active with recent posts?",
-        "4. Do employees post thought leadership content?",
-        "5. Are there LinkedIn articles about the brand?",
-        "6. Is there engagement on posts (likes, comments, shares)?",
-    ]
 
-    result["recommendations"] = [
-        "Create/optimize LinkedIn company page",
-        "Post regular thought leadership content",
-        "Encourage employees to share company content",
-        "Publish long-form LinkedIn articles",
-        "Engage with industry discussions and comments",
-        "Add company LinkedIn URL to schema sameAs property",
-    ]
+def check_other_platforms(brand: str) -> dict:
+    """Check other supplementary platforms (Quora, News, GitHub etc)."""
+    snippets = ddg_search(f'"{brand}" site:quora.com', max_results=3)
+    snippets += ddg_search(f'"{brand}" news press coverage 2024 2025', max_results=4)
+    snippets += ddg_search(f'"{brand}" podcast mention', max_results=3)
 
-    return result
+    criteria = """Score based on presence across Quora, news/press, GitHub, podcasts:
+- 90-100: Strong press coverage, Quora answers, podcast appearances
+- 70-89: Some press coverage, Quora presence
+- 50-69: Limited press, a few Quora mentions
+- 30-49: Minimal press, rare mentions
+- 0-29: Essentially no supplementary platform presence"""
 
-
-def check_other_platforms(brand_name: str) -> dict:
-    """Check brand presence on additional platforms."""
-    result = {
+    analysis = analyze_with_ai(brand, "Other Platforms (Quora, News, Podcasts)", snippets, criteria)
+    return {
         "platform": "Other Platforms",
+        "correlation": "Supplementary",
         "weight": "15%",
-        "platforms_checked": {},
-        "recommendations": [],
+        "score": analysis.get("score", 0),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "recommendations": [
+            "Create Quora answers for top industry questions related to your brand",
+            "Issue press releases for major company milestones",
+            "Pursue podcast guest appearances in your niche",
+        ]
     }
+
+
+def check_directories(brand_name: str) -> dict:
+    """Check brand presence on major local directories."""
+    # Search for brand on specific directory sites
+    snippets = ddg_search(f'"{brand_name}" site:yelp.com', max_results=3)
+    snippets += ddg_search(f'"{brand_name}" site:yellowpages.com', max_results=3)
+    snippets += ddg_search(f'"{brand_name}" site:trustpilot.com', max_results=3)
+    snippets += ddg_search(f'"{brand_name}" local directory business listing', max_results=3)
+
+    criteria = """Score based on presence across Yelp, YellowPages, Trustpilot, etc:
+- 90-100: Verified listings on 3+ major directories with positive reviews
+- 70-89: Listings on 2 major directories, mostly positive
+- 50-69: Listing on 1 major directory or several smaller niche directories
+- 30-49: Sparse mentions in directories, no verified listings
+- 0-29: No identifiable local directory presence"""
+
+    analysis = analyze_with_ai(brand_name, "Local Directories", snippets, criteria)
+    return {
+        "platform": "Local Directories",
+        "correlation": "High (Local Entity)",
+        "weight": "20%",
+        "score": analysis.get("score", 0),
+        "has_listings": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "neutral"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "recommendations": [
+            "Claim your business profile on Yelp and YellowPages",
+            "Encourage happy customers to leave reviews on Trustpilot",
+            "Ensure NAP (Name, Address, Phone) consistency across all directories",
+            "Add high-quality photos to your directory listings",
+        ]
+    }
+
+
+def check_google_maps_presence(brand: str) -> dict:
+    """Check brand presence on Google Maps / GBP via search snippets."""
+    snippets = ddg_search(f'"{brand}" site:google.com/maps', max_results=5)
+    snippets += ddg_search(f'{brand} Google Business Profile review', max_results=3)
+
+    criteria = """Score based on:
+- 90-100: Verified Google Business Profile with 4.5+ rating and 100+ reviews
+- 70-89: Verified GBP with 4.0+ rating and 20+ reviews
+- 50-69: GBP exists, verified, but fewer reviews
+- 30-49: Claimed but incomplete profile or low ratings
+- 10-29: Unclaimed profile or passing mentions only
+- 0-9: No Google Maps presence"""
+
+    # We reuse the analyze_with_ai but with a local context focus
+    analysis = analyze_with_ai(brand, "Google Maps (GBP)", snippets, criteria)
+    return {
+        "platform": "Google Maps (GBP)",
+        "correlation": "High (Local Entity)",
+        "weight": "20%",
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.google.com/maps/search/{brand.replace(' ', '+')}",
+        "recommendations": [
+            "Claim and verify your Google Business Profile",
+            "Ensure NAP (Name, Address, Phone) consistency",
+            "Regularly post updates and photos to your GBP",
+            "Encourage customers to leave detailed, keyword-rich reviews",
+        ]
+    }
+
+
+def calculate_brand_authority(platforms: dict) -> int:
+    """Calculate composite Brand Authority Score from platform scores."""
+    weights = {
+        "youtube": 0.25,
+        "reddit": 0.25,
+        "wikipedia": 0.20,
+        "linkedin": 0.15,
+        "other": 0.15,
+    }
+    youtube_score = platforms.get("YouTube", {}).get("score", 0)
+    reddit_score = platforms.get("Reddit", {}).get("score", 0)
+    wikipedia_score = platforms.get("Wikipedia / Wikidata", {}).get("score", 0)
+    linkedin_score = platforms.get("LinkedIn", {}).get("score", 0)
+    directory_score = platforms.get("Local Directories", {}).get("score", 0)
+    other_score = platforms.get("Other Platforms", {}).get("score", 0)
+
+    total = (
+        youtube_score * 0.20
+        + reddit_score * 0.20
+        + wikipedia_score * 0.15
+        + linkedin_score * 0.15
+        + directory_score * 0.20
+        + other_score * 0.10
+    )
+    return min(int(total), 100)
+
+
+def scan_brand(brand_name: str, url: str = "") -> dict:
+    """Main entrypoint: Perform full brand scan using AI-powered analysis."""
+    print(f"[brand_scanner] Starting brand analysis for: {brand_name}", file=sys.stderr)
+
+    youtube = check_youtube(brand_name)
+    print(f"[brand_scanner] YouTube: {youtube['score']}/100", file=sys.stderr)
+
+    reddit = check_reddit(brand_name)
+    print(f"[brand_scanner] Reddit: {reddit['score']}/100", file=sys.stderr)
+
+    wikipedia = check_wikipedia(brand_name)
+    print(f"[brand_scanner] Wikipedia: {wikipedia['score']}/100", file=sys.stderr)
+
+    linkedin = check_linkedin(brand_name)
+    print(f"[brand_scanner] LinkedIn: {linkedin['score']}/100", file=sys.stderr)
+
+    directories = check_directories(brand_name)
+    print(f"[brand_scanner] Directories: {directories['score']}/100", file=sys.stderr)
+
+    other = check_other_platforms(brand_name)
+    print(f"[brand_scanner] Other: {other['score']}/100", file=sys.stderr)
+
+    google_maps = check_google_maps_presence(brand_name)
 
     platforms = {
-        "Yelp": f"https://www.yelp.com/search?find_desc={quote_plus(brand_name)}",
-        "BBB": f"https://www.bbb.org/search?find_text={quote_plus(brand_name)}",
-        "Yellow Pages": f"https://www.yellowpages.com/search?search_terms={quote_plus(brand_name)}",
-        "Quora": f"https://www.quora.com/search?q={quote_plus(brand_name)}",
-        "Stack Overflow": f"https://stackoverflow.com/search?q={quote_plus(brand_name)}",
-        "GitHub": f"https://github.com/search?q={quote_plus(brand_name)}",
-        "Threads": f"https://www.threads.net/search?q={quote_plus(brand_name)}",
-        "BlueSky": f"https://bsky.app/search?q={quote_plus(brand_name)}",
-        "Crunchbase": f"https://www.crunchbase.com/textsearch?q={quote_plus(brand_name)}",
-        "Product Hunt": f"https://www.producthunt.com/search?q={quote_plus(brand_name)}",
-        "G2": f"https://www.g2.com/search?utf8=&query={quote_plus(brand_name)}",
-        "Trustpilot": f"https://www.trustpilot.com/search?query={quote_plus(brand_name)}",
+        "YouTube": youtube,
+        "Reddit": reddit,
+        "Wikipedia / Wikidata": wikipedia,
+        "LinkedIn": linkedin,
+        "Local Directories": directories,
+        "Other Platforms": other,
+        "Google Maps (GBP)": google_maps,
     }
 
-    result["platforms_checked"] = {
-        name: {
-            "search_url": url,
-            "check_instruction": f"Search for '{brand_name}' on {name}",
-        }
-        for name, url in platforms.items()
-    }
+    brand_authority = calculate_brand_authority(platforms)
+    print(f"[brand_scanner] Brand Authority Score: {brand_authority}/100", file=sys.stderr)
 
-    result["recommendations"] = [
-        "Maintain profiles on industry-relevant platforms",
-        "Respond to questions on Quora and Stack Overflow",
-        "Encourage customer reviews on G2 and Trustpilot",
-        "Keep Crunchbase profile updated (important for B2B)",
-        "Open-source contributions on GitHub boost developer brand authority",
-        "Product Hunt launch can generate significant initial buzz",
-    ]
-
-    return result
-
-
-def generate_brand_report(brand_name: str, domain: str = None) -> dict:
-    """Generate a comprehensive brand mention report."""
-    report = {
+    return {
         "brand_name": brand_name,
-        "domain": domain,
-        "analysis_date": "Generated by GEO-SEO Claude Tool",
-        "key_insight": "Brand mentions correlate 3x more strongly with AI visibility than backlinks (Ahrefs Dec 2025, 75K brands)",
-        "platforms": {},
-        "overall_recommendations": [],
+        "url": url,
+        "brand_authority_score": brand_authority,
+        "platforms": platforms,
+        "recommendations": [
+            "Prioritize YouTube content creation—highest AI citation correlation",
+            "Build authentic Reddit community presence",
+            "Pursue Wikipedia notability through press coverage",
+            "Maintain consistent LinkedIn posting schedule",
+            "Build Quora authority in your niche",
+        ]
     }
-
-    # Check all platforms
-    report["platforms"]["google_maps"] = check_google_maps_presence(brand_name)
-    report["platforms"]["youtube"] = check_youtube_presence(brand_name)
-    report["platforms"]["tiktok"] = check_tiktok_presence(brand_name)
-    report["platforms"]["reddit"] = check_reddit_presence(brand_name)
-    report["platforms"]["wikipedia"] = check_wikipedia_presence(brand_name)
-    report["platforms"]["linkedin"] = check_linkedin_presence(brand_name)
-    report["platforms"]["other"] = check_other_platforms(brand_name)
-
-    # Overall recommendations
-    report["overall_recommendations"] = [
-        "Priority 0: Google Maps (GBP) — critical for local AI search visibility (Google Search AI Overviews).",
-        "Priority 1: YouTube — highest correlation (0.737) with AI citations. Create educational content.",
-        "Priority 2: Reddit — build authentic presence in industry subreddits. No marketing speak.",
-        "Priority 3: Wikipedia — establish notability through press coverage, then create/improve entry.",
-        "Priority 4: LinkedIn — thought leadership content from founders and employees.",
-        "Priority 5: Review platforms — G2, Trustpilot, Capterra for social proof signals.",
-        "Cross-platform: Ensure consistent NAP (Name, Address, Phone) across all platforms.",
-        "Schema markup: Add sameAs property linking to ALL platform profiles.",
-        "Monitor: Set up brand mention alerts across all platforms.",
-    ]
-
-    return report
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python brand_scanner.py <brand_name> [domain]")
-        print("Example: python brand_scanner.py 'Acme Corp' acmecorp.com")
+        print("Usage: python brand_scanner.py <brand_name> [url]")
         sys.exit(1)
 
     brand = sys.argv[1]
-    domain = sys.argv[2] if len(sys.argv) > 2 else None
+    url = sys.argv[2] if len(sys.argv) > 2 else ""
 
-    result = generate_brand_report(brand, domain)
-    print(json.dumps(result, indent=2, default=str))
+    result = scan_brand(brand, url)
+    print(json.dumps(result, indent=2))

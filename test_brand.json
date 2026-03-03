@@ -1,0 +1,154 @@
+{
+  "brand_name": "Masterly Cleaning Solutions",
+  "url": "",
+  "brand_authority_score": 45,
+  "platforms": {
+    "YouTube": {
+      "platform": "YouTube",
+      "correlation": 0.737,
+      "weight": "25%",
+      "score": 45,
+      "has_channel": true,
+      "sentiment": "neutral",
+      "key_findings": [
+        "Multiple YouTube channels mention Masterly Cleaning Solutions or related cleaning topics.",
+        "The brand is referenced in several videos and channels, indicating some recognition.",
+        "There is no evidence of a dedicated, active brand channel with significant subscriber count."
+      ],
+      "summary": "Masterly Cleaning Solutions has a modest presence on YouTube through mentions and related content but lacks a dedicated, highly active brand channel.",
+      "search_url": "https://www.youtube.com/results?search_query=Masterly+Cleaning+Solutions",
+      "recommendations": [
+        "Create a YouTube channel if none exists",
+        "Publish educational/tutorial content related to your niche",
+        "Encourage customers to create review/demo videos",
+        "Optimize video titles and descriptions with brand name"
+      ]
+    },
+    "Reddit": {
+      "platform": "Reddit",
+      "correlation": "High",
+      "weight": "25%",
+      "score": 65,
+      "has_presence": true,
+      "sentiment": "neutral",
+      "key_findings": [
+        "The brand is mentioned on Reddit in at least one thread related to cleaning services.",
+        "There is no evidence of active or official Reddit accounts or frequent discussions about Masterly Cleaning Solutions.",
+        "Mentions are limited and do not indicate widespread community recognition or recommendation."
+      ],
+      "summary": "Masterly Cleaning Solutions has a moderate Reddit presence with limited mentions and no significant community engagement.",
+      "search_url": "https://www.reddit.com/search/?q=Masterly+Cleaning+Solutions",
+      "recommendations": [
+        "Identify 3-5 subreddits where your target audience is active",
+        "Participate authentically\u2014do not shill",
+        "Monitor and respond to brand mentions",
+        "Create genuinely helpful posts that demonstrate expertise"
+      ]
+    },
+    "Wikipedia / Wikidata": {
+      "platform": "Wikipedia / Wikidata",
+      "correlation": "High",
+      "weight": "20%",
+      "score": 0,
+      "has_wikipedia": false,
+      "wikipedia_url": "",
+      "wikidata_id": "",
+      "key_findings": [
+        "No Wikipedia article exists for Masterly Cleaning Solutions.",
+        "No Wikidata entry found for the brand.",
+        "Brand is not mentioned in related cleaning or commercial cleaning Wikipedia pages."
+      ],
+      "summary": "Masterly Cleaning Solutions currently has no presence on Wikipedia or Wikidata.",
+      "recommendations": [
+        "Build notability through press coverage first before seeking a Wikipedia article",
+        "Ensure your Wikidata entry (Q-number) is complete even without a full article",
+        "Contribute to industry articles where your brand can be naturally cited"
+      ]
+    },
+    "LinkedIn": {
+      "platform": "LinkedIn",
+      "correlation": "Moderate",
+      "weight": "15%",
+      "score": 45,
+      "has_presence": true,
+      "sentiment": "neutral",
+      "key_findings": [
+        "Multiple LinkedIn pages with similar names but varying follower counts and activity levels",
+        "The main brand, Masterly Solutions, has 1,804 followers but no indication of regular posting or thought leadership",
+        "Other related pages have very low followers and limited activity, indicating sparse or inactive presence"
+      ],
+      "summary": "Masterly Cleaning Solutions has a modest LinkedIn presence with some activity, but lacks significant follower engagement or regular content updates.",
+      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Masterly+Cleaning+Solutions",
+      "recommendations": [
+        "Optimize company page with complete information and regular posting",
+        "Encourage leadership to post thought leadership content weekly",
+        "Engage with industry discussions to increase visibility"
+      ]
+    },
+    "Local Directories": {
+      "platform": "Local Directories",
+      "correlation": "High (Local Entity)",
+      "weight": "20%",
+      "score": 45,
+      "has_listings": false,
+      "sentiment": "unknown",
+      "key_findings": [
+        "No verified listings for Masterly Cleaning Solutions on major directories like YellowPages or Yelp.",
+        "Mentions of similar or unrelated cleaning companies are present, but not directly linked to Masterly Cleaning Solutions.",
+        "Brand presence is primarily found through Trustpilot reviews, not through local directory listings."
+      ],
+      "summary": "Masterly Cleaning Solutions lacks verified local directory listings, indicating minimal direct presence on major local directories.",
+      "recommendations": [
+        "Claim your business profile on Yelp and YellowPages",
+        "Encourage happy customers to leave reviews on Trustpilot",
+        "Ensure NAP (Name, Address, Phone) consistency across all directories",
+        "Add high-quality photos to your directory listings"
+      ]
+    },
+    "Other Platforms": {
+      "platform": "Other Platforms",
+      "correlation": "Supplementary",
+      "weight": "15%",
+      "score": 75,
+      "key_findings": [
+        "The brand is actively mentioned on Facebook with recent posts highlighting services and promotions.",
+        "There are multiple podcast references, including industry-related shows like 'Clean Living' and 'The Business of Cleaning,' indicating some media engagement.",
+        "Limited but notable Quora mentions focus on general knowledge about platforms and a few indirect references, not directly about the brand."
+      ],
+      "summary": "Masterly Cleaning Solutions has a moderate presence on other platforms, with active social media and podcast mentions but limited direct press coverage or Quora engagement.",
+      "recommendations": [
+        "Create Quora answers for top industry questions related to your brand",
+        "Issue press releases for major company milestones",
+        "Pursue podcast guest appearances in your niche"
+      ]
+    },
+    "Google Maps (GBP)": {
+      "platform": "Google Maps (GBP)",
+      "correlation": "High (Local Entity)",
+      "weight": "20%",
+      "score": 0,
+      "has_presence": false,
+      "sentiment": "unknown",
+      "key_findings": [
+        "No results found for Masterly Cleaning Solutions on Google Maps.",
+        "Search indicates no verified or claimed Google Business Profile.",
+        "References are external and do not link to an active GBP listing."
+      ],
+      "summary": "There is no visible presence of Masterly Cleaning Solutions on Google Maps based on current search results.",
+      "search_url": "https://www.google.com/maps/search/Masterly+Cleaning+Solutions",
+      "recommendations": [
+        "Claim and verify your Google Business Profile",
+        "Ensure NAP (Name, Address, Phone) consistency",
+        "Regularly post updates and photos to your GBP",
+        "Encourage customers to leave detailed, keyword-rich reviews"
+      ]
+    }
+  },
+  "recommendations": [
+    "Prioritize YouTube content creation\u2014highest AI citation correlation",
+    "Build authentic Reddit community presence",
+    "Pursue Wikipedia notability through press coverage",
+    "Maintain consistent LinkedIn posting schedule",
+    "Build Quora authority in your niche"
+  ]
+}

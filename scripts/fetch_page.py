@@ -49,6 +49,7 @@ def fetch_page(url: str, timeout: int = 30) -> dict:
         "heading_structure": [],
         "word_count": 0,
         "text_content": "",
+        "raw_html": "",
         "internal_links": [],
         "external_links": [],
         "images": [],
@@ -120,6 +121,7 @@ def fetch_page(url: str, timeout: int = 30) -> dict:
             element.decompose()
         text = soup.get_text(separator=" ", strip=True)
         result["text_content"] = text
+        result["raw_html"] = response.text
         result["word_count"] = len(text.split())
 
         # Links

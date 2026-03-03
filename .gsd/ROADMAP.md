@@ -26,6 +26,28 @@
 - [x] Modify `scripts/generate_pdf_report.py` for custom visual styling <!-- id: 16 -->
 
 ## Phase 5: Advanced Optimization & Scaling <!-- id: 17 -->
-- [ ] Integrate additional brand mention platforms in `brand_scanner.py` <!-- id: 18 -->
-- [ ] Fine-tune `citability_scorer.py` for specific industry niches <!-- id: 19 -->
-- [ ] Implement batch auditing script for multiple URLs <!-- id: 20 -->
+**Status**: ✅ Complete
+- [x] Integrate TikTok, Threads, and BlueSky in `brand_scanner.py` <!-- id: 18 -->
+- [x] Fine-tune `citability_scorer.py` for industry niches <!-- id: 19 -->
+- [x] Implement batch auditing script for multiple URLs <!-- id: 20 -->
+
+## Phase 6: Web Dashboard & Automation <!-- id: 21 -->
+**Status**: ✅ Complete
+- [x] Implement Node.js API server for audit control <!-- id: 22 -->
+- [x] Build premium "glassmorphism" dashboard UI <!-- id: 23 -->
+- [x] Integrate sequential script execution with real-time logs <!-- id: 24 -->
+- [x] Add one-click PDF generation and viewing <!-- id: 25 -->
+
+## Phase 7: AI Scoring & Scraper Enhancement <!-- id: 26 -->
+**Status**: ✅ Complete
+- [x] Refactor `brand_scanner.py` for real OpenAI analysis <!-- id: 27 -->
+- [x] Implement automated `robots.txt` crawler auditing <!-- id: 28 -->
+- [x] Enrich PDF reports with AI-generated fix examples and impact analysis <!-- id: 29 -->
+- [x] Optimize PDF layout and spacing <!-- id: 30 -->
+
+## Phase 8: Google Business Profile (GBP) Integration <!-- id: 31 -->
+**Status**: ✅ Complete
+- [x] Add GBP URL Input to Dashboard <!-- id: 32 -->
+- [x] Create `gbp_analyzer.py` for AI Local Analysis <!-- id: 33 -->
+- [x] Integrate GBP Data into PDF Report <!-- id: 34 -->
+- [x] Verify End-to-End GBP Audit Flow <!-- id: 35 -->

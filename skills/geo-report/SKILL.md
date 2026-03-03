@@ -157,6 +157,24 @@ Present entity presence across platforms:
 
 **Translate for the client**: "AI platforms build trust by cross-referencing your brand across multiple authoritative sources. Each platform where your brand has an accurate, consistent presence increases the likelihood of being cited in AI answers."
 
+### Section 5.1: Local Business Profile (GBP)
+
+Present the Google Business Profile health:
+
+```markdown
+## Local Business Profile Health (GBP)
+
+| Metric | Status | Impact | Priority Action |
+|---|---|---|---|
+| Profile Verification | Verified/No | Critical | Claim & Verify |
+| Review Rating | X.X/5.0 | High | Benchmark: > 4.2 |
+| Review Count | XX reviews | High | Benchmark: 50+ |
+| NAP Consistency | Pass/Fail | Critical | Sync Address/Phone |
+| Google Maps Link | Present/Missing | Medium | Add to sameAs schema |
+```
+
+**Local AI Context**: "Google AI Overviews (AIO) uses your Google Business Profile as a primary source for local search queries. A high-health GBP is the single most important factor for appearing in local AI answers."
+
 ### Section 6: Citability Analysis
 
 #### Top 5 Most Citable Pages

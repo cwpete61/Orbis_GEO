@@ -55,11 +55,27 @@ def validate_llmstxt(url: str) -> dict:
 
     # Check llms.txt
     try:
-        response = requests.get(llms_url, headers=DEFAULT_HEADERS, timeout=15)
-        if response.status_code == 200:
+        # Check for cached content first
+        html_content = None
+        import os
+        cache_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "test_fetch.json")
+        if os.path.exists(cache_path):
+            with open(cache_path, "r", encoding="utf-8") as f:
+                cache_data = json.load(f)
+                if cache_data.get("url") == llms_url: # Unlikely as fetch_page fetches home
+                    html_content = cache_data.get("raw_html")
+
+        if not html_content:
+            response = requests.get(llms_url, headers=DEFAULT_HEADERS, timeout=15)
+            if response.status_code == 200:
+                html_content = response.text
+            else:
+                result["issues"].append(f"llms.txt returned status {response.status_code}")
+
+        if html_content:
             result["exists"] = True
-            result["content"] = response.text
-            content = response.text
+            result["content"] = html_content
+            content = html_content
 
             # Validate format
             lines = content.strip().split("\n")
@@ -139,13 +155,28 @@ def generate_llmstxt(url: str, max_pages: int = 30) -> dict:
         "sections": {},
     }
 
-    # Fetch homepage
+    # Discover and categorize pages
+    # Check for cached content from fetch_page script
+    soup = None
     try:
-        response = requests.get(url, headers=DEFAULT_HEADERS, timeout=30)
-        soup = BeautifulSoup(response.text, "lxml")
-    except Exception as e:
-        result["error"] = f"Failed to fetch homepage: {str(e)}"
-        return result
+        import os
+        cache_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "test_fetch.json")
+        if os.path.exists(cache_path):
+            with open(cache_path, "r", encoding="utf-8") as f:
+                cache_data = json.load(f)
+                if cache_data.get("url") == url and "raw_html" in cache_data:
+                    soup = BeautifulSoup(cache_data["raw_html"], "lxml")
+    except Exception:
+        pass
+
+    if not soup:
+        # Fetch homepage
+        try:
+            response = requests.get(url, headers=DEFAULT_HEADERS, timeout=30)
+            soup = BeautifulSoup(response.text, "lxml")
+        except Exception as e:
+            result["error"] = f"Failed to fetch homepage: {str(e)}"
+            return result
 
     # Extract site name and description
     title = soup.find("title")
@@ -269,21 +300,140 @@ def generate_llmstxt(url: str, max_pages: int = 30) -> dict:
     return result
 
 
+
+# All major AI crawlers and which platform they serve
+AI_CRAWLERS = {
+    "GPTBot": {"platform": "ChatGPT / OpenAI", "docs": "https://platform.openai.com/docs/gptbot"},
+    "ChatGPT-User": {"platform": "ChatGPT Browsing", "docs": "https://platform.openai.com/docs/plugins/bot"},
+    "ClaudeBot": {"platform": "Anthropic Claude", "docs": "https://support.anthropic.com/en/articles/8896518"},
+    "anthropic-ai": {"platform": "Anthropic AI", "docs": "https://support.anthropic.com/"},
+    "PerplexityBot": {"platform": "Perplexity AI", "docs": "https://docs.perplexity.ai/docs/perplexitybot"},
+    "Googlebot": {"platform": "Google (AI Overviews)", "docs": "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers"},
+    "Google-Extended": {"platform": "Google Gemini / Bard", "docs": "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers"},
+    "Bingbot": {"platform": "Bing / Copilot", "docs": "https://www.bing.com/webmaster/help/which-crawlers-does-bing-use"},
+    "cohere-ai": {"platform": "Cohere AI", "docs": "https://cohere.com"},
+    "YouBot": {"platform": "You.com AI Search", "docs": "https://you.com"},
+    "Applebot": {"platform": "Apple Siri / AI Features", "docs": "https://support.apple.com/en-us/111900"},
+    "Meta-ExternalAgent": {"platform": "Meta AI", "docs": "https://www.meta.com"},
+}
+
+
+def check_ai_crawlers(url: str) -> dict:
+    """Fetch robots.txt and determine which AI crawlers are allowed/blocked."""
+    parsed = urlparse(url)
+    base_url = f"{parsed.scheme}://{parsed.netloc}"
+    robots_url = f"{base_url}/robots.txt"
+
+    result = {
+        "robots_url": robots_url,
+        "robots_found": False,
+        "crawlers": {},
+    }
+
+    robots_text = ""
+    try:
+        response = requests.get(robots_url, headers=DEFAULT_HEADERS, timeout=10)
+        if response.status_code == 200:
+            result["robots_found"] = True
+            robots_text = response.text
+    except Exception as e:
+        result["error"] = f"Could not fetch robots.txt: {e}"
+        robots_text = ""
+
+    # Parse robots.txt into per-agent rules
+    # Simple parser: track current user-agent and whether Disallow: / is set
+    agent_rules: dict[str, list[str]] = {}
+    current_agents: list[str] = []
+    global_disallows: list[str] = []
+    in_global = False
+
+    for line in robots_text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            if current_agents:
+                current_agents = []
+            continue
+
+        if line.lower().startswith("user-agent:"):
+            agent = line.split(":", 1)[1].strip()
+            current_agents.append(agent)
+            if agent not in agent_rules:
+                agent_rules[agent] = []
+            in_global = (agent == "*")
+
+        elif line.lower().startswith("disallow:") and current_agents:
+            path = line.split(":", 1)[1].strip()
+            for a in current_agents:
+                agent_rules.setdefault(a, []).append(("disallow", path))
+            if in_global:
+                global_disallows.append(path)
+
+        elif line.lower().startswith("allow:") and current_agents:
+            path = line.split(":", 1)[1].strip()
+            for a in current_agents:
+                agent_rules.setdefault(a, []).append(("allow", path))
+
+    def is_allowed(agent_name: str) -> tuple[str, str]:
+        """Return (status, detail) for a specific crawler."""
+        if not result["robots_found"]:
+            return "Unknown", "robots.txt not found — crawler access is likely allowed by default"
+
+        rules = agent_rules.get(agent_name, [])
+
+        # Check for explicit full-block: Disallow: /
+        for rule_type, path in rules:
+            if rule_type == "disallow" and path in ["/", ""]:
+                return "Blocked", f"Explicitly blocked via 'Disallow: /' for {agent_name}"
+            if rule_type == "disallow" and path:
+                return "Partial", f"Some paths blocked ({path}) for {agent_name}"
+
+        if rules:
+            return "Allowed", f"Agent {agent_name} found in robots.txt with no full blocks"
+
+        # No explicit rule — fall back to global * rules
+        for path in global_disallows:
+            if path == "/":
+                return "Blocked", f"Blocked via wildcard 'Disallow: /' (no explicit {agent_name} rule)"
+
+        return "Allowed", f"No explicit rule for {agent_name} — inheriting global allow"
+
+    for agent_key, meta in AI_CRAWLERS.items():
+        status, detail = is_allowed(agent_key)
+        result["crawlers"][agent_key] = {
+            "platform": meta["platform"],
+            "status": status,
+            "recommendation": (
+                f"Add 'Allow: /' rule for {agent_key} in robots.txt"
+                if status == "Blocked"
+                else ("Consider explicitly allowing this crawler" if status == "Unknown" else "No action needed")
+            ),
+            "detail": detail,
+        }
+
+    return result
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python llmstxt_generator.py <url> [mode]")
-        print("Modes: validate (default), generate")
+        print("Modes: validate (default), generate, crawlers")
         sys.exit(1)
 
     target_url = sys.argv[1]
     mode = sys.argv[2] if len(sys.argv) > 2 else "validate"
 
     if mode == "validate":
-        data = validate_llmstxt(target_url)
+        llms_data = validate_llmstxt(target_url)
+        crawler_data = check_ai_crawlers(target_url)
+        combined = {**llms_data, **crawler_data}
+        print(json.dumps(combined, indent=2, default=str))
     elif mode == "generate":
         data = generate_llmstxt(target_url)
+        print(json.dumps(data, indent=2, default=str))
+    elif mode == "crawlers":
+        data = check_ai_crawlers(target_url)
+        print(json.dumps(data, indent=2, default=str))
     else:
-        print(f"Unknown mode: {mode}. Use 'validate' or 'generate'.")
+        print(f"Unknown mode: {mode}. Use 'validate', 'generate', or 'crawlers'.")
         sys.exit(1)
 
-    print(json.dumps(data, indent=2, default=str))

@@ -1,0 +1,52 @@
+{
+  "business_name": "Google Drive (implied as a service provider or support entity)",
+  "overall_local_score": 35,
+  "status": "Fair",
+  "insights": [
+    {
+      "title": "Business Name & Category Clarity",
+      "score": 20,
+      "details": "The search context pertains primarily to Google Drive and related Google services, not a specific local business. There is no distinct local business name or category identified, making it unclear whether this is a local entity or a general service overview."
+    },
+    {
+      "title": "AI-Compatible Descriptions",
+      "score": 40,
+      "details": "Descriptions are generic, focusing on Google's services without including localized entities, services, or keywords that would enhance AI recognition. The content is more informational than business-specific."
+    },
+    {
+      "title": "Sentiment of Recent Mentions",
+      "score": 50,
+      "details": "Mentions are neutral, emphasizing technical assistance and service features. No positive or negative sentiment dominates, but the lack of user reviews or feedback reduces AI engagement likelihood."
+    },
+    {
+      "title": "AI Recommendation Likelihood",
+      "score": 30,
+      "details": "Given the absence of a clear local business profile, reviews, and specific services, AI models like ChatGPT or Google SGE are unlikely to recommend this as a notable local destination or service provider."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "critical",
+      "title": "Lack of Business Identity",
+      "description": "No explicit local business name, category, or address is present, leading to challenges in local search visibility.",
+      "impact": "Reduces discoverability in local searches and diminishes AI recommendation potential.",
+      "fix_example": "Create and verify a Google Business Profile with accurate business name, category, description, and location details."
+    },
+    {
+      "severity": "high",
+      "title": "Generic Service Descriptions",
+      "description": "Descriptions focus on Google Drive's features without local context or specific services offered.",
+      "impact": "Limits AI's ability to associate the profile with relevant local queries or user intents.",
+      "fix_example": "Include localized service descriptions, keywords, and customer-centric language specific to your business location."
+    },
+    {
+      "severity": "medium",
+      "title": "Limited Engagement Signals",
+      "description": "No reviews, photos, or local engagement metrics are present.",
+      "impact": "Decreases trust and AI's likelihood to recommend or rank the profile highly.",
+      "fix_example": "Encourage satisfied customers to leave reviews and add photos or service details to enhance profile richness."
+    }
+  ],
+  "audit_date": "2026-03-03 13:41",
+  "gbp_url": "https://share.google/frXk5ODsFdJNoyLGy"
+}

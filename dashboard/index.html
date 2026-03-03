@@ -15,42 +15,140 @@
             <div class="tagline">Enterprise AI Search Visibility Auditor</div>
         </header>
 
-        <section class="control-panel glass">
-            <div class="input-group">
-                <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)" value="Orbis Local">
-                <input type="text" id="targetUrl" placeholder="Target URL (https://...)" value="https://google.com">
-            </div>
+        <!-- DASHBOARD VIEW -->
+        <main id="dashboardView">
+            <section class="control-panel glass">
+                <div class="input-group">
+                    <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)">
+                    <input type="text" id="targetUrl" placeholder="Target URL (https://...)">
+                    <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)">
+                </div>
 
-            <div class="actions">
-                <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
-                <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
-                <button id="openPdf" class="btn success-btn">PDF</button>
-                <button id="clearLogs" class="btn secondary">Clear Logs</button>
-            </div>
-        </section>
+                <div class="actions">
+                    <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
+                    <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
+                    <a id="openPdf" class="btn success-btn" href="/api/view-report" target="_blank"
+                        style="text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center;">PDF
+                        Report</a>
+                    <button id="clearLogs" class="btn secondary">Clear Logs</button>
+                </div>
+            </section>
 
-        <section class="manual-steps">
-            <h3>Manual Controls</h3>
-            <div class="step-buttons">
-                <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
-                <button onclick="runStep('score')" class="step-btn">2. Score Citability</button>
-                <button onclick="runStep('brand')" class="step-btn">3. Brand Scan</button>
-                <button onclick="runStep('crawlers')" class="step-btn">4. Crawler Check</button>
-                <button onclick="runStep('report')" class="step-btn">5. Generate PDF</button>
-            </div>
-        </section>
+            <section class="manual-steps">
+                <h3>Manual Controls</h3>
+                <div class="step-buttons">
+                    <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
+                    <button onclick="runStep('score')" class="step-btn">2. Score Citability</button>
+                    <button onclick="runStep('brand')" class="step-btn">3. Brand Scan</button>
+                    <button onclick="runStep('crawlers')" class="step-btn">4. Crawler Check</button>
+                    <button onclick="runStep('gbp')" class="step-btn">5. GBP Analysis</button>
+                    <button onclick="runStep('report')" class="step-btn">6. Generate PDF</button>
+                </div>
+            </section>
 
-        <section class="output-console glass">
-            <div class="console-header">
-                <span>Console Output</span>
-                <div class="status-indicator" id="statusIndicator">Ready</div>
+            <section class="output-console glass">
+                <div class="console-header">
+                    <span>Console Output</span>
+                    <div class="status-indicator" id="statusIndicator">Ready</div>
+                </div>
+                <div id="logOutput" class="console-body">
+                    Waiting for command...
+                </div>
+            </section>
+        </main>
+
+        <!-- GENERATING VIEW -->
+        <main id="generatingView" style="display: none;">
+            <div class="generating-container glass">
+                <div id="statLabel" class="stat-box">85% of Users Prefer AI Summaries</div>
+                <h2>Orbis Local: Generating Your Report</h2>
+                <div class="brand-sub">Analyzing Citability for <strong id="generatingBrand">...</strong></div>
+
+                <div id="strategyBox" class="strategy-card">AI isn't just a trend; it's the 2026 search baseline.</div>
+
+                <div class="percent-text" id="percentCounter">0%</div>
+                <div class="progress-wrapper">
+                    <div id="subProgressBar" class="progress-fill"></div>
+                </div>
+
+                <div class="stages">
+                    <div id="stage-fetch" class="stage">
+                        <div class="dot"></div>FETCH
+                    </div>
+                    <div id="stage-score" class="stage">
+                        <div class="dot"></div>SCORE
+                    </div>
+                    <div id="stage-brand" class="stage">
+                        <div class="dot"></div>BRAND
+                    </div>
+                    <div id="stage-crawlers" class="stage">
+                        <div class="dot"></div>CRAWLERS
+                    </div>
+                    <div id="stage-gbp" class="stage">
+                        <div class="dot"></div>GBP
+                    </div>
+                    <div id="stage-report" class="stage">
+                        <div class="dot"></div>REPORT
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="bar-group">
+                        <span class="bar-val">85%</span>
+                        <div class="bar" id="bar1" style="height: 0;" data-h="85"></div>
+                        <span class="bar-label">AI PREF</span>
+                    </div>
+                    <div class="bar-group">
+                        <span class="bar-val">92%</span>
+                        <div class="bar" id="bar2" style="height: 0;" data-h="92"></div>
+                        <span class="bar-label">SGE 2026</span>
+                    </div>
+                    <div class="bar-group">
+                        <span class="bar-val">78%</span>
+                        <div class="bar" id="bar3" style="height: 0;" data-h="78"></div>
+                        <span class="bar-label">TRUST</span>
+                    </div>
+                </div>
             </div>
-            <div id="logOutput" class="console-body">
-                Waiting for command...
+        </main>
+
+        <!-- LEAD GEN VIEW -->
+        <main id="leadGenView" style="display: none;">
+            <div class="lead-gen-container glass">
+                <h2>Your Report is Almost Ready!</h2>
+                <p>Enter your details to finalize the generation and reveal your full GEO-SEO Roadmap.</p>
+                <form id="leadGenForm" class="lead-form">
+                    <div class="form-group">
+                        <input type="text" id="leadName" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="leadEmail" placeholder="Business Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="leadPhone" placeholder="Phone Number (optional)">
+                    </div>
+                    <button type="submit" class="btn primary large-btn">View My Report Now</button>
+                </form>
             </div>
-        </section>
+        </main>
+
+        <!-- REPORT VIEW -->
+        <main id="reportView" style="display: none;">
+            <div class="report-viewer glass">
+                <div class="report-header">
+                    <h2>GEO Audit Complete</h2>
+                    <button onclick="showView('dashboardView')" class="btn secondary">Back to Dashboard</button>
+                    <a id="downloadReport" href="/api/view-report" target="_blank" class="btn success-btn">Download
+                        PDF</a>
+                </div>
+                <div class="report-frame-container">
+                    <iframe id="reportFrame" src="about:blank"></iframe>
+                </div>
+            </div>
+        </main>
     </div>
 
+    <div class="scanner-line"></div>
     <script src="app.js"></script>
 </body>
 

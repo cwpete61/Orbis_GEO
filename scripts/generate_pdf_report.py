@@ -173,13 +173,18 @@ def create_platform_chart(platforms, width=450, height=180):
                     fillColor=LIGHT_BG, strokeColor=None))
 
         # Score bar
-        bar_width = (score / 100) * bar_max_width
-        color = get_score_color(score)
+        try:
+            numeric_score = float(score)
+        except ValueError:
+            numeric_score = 0
+            
+        bar_width = (numeric_score / 100) * bar_max_width
+        color = get_score_color(numeric_score)
         d.add(Rect(bar_x, y, bar_width, bar_height,
                     fillColor=color, strokeColor=None))
 
         # Score text
-        d.add(String(bar_x + bar_max_width + 10, y + 6, f"{score}/100",
+        d.add(String(bar_x + bar_max_width + 10, y + 6, f"{numeric_score}/100",
                      fontSize=9, fontName='Helvetica-Bold',
                      fillColor=TEXT_PRIMARY, textAnchor='start'))
 
@@ -195,7 +200,8 @@ def build_styles():
         fontName='Helvetica-Bold',
         fontSize=28,
         textColor=PRIMARY,
-        spaceAfter=6,
+        spaceAfter=12,
+        leading=32,
         alignment=TA_LEFT,
     ))
 
@@ -204,6 +210,7 @@ def build_styles():
         fontName='Helvetica',
         fontSize=14,
         textColor=TEXT_SECONDARY,
+        spaceBefore=10,
         spaceAfter=20,
         alignment=TA_LEFT,
     ))
@@ -287,6 +294,42 @@ def build_styles():
         spaceAfter=3,
         bulletIndent=5,
         leading=14,
+    ))
+
+    styles.add(ParagraphStyle(
+        name='DetailedDescription',
+        fontName='Helvetica',
+        fontSize=10,
+        textColor=TEXT_PRIMARY,
+        spaceBefore=2,
+        spaceAfter=6,
+        leading=14,
+        leftIndent=15,
+    ))
+
+    styles.add(ParagraphStyle(
+        name='FindingImpact',
+        fontName='Helvetica-Oblique',
+        fontSize=9,
+        textColor=TEXT_SECONDARY,
+        spaceBefore=0,
+        spaceAfter=6,
+        leading=12,
+        leftIndent=15,
+    ))
+
+    styles.add(ParagraphStyle(
+        name='CodeFix',
+        fontName='Courier',
+        fontSize=9,
+        textColor=TEXT_PRIMARY,
+        backColor=LIGHT_BG,
+        borderPadding=8,
+        spaceBefore=4,
+        spaceAfter=12,
+        leading=11,
+        leftIndent=25,
+        rightIndent=15,
     ))
 
     styles.add(ParagraphStyle(
@@ -386,6 +429,9 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         "Gemini": 0,
         "Bing Copilot": 0,
     })
+    gbp = data.get("gbp", {})
+    directories = data.get("directories", {})
+    local_authority = scores.get("local_authority", 0)
 
     crawlers = data.get("crawlers", [])
     findings = data.get("findings", [])
@@ -486,8 +532,9 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         ["Brand Authority Signals", f"{brand_authority}/100", "20%", f"{round(brand_authority * 0.20, 1)}"],
         ["Content Quality & E-E-A-T", f"{content_eeat}/100", "20%", f"{round(content_eeat * 0.20, 1)}"],
         ["Technical Foundations", f"{technical}/100", "15%", f"{round(technical * 0.15, 1)}"],
-        ["Structured Data", f"{schema_score}/100", "10%", f"{round(schema_score * 0.10, 1)}"],
+        ["Strategic Schema Implementation", f"{schema_score}/100", "10%", f"{round(schema_score * 0.10, 1)}"],
         ["Platform Optimization", f"{platform_optimization}/100", "10%", f"{round(platform_optimization * 0.10, 1)}"],
+        ["Google Business/Local Authority", f"{local_authority}/100", "10%", f"{round(local_authority * 0.10, 1)}"],
         ["OVERALL", f"{geo_score}/100", "100%", f"{geo_score}"],
     ]
 
@@ -500,9 +547,12 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
 
     # Color-code score cells
     for i in range(1, len(score_data) - 1):
-        score_val = int(score_data[i][1].split("/")[0])
-        color = get_score_color(score_val)
-        style.add('TEXTCOLOR', (1, i), (1, i), color)
+        try:
+            score_val = int(float(score_data[i][1].split("/")[0]))
+            color = get_score_color(score_val)
+            style.add('TEXTCOLOR', (1, i), (1, i), color)
+        except (ValueError, IndexError):
+            continue
 
     score_table.setStyle(style)
     elements.append(score_table)
@@ -510,8 +560,8 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     elements.append(Spacer(1, 16))
 
     # Score bar chart
-    chart_scores = [ai_citability, brand_authority, content_eeat, technical, schema_score, platform_optimization]
-    chart_labels = ["Citability", "Brand", "Content", "Technical", "Schema", "Platform"]
+    chart_scores = [ai_citability, brand_authority, local_authority, content_eeat, technical, schema_score, platform_optimization]
+    chart_labels = ["Citability", "Brand", "Local", "Content", "Technical", "Schema", "Platform"]
     elements.append(create_bar_chart(chart_scores, chart_labels))
 
     elements.append(PageBreak())
@@ -533,9 +583,8 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     if platforms:
         elements.append(create_platform_chart(platforms))
 
-    elements.append(Spacer(1, 10))
+    elements.append(Spacer(1, 40))
 
-    # Platform table
     platform_table_data = [["AI Platform", "Score", "Status"]]
     for name, score in platforms.items():
         status = get_score_label(score)
@@ -544,7 +593,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     pt = Table(platform_table_data, colWidths=[180, 80, 150])
     pt_style = make_table_style()
     for i in range(1, len(platform_table_data)):
-        score_val = int(platform_table_data[i][1].split("/")[0])
+        score_val = int(float(platform_table_data[i][1].split("/")[0]))
         color = get_score_color(score_val)
         pt_style.add('TEXTCOLOR', (1, i), (1, i), color)
     pt.setStyle(pt_style)
@@ -593,7 +642,105 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         elements.append(ct)
     else:
         elements.append(Paragraph(
-            "<i>Run /geo crawlers to populate this section with AI crawler access data.</i>",
+            "<i>Run Step 4 to populate this section with AI crawler access data.</i>",
+            styles['BodyText_Custom']
+        ))
+
+    elements.append(PageBreak())
+    
+    # ============================================================
+    # GOOGLE BUSINESS PROFILE (GBP) ANALYSIS
+    # ============================================================
+    elements.append(Paragraph("Google Business Profile (GBP) Analysis", styles['SectionHeader']))
+    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
+
+    if gbp:
+        elements.append(Paragraph(
+            f"<b>Profile Analyzed:</b> {gbp.get('business_name', 'Unknown Business')}<br/>"
+            f"<b>Profile URL:</b> {gbp.get('gbp_url', 'Not Provided')}<br/>"
+            f"<b>Analysis Date:</b> {gbp.get('audit_date', 'N/A')}",
+            styles['BodyText_Custom']
+        ))
+        elements.append(Spacer(1, 15))
+
+        # Local Authority Score Card
+        gbp_score = gbp.get('overall_local_score', 0)
+        gbp_status = gbp.get('status', 'Fair')
+        score_color = get_score_color(gbp_score)
+        
+        elements.append(Paragraph(
+            f"<font color='{score_color}' size=14><b>Local Authority Score: {gbp_score}/100</b></font> ({gbp_status})",
+            styles['BodyText_Custom']
+        ))
+        elements.append(Spacer(1, 15))
+
+        # Insights Table
+        if gbp.get("insights"):
+            elements.append(Paragraph("AI Readiness Insights", styles['SubHeader']))
+            insight_data = [["Factor", "Score", "Details"]]
+            for insight in gbp["insights"]:
+                insight_data.append([
+                    insight.get("title", ""),
+                    f"{insight.get('score', 0)}/100",
+                    insight.get("details", "")
+                ])
+            
+            it = Table(insight_data, colWidths=[120, 60, 300])
+            it_style = make_table_style()
+            for i in range(1, len(insight_data)):
+                s_val = int(float(insight_data[i][1].split("/")[0]))
+                it_style.add('TEXTCOLOR', (1, i), (1, i), get_score_color(s_val))
+            it.setStyle(it_style)
+            elements.append(it)
+            elements.append(Spacer(1, 20))
+    else:
+        elements.append(Paragraph(
+            "No Google Business Profile was provided for analysis. Local AI search visibility "
+            "may be limited without a verified and optimized GBP.",
+            styles['BodyText_Custom']
+        ))
+
+    elements.append(PageBreak())
+
+    # ============================================================
+    # LOCAL DIRECTORY VISIBILITY
+    # ============================================================
+    elements.append(Paragraph("Local Directory Visibility", styles['SectionHeader']))
+    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
+
+    if directories:
+        elements.append(Paragraph(
+            "Local directories are critical 'Ground Truth' sources that AI models use to verify "
+            "business existence, location, and reputation.",
+            styles['BodyText_Custom']
+        ))
+        elements.append(Spacer(1, 10))
+
+        dir_score = directories.get("score", 0)
+        dir_color = get_score_color(dir_score)
+
+        elements.append(Paragraph(
+            f"<font color='{dir_color}' size=14><b>Directory Authority Score: {dir_score}/100</b></font>",
+            styles['BodyText_Custom']
+        ))
+        elements.append(Spacer(1, 12))
+
+        # Recommendations for directories
+        if directories.get("recommendations"):
+            elements.append(Paragraph("Strategic Recommendations", styles['SubHeader']))
+            for rec in directories["recommendations"]:
+                elements.append(Paragraph(rec, styles['Recommendation'], bulletText='•'))
+            elements.append(Spacer(1, 15))
+
+        # Key Findings for directories
+        if directories.get("key_findings"):
+            elements.append(Paragraph("Key Insights", styles['SubHeader']))
+            for finding in directories["key_findings"]:
+                elements.append(Paragraph(finding, styles['DetailedDescription'], bulletText='-'))
+    else:
+        elements.append(Paragraph(
+            "No local directory data was found during this scan. Optimizing your presence on "
+            "Yelp, YellowPages, and industry-specific directories is highly recommended for AI visibility.",
             styles['BodyText_Custom']
         ))
 
@@ -610,8 +757,11 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             severity = finding.get("severity", "info").upper()
             title = finding.get("title", "")
             description = finding.get("description", "")
+            detailed_description = finding.get("detailed_description", "")
+            impact = finding.get("impact", "")
+            fix_example = finding.get("fix_example", "")
 
-            if severity == "CRITICAL":
+            if severity == "CRITICAL" or severity == "DANGER":
                 sev_color = DANGER
             elif severity == "HIGH":
                 sev_color = WARNING
@@ -620,13 +770,30 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             else:
                 sev_color = TEXT_SECONDARY
 
+            # Title with severity
             elements.append(Paragraph(
                 f'<font color="{sev_color.hexval()}">[{severity}]</font> <b>{title}</b>',
                 styles['BodyText_Custom']
             ))
-            if description:
-                elements.append(Paragraph(description, styles['Recommendation']))
-            elements.append(Spacer(1, 4))
+
+            # Descriptions
+            if detailed_description:
+                elements.append(Paragraph(detailed_description, styles['DetailedDescription']))
+            elif description:
+                elements.append(Paragraph(description, styles['DetailedDescription']))
+
+            # Impact
+            if impact:
+                elements.append(Paragraph(f"<b>GEO Impact:</b> {impact}", styles['FindingImpact']))
+
+            # Fix Example
+            if fix_example:
+                # Clean up any potential markdown code blocks from AI
+                clean_fix = fix_example.replace("```json", "").replace("```html", "").replace("```", "").strip()
+                elements.append(Paragraph("<b>Fix Example:</b>", styles['DetailedDescription']))
+                elements.append(Paragraph(clean_fix, styles['CodeFix']))
+
+            elements.append(Spacer(1, 8))
     else:
         elements.append(Paragraph(
             "<i>Run a full /geo audit to populate findings.</i>",
@@ -636,89 +803,44 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     elements.append(PageBreak())
 
     # ============================================================
-    # PRIORITIZED ACTION PLAN
+    # GEO-FIRST OPTIMIZATION ROADMAP
     # ============================================================
-    elements.append(Paragraph("Prioritized Action Plan", styles['SectionHeader']))
-    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
-
-    # Quick Wins
-    elements.append(Paragraph("Quick Wins (This Week)", styles['SubHeader']))
+    elements.append(Paragraph("GEO-First Optimization Roadmap", styles['SectionHeader']))
+    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=8))
+    
     elements.append(Paragraph(
-        "High impact, low effort — can be implemented immediately.",
+        "This roadmap prioritizes <b>Generative Engine Optimization (GEO)</b> to maximize visibility in AI search "
+        "results (ChatGPT, Perplexity, Google SGE, etc.), followed by Local and Technical SEO enhancements.",
         styles['SmallText']
     ))
-
-    if quick_wins:
-        for i, action in enumerate(quick_wins, 1):
-            if isinstance(action, dict):
-                text = f"<b>{i}.</b> {action.get('action', '')} — <i>{action.get('impact', '')}</i>"
-            else:
-                text = f"<b>{i}.</b> {action}"
-            elements.append(Paragraph(text, styles['Recommendation']))
-    else:
-        default_wins = [
-            "Allow all Tier 1 AI crawlers in robots.txt (GPTBot, ClaudeBot, PerplexityBot)",
-            "Add publication and last-updated dates to all content pages",
-            "Add author bylines with credentials to blog posts and articles",
-            "Create an llms.txt file to guide AI systems to your key content",
-            "Add sameAs properties to Organization schema linking to all platform profiles",
-        ]
-        for i, action in enumerate(default_wins, 1):
-            elements.append(Paragraph(f"<b>{i}.</b> {action}", styles['Recommendation']))
-
     elements.append(Spacer(1, 12))
 
-    # Medium-Term
-    elements.append(Paragraph("Medium-Term Improvements (This Month)", styles['SubHeader']))
-    elements.append(Paragraph(
-        "Significant impact, moderate effort — requires content or technical changes.",
-        styles['SmallText']
-    ))
+    def render_roadmap_section(title, items, subtitle):
+        elements.append(Paragraph(title, styles['SubHeader']))
+        elements.append(Paragraph(subtitle, styles['SmallText']))
+        elements.append(Spacer(1, 6))
+        
+        if items:
+            for i, item in enumerate(items, 1):
+                if isinstance(item, dict):
+                    action = item.get("action", "")
+                    cat = item.get("category", "SEO").upper()
+                    impact = item.get("impact", "")
+                    
+                    # Color coding for categories
+                    cat_color = HIGHLIGHT if cat == "GEO" else (SUCCESS if cat == "LOCAL" else INFO)
+                    
+                    text = f"<b>{i}. <font color='{cat_color}'>[{cat}]</font></b> {action} — <i>{impact}</i>"
+                else:
+                    text = f"<b>{i}.</b> {item}"
+                elements.append(Paragraph(text, styles['Recommendation']))
+        else:
+            elements.append(Paragraph("<i>No specific items generated. Follow baseline recommendations.</i>", styles['SmallText']))
+        elements.append(Spacer(1, 12))
 
-    if medium_term:
-        for i, action in enumerate(medium_term, 1):
-            if isinstance(action, dict):
-                text = f"<b>{i}.</b> {action.get('action', '')} — <i>{action.get('impact', '')}</i>"
-            else:
-                text = f"<b>{i}.</b> {action}"
-            elements.append(Paragraph(text, styles['Recommendation']))
-    else:
-        default_medium = [
-            "Restructure top 10 pages with question-based headings and direct answer blocks",
-            "Implement comprehensive Organization + Article + Person schema markup",
-            "Optimize content blocks for AI citability (134-167 word self-contained passages)",
-            "Ensure server-side rendering for all public content pages",
-            "Implement IndexNow protocol for Bing/Copilot indexing speed",
-        ]
-        for i, action in enumerate(default_medium, 1):
-            elements.append(Paragraph(f"<b>{i}.</b> {action}", styles['Recommendation']))
-
-    elements.append(Spacer(1, 12))
-
-    # Strategic
-    elements.append(Paragraph("Strategic Initiatives (This Quarter)", styles['SubHeader']))
-    elements.append(Paragraph(
-        "Long-term competitive advantage — requires ongoing investment.",
-        styles['SmallText']
-    ))
-
-    if strategic:
-        for i, action in enumerate(strategic, 1):
-            if isinstance(action, dict):
-                text = f"<b>{i}.</b> {action.get('action', '')} — <i>{action.get('impact', '')}</i>"
-            else:
-                text = f"<b>{i}.</b> {action}"
-            elements.append(Paragraph(text, styles['Recommendation']))
-    else:
-        default_strategic = [
-            "Build Wikipedia/Wikidata entity presence through press coverage and notability",
-            "Develop active Reddit community engagement strategy in relevant subreddits",
-            "Create YouTube content strategy aligned with AI-searched queries",
-            "Establish original research/data publication program for unique citability",
-            "Build topical authority through comprehensive content clusters",
-        ]
-        for i, action in enumerate(default_strategic, 1):
-            elements.append(Paragraph(f"<b>{i}.</b> {action}", styles['Recommendation']))
+    render_roadmap_section("Quick Wins (This Week)", quick_wins, "High impact, low effort — implement these immediately for fastest growth.")
+    render_roadmap_section("Medium-Term Improvements (This Month)", medium_term, "Performance optimization — requires content or technical adjustments.")
+    render_roadmap_section("Strategic Initiatives (This Quarter)", strategic, "Long-term authority — building sustainable dominance in AI search.")
 
     elements.append(PageBreak())
 
@@ -755,6 +877,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
 
     # Glossary
     elements.append(Paragraph("Glossary", styles['SubHeader']))
+    elements.append(Spacer(1, 20))
 
     glossary = [
         ["Term", "Definition"],
