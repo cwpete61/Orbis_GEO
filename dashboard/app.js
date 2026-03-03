@@ -264,7 +264,7 @@ function startGeneratingAnimations() {
 }
 
 // Lead Gen Form Submission
-document.getElementById('leadGenForm').addEventListener('submit', (e) => {
+document.getElementById('leadGenForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // In a real app, we'd send this to a CRM
@@ -273,23 +273,47 @@ document.getElementById('leadGenForm').addEventListener('submit', (e) => {
     const phone = document.getElementById('leadPhone').value;
     const brand = document.getElementById('brandName').value;
     const url = document.getElementById('targetUrl').value;
+    const consent = document.getElementById('leadConsent').checked;
 
-    log(`Lead captured: ${name} (${email})`, 'success');
+    const submitBtn = document.querySelector('#leadGenForm button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Verifying...';
+    submitBtn.disabled = true;
 
-    // Persist lead to server
-    fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, brand, url })
-    }).catch(err => console.error("Failed to save lead:", err));
+    try {
+        // Persist lead to server and verify email
+        const response = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, phone, brand, url, consent })
+        });
 
-    showView('reportView');
-    const scannerLine = document.querySelector('.scanner-line');
-    if (scannerLine) scannerLine.style.display = 'none';
+        const result = await response.json();
 
-    const reportFrame = document.getElementById('reportFrame');
-    // Load the PDF report into the iframe
-    reportFrame.src = '/api/view-report';
+        if (!response.ok) {
+            alert(result.error || "Failed to submit form. Please check your data.");
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            return;
+        }
+
+        log(`Lead captured: ${name} (${email}) - Marketing Consent: ${consent}`, 'success');
+
+        showView('reportView');
+        const scannerLine = document.querySelector('.scanner-line');
+        if (scannerLine) scannerLine.style.display = 'none';
+
+        const reportFrame = document.getElementById('reportFrame');
+        // Load the PDF report into the iframe
+        reportFrame.src = '/api/view-report';
+
+    } catch (err) {
+        console.error("Failed to save lead:", err);
+        alert("An unexpected error occurred. Please try again.");
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
 });
 
 document.getElementById('clearLogs').addEventListener('click', () => {

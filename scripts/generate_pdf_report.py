@@ -396,6 +396,11 @@ def make_table_style(header_color=PRIMARY):
 def generate_report(data, output_path="GEO-REPORT.pdf"):
     """Generate the full PDF report from audit data."""
 
+    # Extract data with defaults
+    url = data.get("url", "https://example.com")
+    brand_name = data.get("brand_name", url.replace("https://", "").replace("http://", "").split("/")[0])
+    date = data.get("date", datetime.now().strftime("%Y-%m-%d"))
+
     doc = SimpleDocTemplate(
         output_path,
         pagesize=letter,
@@ -403,15 +408,11 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         bottomMargin=55,
         leftMargin=50,
         rightMargin=50,
+        title=f"{brand_name} AI Search Visibility Report"
     )
 
     styles = build_styles()
     elements = []
-
-    # Extract data with defaults
-    url = data.get("url", "https://example.com")
-    brand_name = data.get("brand_name", url.replace("https://", "").replace("http://", "").split("/")[0])
-    date = data.get("date", datetime.now().strftime("%Y-%m-%d"))
     geo_score = data.get("geo_score", 0)
 
     scores = data.get("scores", {})

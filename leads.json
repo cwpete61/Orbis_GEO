@@ -38,5 +38,23 @@
     "brand": "Masterly Cleaning Solutions",
     "url": "https://masterlycleaningsolutions.com/",
     "timestamp": "2026-03-03T18:42:14.204Z"
+  },
+  {
+    "name": "Crawford Peterson",
+    "email": "crawford.peterson.sr@gmail.com",
+    "phone": "9294977803",
+    "brand": "BPS Zero Fees",
+    "url": "http://bpszerofees.com/",
+    "consent": true,
+    "timestamp": "2026-03-03T21:55:13.853Z"
+  },
+  {
+    "name": "Test User",
+    "email": "insights@myorbislocal.com",
+    "phone": "555-0199",
+    "brand": "Test Brand",
+    "url": "https://example.com",
+    "consent": true,
+    "timestamp": "2026-03-03T23:31:26.193Z"
   }
 ]

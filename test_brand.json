@@ -1,7 +1,7 @@
 {
-  "brand_name": "Masterly Cleaning Solutions",
+  "brand_name": "BPS Zero Fees",
   "url": "",
-  "brand_authority_score": 45,
+  "brand_authority_score": 31,
   "platforms": {
     "YouTube": {
       "platform": "YouTube",
@@ -11,12 +11,12 @@
       "has_channel": true,
       "sentiment": "neutral",
       "key_findings": [
-        "Multiple YouTube channels mention Masterly Cleaning Solutions or related cleaning topics.",
-        "The brand is referenced in several videos and channels, indicating some recognition.",
-        "There is no evidence of a dedicated, active brand channel with significant subscriber count."
+        "Multiple videos mention BPS Zero Fees, but none appear to be from an official or dedicated channel.",
+        "Mentions are mostly in videos related to finance and crypto topics, not directly branded content.",
+        "No evidence of an active YouTube channel with substantial subscriber base or consistent branding."
       ],
-      "summary": "Masterly Cleaning Solutions has a modest presence on YouTube through mentions and related content but lacks a dedicated, highly active brand channel.",
-      "search_url": "https://www.youtube.com/results?search_query=Masterly+Cleaning+Solutions",
+      "summary": "BPS Zero Fees has some presence on YouTube through mentions in various videos, but lacks an active dedicated channel or significant brand visibility.",
+      "search_url": "https://www.youtube.com/results?search_query=BPS+Zero+Fees",
       "recommendations": [
         "Create a YouTube channel if none exists",
         "Publish educational/tutorial content related to your niche",
@@ -28,16 +28,16 @@
       "platform": "Reddit",
       "correlation": "High",
       "weight": "25%",
-      "score": 65,
+      "score": 45,
       "has_presence": true,
       "sentiment": "neutral",
       "key_findings": [
-        "The brand is mentioned on Reddit in at least one thread related to cleaning services.",
-        "There is no evidence of active or official Reddit accounts or frequent discussions about Masterly Cleaning Solutions.",
-        "Mentions are limited and do not indicate widespread community recognition or recommendation."
+        "Brand 'BPS Zero Fees' is not directly mentioned in the search results.",
+        "Related discussions involve fee structures, certifications, and platform fees, but no explicit references to BPS Zero Fees.",
+        "Mentions of BPS certifications and fee-related topics suggest some community awareness, but no active or official presence."
       ],
-      "summary": "Masterly Cleaning Solutions has a moderate Reddit presence with limited mentions and no significant community engagement.",
-      "search_url": "https://www.reddit.com/search/?q=Masterly+Cleaning+Solutions",
+      "summary": "BPS Zero Fees has limited and indirect presence on Reddit, with no direct mentions or official engagement.",
+      "search_url": "https://www.reddit.com/search/?q=BPS+Zero+Fees",
       "recommendations": [
         "Identify 3-5 subreddits where your target audience is active",
         "Participate authentically\u2014do not shill",
@@ -54,11 +54,11 @@
       "wikipedia_url": "",
       "wikidata_id": "",
       "key_findings": [
-        "No Wikipedia article exists for Masterly Cleaning Solutions.",
-        "No Wikidata entry found for the brand.",
-        "Brand is not mentioned in related cleaning or commercial cleaning Wikipedia pages."
+        "No Wikipedia article exists for BPS Zero Fees.",
+        "No Wikidata entry associated with the brand.",
+        "Search results show articles related to similar abbreviations or terms but not the brand itself."
       ],
-      "summary": "Masterly Cleaning Solutions currently has no presence on Wikipedia or Wikidata.",
+      "summary": "BPS Zero Fees currently has no presence on Wikipedia or Wikidata.",
       "recommendations": [
         "Build notability through press coverage first before seeking a Wikipedia article",
         "Ensure your Wikidata entry (Q-number) is complete even without a full article",
@@ -69,16 +69,16 @@
       "platform": "LinkedIn",
       "correlation": "Moderate",
       "weight": "15%",
-      "score": 45,
-      "has_presence": true,
-      "sentiment": "neutral",
+      "score": 0,
+      "has_presence": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "Multiple LinkedIn pages with similar names but varying follower counts and activity levels",
-        "The main brand, Masterly Solutions, has 1,804 followers but no indication of regular posting or thought leadership",
-        "Other related pages have very low followers and limited activity, indicating sparse or inactive presence"
+        "No official LinkedIn company page for BPS Zero Fees was found in the search results.",
+        "All search results are related to other companies or general LinkedIn content unrelated to BPS Zero Fees.",
+        "The absence of a dedicated LinkedIn presence indicates minimal or no active brand presence on the platform."
       ],
-      "summary": "Masterly Cleaning Solutions has a modest LinkedIn presence with some activity, but lacks significant follower engagement or regular content updates.",
-      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Masterly+Cleaning+Solutions",
+      "summary": "There is no detectable LinkedIn presence for BPS Zero Fees based on the current search results.",
+      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=BPS+Zero+Fees",
       "recommendations": [
         "Optimize company page with complete information and regular posting",
         "Encourage leadership to post thought leadership content weekly",
@@ -90,14 +90,14 @@
       "correlation": "High (Local Entity)",
       "weight": "20%",
       "score": 45,
-      "has_listings": false,
-      "sentiment": "unknown",
+      "has_listings": true,
+      "sentiment": "negative",
       "key_findings": [
-        "No verified listings for Masterly Cleaning Solutions on major directories like YellowPages or Yelp.",
-        "Mentions of similar or unrelated cleaning companies are present, but not directly linked to Masterly Cleaning Solutions.",
-        "Brand presence is primarily found through Trustpilot reviews, not through local directory listings."
+        "The brand is mentioned in multiple directories such as Yelp and Trustpilot, but most listings are for different companies with similar initials or names.",
+        "There are no verified or active listings specifically for BPS Zero Fees on major directories like YellowPages or Yelp.",
+        "Most search results reference other businesses or are outdated, indicating limited or no current presence."
       ],
-      "summary": "Masterly Cleaning Solutions lacks verified local directory listings, indicating minimal direct presence on major local directories.",
+      "summary": "BPS Zero Fees has limited and mostly unverified presence across local directories, with minimal current visibility.",
       "recommendations": [
         "Claim your business profile on Yelp and YellowPages",
         "Encourage happy customers to leave reviews on Trustpilot",
@@ -109,13 +109,13 @@
       "platform": "Other Platforms",
       "correlation": "Supplementary",
       "weight": "15%",
-      "score": 75,
+      "score": 45,
       "key_findings": [
-        "The brand is actively mentioned on Facebook with recent posts highlighting services and promotions.",
-        "There are multiple podcast references, including industry-related shows like 'Clean Living' and 'The Business of Cleaning,' indicating some media engagement.",
-        "Limited but notable Quora mentions focus on general knowledge about platforms and a few indirect references, not directly about the brand."
+        "No direct Quora mentions or answers related to BPS Zero Fees were found.",
+        "Limited news coverage or press mentions specifically about the brand; only general Medicare and industry-related articles are present.",
+        "Two YouTube channels related to BPS Zero Fees exist, but no podcast appearances or mentions are identified in the search results."
       ],
-      "summary": "Masterly Cleaning Solutions has a moderate presence on other platforms, with active social media and podcast mentions but limited direct press coverage or Quora engagement.",
+      "summary": "BPS Zero Fees has minimal to no presence on other platforms such as Quora, news, or podcasts based on current search results.",
       "recommendations": [
         "Create Quora answers for top industry questions related to your brand",
         "Issue press releases for major company milestones",
@@ -130,12 +130,12 @@
       "has_presence": false,
       "sentiment": "unknown",
       "key_findings": [
-        "No results found for Masterly Cleaning Solutions on Google Maps.",
-        "Search indicates no verified or claimed Google Business Profile.",
-        "References are external and do not link to an active GBP listing."
+        "No Google Business Profile results found for BPS Zero Fees on Google Maps.",
+        "No reviews or ratings are available on the platform.",
+        "The brand's presence appears to be unclaimed or nonexistent on Google Maps."
       ],
-      "summary": "There is no visible presence of Masterly Cleaning Solutions on Google Maps based on current search results.",
-      "search_url": "https://www.google.com/maps/search/Masterly+Cleaning+Solutions",
+      "summary": "BPS Zero Fees currently has no visible or verified presence on Google Maps.",
+      "search_url": "https://www.google.com/maps/search/BPS+Zero+Fees",
       "recommendations": [
         "Claim and verify your Google Business Profile",
         "Ensure NAP (Name, Address, Phone) consistency",

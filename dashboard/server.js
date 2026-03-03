@@ -1,8 +1,21 @@
 const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
+const nodemailer = require('nodemailer');
+
 const app = express();
 const port = 3000;
+
+// Setup email transporter for Leads
+const transporter = nodemailer.createTransport({
+    host: 'mail.spacemail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'insights@orbislocal.com',
+        pass: 'Orbis@8214@@!!'
+    }
+});
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '.')));
@@ -144,8 +157,24 @@ app.get('/api/view-report', (req, res) => {
 });
 
 // API: Save Lead
-app.post('/api/lead', (req, res) => {
-    const { name, email, phone, brand, url } = req.body;
+app.post('/api/lead', async (req, res) => {
+    const { name, email, phone, brand, url, consent } = req.body;
+
+    // Verify Email with Reoon API
+    try {
+        // We use dynamic import for node-fetch if fetch isn't available, but Node 18+ has fetch built-in
+        const verifyResponse = await fetch(`https://emailverifier.reoon.com/api/v1/verify?key=ufdAYB7hnnSr2idfjNZOr6gKW2dmfb2U&mode=quick&email=${encodeURIComponent(email)}`);
+        const verifyResult = await verifyResponse.json();
+
+        // Reoon returns status: "safe", "valid", "invalid", "disposable", "role_account", "catch_all"
+        // We want to reject outright invalid or disposable emails.
+        if (verifyResult.status === 'invalid' || verifyResult.status === 'disposable' || verifyResult.status === 'spamtrap') {
+            return res.status(400).json({ error: `Email verification failed: Address is ${verifyResult.status}. Please use a valid business email.` });
+        }
+    } catch (e) {
+        console.error("Email verification service error (proceeding anyway):", e);
+    }
+
     const fs = require('fs');
     const leadsPath = path.join(__dirname, '..', 'leads.json');
 
@@ -159,11 +188,68 @@ app.post('/api/lead', (req, res) => {
     }
 
     leads.push({
-        name, email, phone, brand, url,
+        name, email, phone, brand, url, consent,
         timestamp: new Date().toISOString()
     });
 
     fs.writeFileSync(leadsPath, JSON.stringify(leads, null, 2));
+
+    // Send admin email notification
+    const adminMailOptions = {
+        from: '"Orbis Local Auditor" <insights@orbislocal.com>',
+        to: 'insights@myorbislocal.com',
+        subject: `New Enterprise Audit Lead: ${name} - ${brand || 'Unknown Brand'}`,
+        text: `A new lead has completed the Orbis Local Enterprise AI Search Visibility Auditor.\n\n` +
+            `Contact Details:\n` +
+            `Name: ${name}\n` +
+            `Email: ${email}\n` +
+            `Phone: ${phone}\n` +
+            `Brand/Company: ${brand || 'N/A'}\n` +
+            `Target URL: ${url}\n` +
+            `Marketing Consent: ${consent ? 'Yes' : 'No'}\n\n` +
+            `This lead has been saved to your local leads.json file.`
+    };
+
+    transporter.sendMail(adminMailOptions, (error, info) => {
+        if (error) {
+            console.error("Failed to send admin lead email notification:", error);
+        } else {
+            console.log("Admin lead email notification sent:", info.messageId);
+        }
+    });
+
+    // Send subscriber email with PDF attachment
+    const subscriberMailOptions = {
+        from: '"Orbis Local Auditor" <insights@orbislocal.com>',
+        to: email,
+        subject: `Your Orbis Local AI Search Visibility Report`,
+        html: `
+            <p>Hi ${name},</p>
+            <p>Thank you for requesting your Enterprise AI Search Visibility Audit.</p>
+            <p>I've attached your custom report directly to this email so you can review your current visibility scores across the AI ecosystem.</p>
+            <p>I want to be completely transparent with you: as we move deeper into 2026, the shift to AI-driven search is accelerating rapidly. If you aren't actively optimizing for visibility on platforms like Google AI Overviews, ChatGPT, Perplexity, and Claude AI right now, it may soon be too late to gain ground.</p>
+            <p>Think of it this way—someone is likely talking to your competitors right now about how to capture this exact market share, just like I'm speaking with you.</p>
+            <p>Take a look at the report, and let's get ahead of the curve before your competitors beat you to the punch.</p>
+            <br>
+            <p>Best regards,</p>
+            <p><strong>The Orbis Local Team</strong></p>
+        `,
+        attachments: [
+            {
+                filename: 'ORBIS-LOCAL-LIVE-REPORT.pdf',
+                path: path.join(__dirname, '..', 'ORBIS-LOCAL-LIVE-REPORT.pdf')
+            }
+        ]
+    };
+
+    transporter.sendMail(subscriberMailOptions, (error, info) => {
+        if (error) {
+            console.error("Failed to send subscriber email with report:", error);
+        } else {
+            console.log("Subscriber email sent successfully:", info.messageId);
+        }
+    });
+
     res.json({ status: 'success' });
 });
 
