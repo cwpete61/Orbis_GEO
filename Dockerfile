@@ -19,8 +19,8 @@ RUN cd dashboard && npm install
 # Copy Python requirements first for caching
 COPY requirements.txt .
 
-# Install Python packages
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python packages with trusted hosts to bypass network issues
+RUN pip install --no-cache-dir --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
 
 # Install Playwright browsers and OS dependencies
 RUN playwright install chromium --with-deps
