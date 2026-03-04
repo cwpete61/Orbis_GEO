@@ -1,319 +1,274 @@
 {
-  "url": "http://bpszerofees.com/",
-  "total_blocks_analyzed": 10,
-  "average_citability_score": 49.0,
+  "url": "https://orbislocal.com",
+  "total_blocks_analyzed": 7,
+  "average_citability_score": 36.3,
   "optimal_length_passages": 0,
   "grade_distribution": {
     "A": 0,
     "B": 0,
-    "C": 5,
-    "D": 5,
-    "F": 0
+    "C": 0,
+    "D": 4,
+    "F": 3
   },
   "top_5_citable": [
     {
-      "heading": "Zero-Fee\r\n                                Merchant Services",
-      "word_count": 36,
-      "total_score": 59,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "Entity Clarity Score",
+      "word_count": 55,
+      "total_score": 48,
+      "grade": "D",
+      "label": "Low Citability",
       "breakdown": {
-        "answer_block_quality": 25,
+        "answer_block_quality": 20,
         "self_containment": 17,
-        "structural_readability": 12,
-        "statistical_density": 5,
-        "uniqueness_signals": 0
-      },
-      "preview": "Zero-fee payment processing eliminates credit card costs entirely. Idaho businesses using our compliant surcharge programs save $500-$3K monthly while maintaining full PCI compliance. Visa, Mastercard, Amex surcharge programsRestaurant and Retail..."
-    },
-    {
-      "heading": "Profit\r\n                                Consulting",
-      "word_count": 33,
-      "total_score": 57,
-      "grade": "C",
-      "label": "Moderate Citability",
-      "breakdown": {
-        "answer_block_quality": 25,
-        "self_containment": 17,
-        "structural_readability": 12,
+        "structural_readability": 8,
         "statistical_density": 3,
         "uniqueness_signals": 0
       },
-      "preview": "Financial analysis identifies and captures 3-8% of lost revenue within 90 days. Our profit consulting reviews vendor contracts, operational efficiency, and margin optimization opportunities. Revenue leak identificationVendor contract renegotiationOperational efficiency..."
+      "preview": "Excellent. AI models clearly understand your service taxonomy. Competitor X has 40% more reviews in \"Downtown\". of local searches result in a visit within 24 hours of people who search..."
     },
     {
-      "heading": "How Much Do Processing Fees Cost Restaurants and Businesses",
-      "word_count": 71,
-      "total_score": 53,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "Stop losing customers youcan't see.",
+      "word_count": 31,
+      "total_score": 47,
+      "grade": "D",
+      "label": "Low Citability",
       "breakdown": {
-        "answer_block_quality": 19,
-        "self_containment": 17,
-        "structural_readability": 6,
-        "statistical_density": 11,
+        "answer_block_quality": 25,
+        "self_containment": 14,
+        "structural_readability": 8,
+        "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Credit card processing fees represent one of the largest operational costs for restaurants, retailers, and service businesses. The table below shows average annual revenue lost to processing fees by business..."
+      "preview": "Get your BISON Strategic Analysis and discover exactly where your business is invisible \u2014 and how much revenue it's costing you. No credit card required \u00b7 Results in under 5..."
     },
     {
-      "heading": "How DoIdaho BusinessesEliminate Credit Card Processing Fees",
-      "word_count": 24,
-      "total_score": 52,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "Decoding Google Business Profile APIs: The Modern SEO Source of Truth",
+      "word_count": 21,
+      "total_score": 44,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 30,
+        "self_containment": 12,
+        "structural_readability": 2,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "Your GBP is an API hub, not a social profile. Learn how AI engines use hidden metadata to verify your business."
+    },
+    {
+      "heading": "The 2026 Guide to AI Search (GEO): Why Local SEO Is Changing Forever",
+      "word_count": 21,
+      "total_score": 40,
+      "grade": "D",
+      "label": "Low Citability",
       "breakdown": {
         "answer_block_quality": 21,
         "self_containment": 15,
-        "structural_readability": 9,
-        "statistical_density": 7,
+        "structural_readability": 2,
+        "statistical_density": 2,
         "uniqueness_signals": 0
       },
-      "preview": "Zero-fee payment processing from Business Profit Strategies saves Idaho businesses $500-$3,000 monthly through compliant surcharge programs. Serving Magic Valley, Twin Falls, and expanding nationally."
+      "preview": "Everything you know about local ranking is being rewritten by Generative Engine Optimization. Learn how to secure your entity clarity today."
     },
     {
-      "heading": "Traditional Processors vs Business Profit Strategies",
-      "word_count": 47,
-      "total_score": 52,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "Lightbox SEO",
+      "word_count": 24,
+      "total_score": 28,
+      "grade": "F",
+      "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 14,
-        "structural_readability": 6,
-        "statistical_density": 11,
+        "answer_block_quality": 20,
+        "self_containment": 0,
+        "structural_readability": 8,
+        "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Most payment processors charge 2.5-3.5% on every transaction plus hidden fees. Business Profit Strategies eliminates these costs through compliant zero-fee programs. FeatureTraditional ProcessorsBusiness Profit StrategiesProcessing Rate2.5-3.5%0%Monthly Fees$500-$3,000$0Annual Cost on $50K/mo$18,000+$0PCI..."
+      "preview": "\u201cOrbisLocal showed our clients exactly how much revenue they were handing to competitors \u2014 and gave them a clear path to win it back.\u201d"
     }
   ],
   "bottom_5_citable": [
     {
-      "heading": "Wealth\r\n                                Strategy",
-      "word_count": 33,
-      "total_score": 39,
-      "grade": "D",
-      "label": "Low Citability",
+      "heading": "Entity Clarity Delta",
+      "word_count": 20,
+      "total_score": 22,
+      "grade": "F",
+      "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 10,
-        "self_containment": 17,
-        "structural_readability": 12,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "Wealth strategy planning converts business profits into personal financial freedom. Robert Scharnhorst brings 50+ years of experience to exit planning, succession, and asset protection. Financial freedom roadmapsExit strategy developmentBusiness succession..."
-    },
-    {
-      "heading": "How Zero-Fee Processing Works",
-      "word_count": 58,
-      "total_score": 42,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 18,
+        "answer_block_quality": 6,
         "self_containment": 12,
-        "structural_readability": 12,
+        "structural_readability": 2,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Does Google and AI clearly understand what you do? We analyze your category misalignment, service taxonomy gaps, and semantic ambiguity."
+    },
+    {
+      "heading": "Why is your businessinvisibleto AI?",
+      "word_count": 23,
+      "total_score": 25,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 13,
+        "self_containment": 10,
+        "structural_readability": 2,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Zero-fee processing (also called dual pricing or cash discounting) is a compliant program that displays two prices: Cash Price:The standard price for cash/debit paymentsCard Price:A small service fee added for..."
+      "preview": "Stop guessing. OrbisLocal analyzes your Entity Clarity, Local Reach, and Intent Capture to tell you exactly why competitors win\u2014and how to fix it."
     },
     {
-      "heading": "Zero-Fee Guarantee",
-      "word_count": 22,
-      "total_score": 45,
+      "heading": "Lightbox SEO",
+      "word_count": 24,
+      "total_score": 28,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 20,
+        "self_containment": 0,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "\u201cOrbisLocal showed our clients exactly how much revenue they were handing to competitors \u2014 and gave them a clear path to win it back.\u201d"
+    },
+    {
+      "heading": "The 2026 Guide to AI Search (GEO): Why Local SEO Is Changing Forever",
+      "word_count": 21,
+      "total_score": 40,
       "grade": "D",
       "label": "Low Citability",
       "breakdown": {
         "answer_block_quality": 21,
         "self_containment": 15,
-        "structural_readability": 6,
-        "statistical_density": 3,
+        "structural_readability": 2,
+        "statistical_density": 2,
         "uniqueness_signals": 0
       },
-      "preview": "Our compliant surcharge programs eliminate 100% of Visa, Mastercard, and Amex processing fees. If we can't save you money, we don't proceed."
+      "preview": "Everything you know about local ranking is being rewritten by Generative Engine Optimization. Learn how to secure your entity clarity today."
     },
     {
-      "heading": "How Much Are Processing Fees Costing Your Business",
-      "word_count": 28,
-      "total_score": 45,
+      "heading": "Decoding Google Business Profile APIs: The Modern SEO Source of Truth",
+      "word_count": 21,
+      "total_score": 44,
       "grade": "D",
       "label": "Low Citability",
       "breakdown": {
-        "answer_block_quality": 22,
+        "answer_block_quality": 30,
         "self_containment": 12,
-        "structural_readability": 6,
-        "statistical_density": 5,
+        "structural_readability": 2,
+        "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Enter your monthly credit card volume to see how much you could save with zero-fee processing. Most Idaho businesses save $500-$3,000 monthly. Want to keep this$0in your pocket?"
-    },
-    {
-      "heading": "Why Idaho Businesses Lose Thousands to Processing Fees",
-      "word_count": 33,
-      "total_score": 46,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 14,
-        "structural_readability": 6,
-        "statistical_density": 5,
-        "uniqueness_signals": 0
-      },
-      "preview": "Credit card processing fees drain 2.5-3.5% of every transaction from Idaho business owners. Business Profit Strategies eliminates these fees through compliant surcharge programs used by restaurants, retailers, and service providers..."
+      "preview": "Your GBP is an API hub, not a social profile. Learn how AI engines use hidden metadata to verify your business."
     }
   ],
   "all_blocks": [
     {
-      "heading": "How DoIdaho BusinessesEliminate Credit Card Processing Fees",
+      "heading": "Why is your businessinvisibleto AI?",
+      "word_count": 23,
+      "total_score": 25,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 13,
+        "self_containment": 10,
+        "structural_readability": 2,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "Stop guessing. OrbisLocal analyzes your Entity Clarity, Local Reach, and Intent Capture to tell you exactly why competitors win\u2014and how to fix it."
+    },
+    {
+      "heading": "Entity Clarity Score",
+      "word_count": 55,
+      "total_score": 48,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 20,
+        "self_containment": 17,
+        "structural_readability": 8,
+        "statistical_density": 3,
+        "uniqueness_signals": 0
+      },
+      "preview": "Excellent. AI models clearly understand your service taxonomy. Competitor X has 40% more reviews in \"Downtown\". of local searches result in a visit within 24 hours of people who search..."
+    },
+    {
+      "heading": "Entity Clarity Delta",
+      "word_count": 20,
+      "total_score": 22,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 6,
+        "self_containment": 12,
+        "structural_readability": 2,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Does Google and AI clearly understand what you do? We analyze your category misalignment, service taxonomy gaps, and semantic ambiguity."
+    },
+    {
+      "heading": "Lightbox SEO",
       "word_count": 24,
-      "total_score": 52,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "total_score": 28,
+      "grade": "F",
+      "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 15,
-        "structural_readability": 9,
-        "statistical_density": 7,
-        "uniqueness_signals": 0
-      },
-      "preview": "Zero-fee payment processing from Business Profit Strategies saves Idaho businesses $500-$3,000 monthly through compliant surcharge programs. Serving Magic Valley, Twin Falls, and expanding nationally."
-    },
-    {
-      "heading": "Why Idaho Businesses Lose Thousands to Processing Fees",
-      "word_count": 33,
-      "total_score": 46,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 14,
-        "structural_readability": 6,
-        "statistical_density": 5,
-        "uniqueness_signals": 0
-      },
-      "preview": "Credit card processing fees drain 2.5-3.5% of every transaction from Idaho business owners. Business Profit Strategies eliminates these fees through compliant surcharge programs used by restaurants, retailers, and service providers..."
-    },
-    {
-      "heading": "How Much Do Processing Fees Cost Restaurants and Businesses",
-      "word_count": 71,
-      "total_score": 53,
-      "grade": "C",
-      "label": "Moderate Citability",
-      "breakdown": {
-        "answer_block_quality": 19,
-        "self_containment": 17,
-        "structural_readability": 6,
-        "statistical_density": 11,
-        "uniqueness_signals": 0
-      },
-      "preview": "Credit card processing fees represent one of the largest operational costs for restaurants, retailers, and service businesses. The table below shows average annual revenue lost to processing fees by business..."
-    },
-    {
-      "heading": "Zero-Fee\r\n                                Merchant Services",
-      "word_count": 36,
-      "total_score": 59,
-      "grade": "C",
-      "label": "Moderate Citability",
-      "breakdown": {
-        "answer_block_quality": 25,
-        "self_containment": 17,
-        "structural_readability": 12,
-        "statistical_density": 5,
-        "uniqueness_signals": 0
-      },
-      "preview": "Zero-fee payment processing eliminates credit card costs entirely. Idaho businesses using our compliant surcharge programs save $500-$3K monthly while maintaining full PCI compliance. Visa, Mastercard, Amex surcharge programsRestaurant and Retail..."
-    },
-    {
-      "heading": "Profit\r\n                                Consulting",
-      "word_count": 33,
-      "total_score": 57,
-      "grade": "C",
-      "label": "Moderate Citability",
-      "breakdown": {
-        "answer_block_quality": 25,
-        "self_containment": 17,
-        "structural_readability": 12,
-        "statistical_density": 3,
-        "uniqueness_signals": 0
-      },
-      "preview": "Financial analysis identifies and captures 3-8% of lost revenue within 90 days. Our profit consulting reviews vendor contracts, operational efficiency, and margin optimization opportunities. Revenue leak identificationVendor contract renegotiationOperational efficiency..."
-    },
-    {
-      "heading": "Wealth\r\n                                Strategy",
-      "word_count": 33,
-      "total_score": 39,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 10,
-        "self_containment": 17,
-        "structural_readability": 12,
+        "answer_block_quality": 20,
+        "self_containment": 0,
+        "structural_readability": 8,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Wealth strategy planning converts business profits into personal financial freedom. Robert Scharnhorst brings 50+ years of experience to exit planning, succession, and asset protection. Financial freedom roadmapsExit strategy developmentBusiness succession..."
+      "preview": "\u201cOrbisLocal showed our clients exactly how much revenue they were handing to competitors \u2014 and gave them a clear path to win it back.\u201d"
     },
     {
-      "heading": "Zero-Fee Guarantee",
-      "word_count": 22,
-      "total_score": 45,
+      "heading": "Stop losing customers youcan't see.",
+      "word_count": 31,
+      "total_score": 47,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 25,
+        "self_containment": 14,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "Get your BISON Strategic Analysis and discover exactly where your business is invisible \u2014 and how much revenue it's costing you. No credit card required \u00b7 Results in under 5..."
+    },
+    {
+      "heading": "The 2026 Guide to AI Search (GEO): Why Local SEO Is Changing Forever",
+      "word_count": 21,
+      "total_score": 40,
       "grade": "D",
       "label": "Low Citability",
       "breakdown": {
         "answer_block_quality": 21,
         "self_containment": 15,
-        "structural_readability": 6,
-        "statistical_density": 3,
+        "structural_readability": 2,
+        "statistical_density": 2,
         "uniqueness_signals": 0
       },
-      "preview": "Our compliant surcharge programs eliminate 100% of Visa, Mastercard, and Amex processing fees. If we can't save you money, we don't proceed."
+      "preview": "Everything you know about local ranking is being rewritten by Generative Engine Optimization. Learn how to secure your entity clarity today."
     },
     {
-      "heading": "Traditional Processors vs Business Profit Strategies",
-      "word_count": 47,
-      "total_score": 52,
-      "grade": "C",
-      "label": "Moderate Citability",
-      "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 14,
-        "structural_readability": 6,
-        "statistical_density": 11,
-        "uniqueness_signals": 0
-      },
-      "preview": "Most payment processors charge 2.5-3.5% on every transaction plus hidden fees. Business Profit Strategies eliminates these costs through compliant zero-fee programs. FeatureTraditional ProcessorsBusiness Profit StrategiesProcessing Rate2.5-3.5%0%Monthly Fees$500-$3,000$0Annual Cost on $50K/mo$18,000+$0PCI..."
-    },
-    {
-      "heading": "How Much Are Processing Fees Costing Your Business",
-      "word_count": 28,
-      "total_score": 45,
+      "heading": "Decoding Google Business Profile APIs: The Modern SEO Source of Truth",
+      "word_count": 21,
+      "total_score": 44,
       "grade": "D",
       "label": "Low Citability",
       "breakdown": {
-        "answer_block_quality": 22,
+        "answer_block_quality": 30,
         "self_containment": 12,
-        "structural_readability": 6,
-        "statistical_density": 5,
-        "uniqueness_signals": 0
-      },
-      "preview": "Enter your monthly credit card volume to see how much you could save with zero-fee processing. Most Idaho businesses save $500-$3,000 monthly. Want to keep this$0in your pocket?"
-    },
-    {
-      "heading": "How Zero-Fee Processing Works",
-      "word_count": 58,
-      "total_score": 42,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 18,
-        "self_containment": 12,
-        "structural_readability": 12,
+        "structural_readability": 2,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Zero-fee processing (also called dual pricing or cash discounting) is a compliant program that displays two prices: Cash Price:The standard price for cash/debit paymentsCard Price:A small service fee added for..."
+      "preview": "Your GBP is an API hub, not a social profile. Learn how AI engines use hidden metadata to verify your business."
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "url": "http://bpszerofees.com/llms.txt",
+  "url": "https://orbislocal.com/llms.txt",
   "exists": false,
   "format_valid": false,
   "has_title": false,
@@ -15,10 +15,10 @@
   ],
   "suggestions": [],
   "full_version": {
-    "url": "http://bpszerofees.com/llms-full.txt",
+    "url": "https://orbislocal.com/llms-full.txt",
     "exists": false
   },
-  "robots_url": "http://bpszerofees.com/robots.txt",
+  "robots_url": "https://orbislocal.com/robots.txt",
   "robots_found": false,
   "crawlers": {
     "GPTBot": {

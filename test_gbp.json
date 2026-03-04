@@ -1,1 +1,45 @@
-{"business_name": "Not Provided", "overall_local_score": 0, "status": "N/A", "insights": [], "findings": [{"severity": "info", "title": "No GBP URL", "description": "No Google Business Profile was provided for analysis."}]}
+{
+  "business_name": "Orbis (Based on URL and context)",
+  "overall_local_score": 45,
+  "status": "Fair",
+  "insights": [
+    {
+      "title": "Business Name & Category Clarity",
+      "score": 35,
+      "details": "The provided search snippets primarily reference Orbi networking products and login pages, suggesting a focus on technology hardware/services related to networking and device management. However, the local Google Business Profile appears to focus on 'Orbis' but lacks explicit mention of the core services offered, such as local community engagement or connection services."
+    },
+    {
+      "title": "AI-Compatible Descriptions",
+      "score": 40,
+      "details": "Descriptions include generic references to login pages and device management without clear mention of local services, community engagement, or distinctive offerings that AI models can leverage. The presence of entities like 'NETGEAR' and 'Orbi' indicates a tech focus rather than hyperlocal services."
+    },
+    {
+      "title": "Sentiment of Recent Reviews/Mentions",
+      "score": 50,
+      "details": "No direct reviews or mentions are available in the provided snippets; thus, sentiment cannot be thoroughly assessed. The existing info points to technical issues or setup instructions rather than customer sentiment."
+    },
+    {
+      "title": "Likelihood of AI Recommendation",
+      "score": 40,
+      "details": "Given the technical focus centered around login/setup instructions for networking hardware, AI models would find limited context for recommending this business for community or local discovery purposes. The relevance is mainly technical, not local or community-centric."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "high",
+      "title": "Unclear Business Focus & Category",
+      "description": "The business seems to primarily be a technical product provider (networking hardware/software), but lacks explicit local service or community engagement details.",
+      "impact": "Reduced AI recommendation relevance, lower local SEO effectiveness, and limited appeal for community-oriented searches.",
+      "fix_example": "Update the Google Business Profile with clear descriptions emphasizing local community services, local tech support, or other hyperlocal activities to improve relevance."
+    },
+    {
+      "severity": "medium",
+      "title": "Lack of Hyperlocal Content",
+      "description": "Current descriptions do not highlight any local events, community connections, or location-specific offerings.",
+      "impact": "AI models may overlook this profile for local discovery in favor of more community-focused entities.",
+      "fix_example": "Add posts, service descriptions, and keywords that emphasize local relevance and community engagement."
+    }
+  ],
+  "audit_date": "2026-03-03 20:09",
+  "gbp_url": "https://g.page/orbislocal"
+}
