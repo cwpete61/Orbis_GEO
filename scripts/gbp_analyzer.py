@@ -5,12 +5,12 @@ import re
 from datetime import datetime
 
 try:
-    from ddgs import DDGS
+    from duckduckgo_search import DDGS
     import openai
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    print(json.dumps({"error": "Missing dependencies. Run: pip install ddgs openai python-dotenv"}))
+    print(json.dumps({"error": "Missing dependencies. Run: pip install duckduckgo_search openai python-dotenv"}))
     sys.exit(1)
 
 def analyze_gbp(gbp_url):
