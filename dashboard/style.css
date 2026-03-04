@@ -649,21 +649,21 @@ site-header {
 /* Documentation Page Layout */
 #doc-main-layout {
     display: flex;
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start;
+    min-height: 100vh;
 }
 
 .doc-sidebar {
-    flex: 0 0 250px;
+    flex: 0 0 280px;
+    width: 280px;
     background: #0b1a30;
-    /* Dark background */
-    padding: 1.5rem;
-    border-radius: 12px;
-    position: sticky;
-    top: 100px;
-    /* Below the sticky header */
+    padding: 2rem 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1100;
+    overflow-y: auto;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .doc-sidebar ul {
@@ -697,13 +697,17 @@ site-header {
 
 .doc-content-area {
     flex: 1;
-    min-width: 0;
-    /* Prevent flex overflow */
+    margin-left: 280px;
+    background: #ffffff;
+    min-height: 100vh;
 }
 
 .doc-tab {
     display: none;
-    padding: 2.5rem;
+    padding: 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #333333;
 }
 
 .doc-tab.active {
@@ -713,21 +717,26 @@ site-header {
 
 /* Documentation Content Styling */
 .doc-tab h2 {
-    color: var(--highlight);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.5rem;
+    color: var(--primary);
+    border-bottom: 2px solid var(--highlight);
+    padding-bottom: 1rem;
     margin-top: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
 }
 
 .doc-tab h3 {
     color: var(--accent);
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
 }
 
 .doc-lead {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #555555;
+    line-height: 1.6;
+    margin-bottom: 2rem;
 }
 
 .doc-bullets {
@@ -903,15 +912,37 @@ site-header {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    #doc-main-layout {
-        flex-direction: column;
+@media (max-width: 1024px) {
+    .doc-sidebar {
+        width: 200px;
+        flex: 0 0 200px;
     }
 
+    .doc-content-area {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 768px) {
     .doc-sidebar {
-        flex: none;
-        width: 100%;
         position: static;
-        margin-bottom: 1rem;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+    }
+
+    .doc-content-area {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .doc-tab {
+        padding: 2rem 1rem;
+    }
+
+    .doc-tab h2 {
+        font-size: 1.8rem;
     }
 }
