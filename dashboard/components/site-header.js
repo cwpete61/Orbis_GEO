@@ -9,20 +9,18 @@ class SiteHeader extends HTMLElement {
         const page = currentPath.split('/').pop() || '';
 
         this.innerHTML = `
-            <header class="site-header">
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="/" class="${page === '' || page === 'index.html' || page === 'home.html' ? 'active' : ''}">Home</a></li>
-                        <li><a href="case-studio.html" class="${page === 'case-studio.html' ? 'active' : ''}">Case Studio</a></li>
-                        <li><a href="more-orbis.html" class="${page === 'more-orbis.html' ? 'active' : ''}">More Orbis</a></li>
-                        <li><a href="documentation.html" class="${page === 'documentation.html' ? 'active' : ''}">Documentation</a></li>
-                    </ul>
-                </nav>
-                <div class="header-top">
-                    <div class="logo">ORBIS LOCAL</div>
-                    <div class="tagline">Enterprise AI Search Visibility Auditor</div>
-                </div>
-            </header>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/" class="${page === '' || page === 'index.html' || page === 'home.html' ? 'active' : ''}">Home</a></li>
+                    <li><a href="case-studio.html" class="${page === 'case-studio.html' ? 'active' : ''}">Case Studio</a></li>
+                    <li><a href="more-orbis.html" class="${page === 'more-orbis.html' ? 'active' : ''}">More Orbis</a></li>
+                    <li><a href="documentation.html" class="${page === 'documentation.html' ? 'active' : ''}">Documentation</a></li>
+                </ul>
+            </nav>
+            <div class="header-top">
+                <div class="logo">ORBIS LOCAL</div>
+                <div class="tagline">Enterprise AI Search Visibility Auditor</div>
+            </div>
             <button id="backToTop" class="back-to-top" aria-label="Back to Top">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="18 15 12 9 6 15"></polyline>
