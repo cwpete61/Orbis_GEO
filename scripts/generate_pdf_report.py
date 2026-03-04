@@ -256,6 +256,14 @@ def build_styles():
     ))
 
     styles.add(ParagraphStyle(
+        name='TableBody',
+        fontName='Helvetica',
+        fontSize=9,
+        textColor=TEXT_PRIMARY,
+        leading=12,
+    ))
+
+    styles.add(ParagraphStyle(
         name='ScoreLabel',
         fontName='Helvetica-Bold',
         fontSize=36,
@@ -529,14 +537,14 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
 
     score_data = [
         ["Component", "Score", "Weight", "Weighted"],
-        ["AI Citability & Visibility", f"{ai_citability}/100", "25%", f"{round(ai_citability * 0.25, 1)}"],
-        ["Brand Authority Signals", f"{brand_authority}/100", "20%", f"{round(brand_authority * 0.20, 1)}"],
-        ["Content Quality & E-E-A-T", f"{content_eeat}/100", "20%", f"{round(content_eeat * 0.20, 1)}"],
-        ["Technical Foundations", f"{technical}/100", "15%", f"{round(technical * 0.15, 1)}"],
-        ["Strategic Schema Implementation", f"{schema_score}/100", "10%", f"{round(schema_score * 0.10, 1)}"],
-        ["Platform Optimization", f"{platform_optimization}/100", "10%", f"{round(platform_optimization * 0.10, 1)}"],
-        ["Google Business/Local Authority", f"{local_authority}/100", "10%", f"{round(local_authority * 0.10, 1)}"],
-        ["OVERALL", f"{geo_score}/100", "100%", f"{geo_score}"],
+        [Paragraph("AI Citability & Visibility", styles['TableBody']), f"{ai_citability}/100", "25%", f"{round(ai_citability * 0.25, 1)}"],
+        [Paragraph("Brand Authority Signals", styles['TableBody']), f"{brand_authority}/100", "20%", f"{round(brand_authority * 0.20, 1)}"],
+        [Paragraph("Content Quality & E-E-A-T", styles['TableBody']), f"{content_eeat}/100", "20%", f"{round(content_eeat * 0.20, 1)}"],
+        [Paragraph("Technical Foundations", styles['TableBody']), f"{technical}/100", "15%", f"{round(technical * 0.15, 1)}"],
+        [Paragraph("Strategic Schema Implementation", styles['TableBody']), f"{schema_score}/100", "10%", f"{round(schema_score * 0.10, 1)}"],
+        [Paragraph("Platform Optimization", styles['TableBody']), f"{platform_optimization}/100", "10%", f"{round(platform_optimization * 0.10, 1)}"],
+        [Paragraph("Google Business/Local Authority", styles['TableBody']), f"{local_authority}/100", "10%", f"{round(local_authority * 0.10, 1)}"],
+        [Paragraph("<b>OVERALL</b>", styles['TableBody']), f"{geo_score}/100", "100%", f"{geo_score}"],
     ]
 
     score_table = Table(score_data, colWidths=[200, 80, 60, 80])
@@ -620,13 +628,13 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         for crawler_name, info in crawler_access.items():
             if isinstance(info, dict):
                 crawler_data.append([
-                    crawler_name,
-                    info.get("platform", ""),
+                    Paragraph(crawler_name, styles['TableBody']),
+                    Paragraph(info.get("platform", ""), styles['TableBody']),
                     info.get("status", "Unknown"),
-                    info.get("recommendation", ""),
+                    Paragraph(info.get("recommendation", ""), styles['TableBody']),
                 ])
             else:
-                crawler_data.append([crawler_name, "", str(info), ""])
+                crawler_data.append([Paragraph(crawler_name, styles['TableBody']), "", str(info), ""])
 
         ct = Table(crawler_data, colWidths=[100, 100, 80, 180])
         ct_style = make_table_style()
@@ -681,9 +689,9 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             insight_data = [["Factor", "Score", "Details"]]
             for insight in gbp["insights"]:
                 insight_data.append([
-                    insight.get("title", ""),
+                    Paragraph(insight.get("title", ""), styles['TableBody']),
                     f"{insight.get('score', 0)}/100",
-                    insight.get("details", "")
+                    Paragraph(insight.get("details", ""), styles['TableBody'])
                 ])
             
             it = Table(insight_data, colWidths=[120, 60, 300])
@@ -882,16 +890,16 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
 
     glossary = [
         ["Term", "Definition"],
-        ["GEO", "Generative Engine Optimization — optimizing content for AI search citation"],
-        ["AIO", "AI Overviews — Google's AI-generated answer boxes in search results"],
-        ["E-E-A-T", "Experience, Expertise, Authoritativeness, Trustworthiness"],
-        ["SSR", "Server-Side Rendering — generating HTML on the server for crawler access"],
-        ["CWV", "Core Web Vitals — Google's page experience metrics (LCP, INP, CLS)"],
-        ["INP", "Interaction to Next Paint — responsiveness metric (replaced FID March 2024)"],
-        ["JSON-LD", "JavaScript Object Notation for Linked Data — preferred structured data format"],
-        ["sameAs", "Schema.org property linking an entity to its profiles on other platforms"],
-        ["llms.txt", "Proposed standard file for guiding AI systems about site content"],
-        ["IndexNow", "Protocol for instantly notifying search engines of content changes"],
+        ["GEO", Paragraph("Generative Engine Optimization — optimizing content for AI search citation", styles['TableBody'])],
+        ["AIO", Paragraph("AI Overviews — Google's AI-generated answer boxes in search results", styles['TableBody'])],
+        ["E-E-A-T", Paragraph("Experience, Expertise, Authoritativeness, Trustworthiness", styles['TableBody'])],
+        ["SSR", Paragraph("Server-Side Rendering — generating HTML on the server for crawler access", styles['TableBody'])],
+        ["CWV", Paragraph("Core Web Vitals — Google's page experience metrics (LCP, INP, CLS)", styles['TableBody'])],
+        ["INP", Paragraph("Interaction to Next Paint — responsiveness metric (replaced FID March 2024)", styles['TableBody'])],
+        ["JSON-LD", Paragraph("JavaScript Object Notation for Linked Data — preferred structured data format", styles['TableBody'])],
+        ["sameAs", Paragraph("Schema.org property linking an entity to its profiles on other platforms", styles['TableBody'])],
+        ["llms.txt", Paragraph("Proposed standard file for guiding AI systems about site content", styles['TableBody'])],
+        ["IndexNow", Paragraph("Protocol for instantly notifying search engines of content changes", styles['TableBody'])],
     ]
 
     gt = Table(glossary, colWidths=[80, 380])
