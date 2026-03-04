@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Orbis Local Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="components/site-header.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Site-Wide Header Component -->
+        <site-header></site-header>
+
+        <main id="doc-main-layout">
+            <aside class="doc-sidebar glass">
+                <nav id="docNav">
+                    <ul>
+                        <li><a href="#intro" class="active" data-target="docs-intro">1. The Shift to GEO</a></li>
+                        <li><a href="#pillars" data-target="docs-pillars">2. The 5 Pillars</a></li>
+                        <li><a href="#citability" data-target="docs-citability">3. Citability & llms.txt</a></li>
+                        <li><a href="#brand" data-target="docs-brand">4. Brand Authority</a></li>
+                        <li><a href="#platforms" data-target="docs-platforms">5. Platform Strategies</a></li>
+                        <li><a href="#score" data-target="docs-score">6. Understanding Your Score</a></li>
+                        <li><a href="#action" data-target="docs-action">7. Actionable Frameworks</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div class="doc-content-area">
+
+                <!-- Section 1 -->
+                <section id="docs-intro" class="doc-tab active glass">
+                    <h2>Introduction: The Shift from SEO to GEO</h2>
+                    <p class="doc-lead">AI search is eating traditional search. This means old strategies won't cut it
+                        anymore.</p>
+
+                    <h3>The Paradigm Shift</h3>
+                    <p>ChatGPT, Perplexity, and Google AI Overviews process information differently than traditional
+                        keyword-based crawlers. They synthesize context rather than just counting keyword density.</p>
+
+                    <div class="doc-feature-box">
+                        <h4>What is GEO?</h4>
+                        <p>Generative Engine Optimization (GEO) focuses on writing highly citable, fact-dense content
+                            that LLMs want to fetch and present to users natively.</p>
+                    </div>
+
+                    <h3>The Orbis Advantage</h3>
+                    <p>Orbis Local uncovers the hidden metrics behind AI citations—scoring you exactly how an LLM would
+                        view your digital presence.</p>
+                </section>
+
+                <!-- Section 2 -->
+                <section id="docs-pillars" class="doc-tab glass">
+                    <h2>The 5 Pillars of AI Search Visibility</h2>
+                    <p>A comprehensive Orbis AI audit relies on evaluating five critical, parallel vectors.</p>
+
+                    <div class="doc-listicle">
+                        <div class="listicle-item">
+                            <span class="listicle-num">1</span>
+                            <div>
+                                <strong>AI Visibility & Citability</strong>
+                                <p>Ensuring content is self-contained and factually rich, specifically engineered to be
+                                    pulled directly into an AI chat window.</p>
+                            </div>
+                        </div>
+                        <div class="listicle-item">
+                            <span class="listicle-num">2</span>
+                            <div>
+                                <strong>Platform Analysis</strong>
+                                <p>Custom readiness checks for OpenAI, Anthropic, Google Gemini, and Perplexity logic.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="listicle-item">
+                            <span class="listicle-num">3</span>
+                            <div>
+                                <strong>Technical SEO</strong>
+                                <p>The foundation the AI crawlers use to access the site in the first place (SSR, CWV,
+                                    Mobile speed).</p>
+                            </div>
+                        </div>
+                        <div class="listicle-item">
+                            <span class="listicle-num">4</span>
+                            <div>
+                                <strong>Content Quality (E-E-A-T)</strong>
+                                <p>Experience, Expertise, Authoritativeness, and Trustworthiness—critical signals for AI
+                                    trust ranking.</p>
+                            </div>
+                        </div>
+                        <div class="listicle-item">
+                            <span class="listicle-num">5</span>
+                            <div>
+                                <strong>Schema Markup</strong>
+                                <p>Structured data serves as a direct, high-speed pipeline into LLM Knowledge Graphs
+                                    without requiring extensive parsing.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="doc-chart-wrapper">
+                        <h3>Pillar Weight Impact Matrix</h3>
+                        <div class="doc-css-chart">
+                            <div class="cbar" style="width: 25%;"><span class="cval">25%</span><span
+                                    class="clabel">Citability</span></div>
+                            <div class="cbar" style="width: 20%;"><span class="cval">20%</span><span
+                                    class="clabel">Brand</span></div>
+                            <div class="cbar" style="width: 20%;"><span class="cval">20%</span><span
+                                    class="clabel">E-E-A-T</span></div>
+                            <div class="cbar" style="width: 15%;"><span class="cval">15%</span><span class="clabel">Tech
+                                    SEO</span></div>
+                            <div class="cbar" style="width: 10%;"><span class="cval">10%</span><span
+                                    class="clabel">Schema</span></div>
+                            <div class="cbar" style="width: 10%;"><span class="cval">10%</span><span
+                                    class="clabel">Platform</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section id="docs-citability" class="doc-tab glass">
+                    <h2>Deep Dive: AI Citability & llms.txt</h2>
+                    <p>AI bots don't want to parse your entire marketing page to find one fact. They want discrete,
+                        packaged knowledge.</p>
+
+                    <h3>The Anatomy of a Citable Passage</h3>
+                    <ul class="doc-bullets">
+                        <li><strong>Length:</strong> 134-167 words is the sweet spot.</li>
+                        <li><strong>Self-Contained:</strong> The paragraph must make sense entirely on its own, without
+                            surrounding context.</li>
+                        <li><strong>Fact-Rich:</strong> High density of entities, numbers, names, and concrete data
+                            points.</li>
+                    </ul>
+
+                    <h3>The llms.txt Standard</h3>
+                    <p>The <code>llms.txt</code> file is rapidly becoming the new <code>robots.txt</code> standard for
+                        the Generative AI era. It explicitly tells crawlers exactly how to map your knowledge base
+                        optimally for model inclusion.</p>
+
+                    <h3>AI Crawler Security</h3>
+                    <p>Many legacy firewall settings actively block bots like <code>GPTBot</code>,
+                        <code>ClaudeBot</code>, and <code>PerplexityBot</code>. If they cannot access the DOM, you do
+                        not exist in their next training run.</p>
+                </section>
+
+                <!-- Section 4 -->
+                <section id="docs-brand" class="doc-tab glass">
+                    <h2>Deep Dive: Brand Authority & Digital Presence</h2>
+
+                    <div class="doc-feature-box highlight">
+                        <strong>Fact:</strong> Unlinked brand mentions on high-authority AI-ingested sites correlate
+                        <strong>3x higher</strong> with AI visibility than traditional backlinks.
+                    </div>
+
+                    <h3>Where AI Agents Learn About Brands</h3>
+                    <p>Our <code>brand_scanner.py</code> module actively polls the exact locations models use for
+                        grounding context:</p>
+                    <ul class="doc-bullets">
+                        <li><strong>Reddit:</strong> Crucial for real-user sentiment.</li>
+                        <li><strong>YouTube Transcripts:</strong> High weighting for tutorial and review presence.</li>
+                        <li><strong>Wikipedia / Wikidata:</strong> The backbone of the primary knowledge graph.</li>
+                        <li><strong>LinkedIn:</strong> Corporate authority B2B signal.</li>
+                    </ul>
+
+                    <h3>Google Business Profile (GBP) Synergy</h3>
+                    <p>For local searches ("plumbers near me" inside ChatGPT), local data aggregators and review volumes
+                        feed directly into localized AI generative mapping.</p>
+                </section>
+
+                <!-- Section 5 -->
+                <section id="docs-platforms" class="doc-tab glass">
+                    <h2>Platform-Specific Strategies</h2>
+                    <p>The "Generative Engines" are not monolithic. Here is how their algorithms differ.</p>
+
+                    <div class="doc-comparison-table">
+                        <div class="tbl-row header">
+                            <div class="tbl-col">Platform</div>
+                            <div class="tbl-col">Core Driver</div>
+                            <div class="tbl-col">Optimization Tactics</div>
+                        </div>
+                        <div class="tbl-row">
+                            <div class="tbl-col"><strong>ChatGPT</strong></div>
+                            <div class="tbl-col">Real-time Bing integration</div>
+                            <div class="tbl-col">Ensure Bing indexing, focus on conversational mid-tail phrasing.</div>
+                        </div>
+                        <div class="tbl-row">
+                            <div class="tbl-col"><strong>Perplexity</strong></div>
+                            <div class="tbl-col">Academic/Research style</div>
+                            <div class="tbl-col">Heavy outbound citations, structured lists, extremely up-to-date data.
+                            </div>
+                        </div>
+                        <div class="tbl-row">
+                            <div class="tbl-col"><strong>Google AI Overviews</strong></div>
+                            <div class="tbl-col">Knowledge Graph + SGE</div>
+                            <div class="tbl-col">Schema markup heavy, extremely strict E-E-A-T trust requirements.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section id="docs-score" class="doc-tab glass">
+                    <h2>Understanding Your GEO Score & Report</h2>
+                    <p>When the Orbis Audit finishes, it outputs a highly visual, data-dense PDF intended directly for
+                        stakeholders.</p>
+
+                    <h3>Interpreting the Metrics</h3>
+                    <ul class="doc-bullets">
+                        <li><strong>Total GEO Score (0-100):</strong> The composite score. Anything under 60 means you
+                            are rapidly losing visibility.</li>
+                        <li><strong>Gauges:</strong> Quickly identify which of the 5 Pillars represents your largest
+                            vulnerability.</li>
+                        <li><strong>Spider Web Chart:</strong> Shows your brand's platform bias. (e.g., highly visible
+                            on Google SGE, totally invisible on Perplexity).</li>
+                    </ul>
+
+                    <div class="doc-feature-box action">
+                        <h4>The Action Plan</h4>
+                        <p>The report generates a prioritized list of "Quick Wins"—tasks that take less than 1 hour but
+                            yield a 10%+ bump in specific pillar scores.</p>
+                    </div>
+                </section>
+
+                <!-- Section 7 -->
+                <section id="docs-action" class="doc-tab glass">
+                    <h2>Actionable Frameworks: Implementation</h2>
+                    <p>You have your audit. Now execute.</p>
+
+                    <div class="doc-listicle num-alt">
+                        <div class="listicle-item">
+                            <span class="listicle-num">#1</span>
+                            <div>
+                                <strong>Fix Crawler Issues Immediately</strong>
+                                <p>Review <code>robots.txt</code> and remove legacy blocks on AI crawlers. Next, place
+                                    an <code>llms.txt</code> file in your root directory detailing your structural site
+                                    map.</p>
+                            </div>
+                        </div>
+                        <div class="listicle-item">
+                            <span class="listicle-num">#2</span>
+                            <div>
+                                <strong>Rewrite Priority Landing Pages</strong>
+                                <p>Take your hero services and rewrite the first 3 paragraphs into dense, citable (150
+                                    word) blocks devoid of standard marketing fluff.</p>
+                            </div>
+                        </div>
+                        <div class="listicle-item">
+                            <span class="listicle-num">#3</span>
+                            <div>
+                                <strong>Aggressively Build Mention Signals</strong>
+                                <p>Stop worrying purely about "dofollow" links. Get your brand explicitly named on
+                                    Reddit AMAs, podcast show notes, and technical Medium posts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <script>
+            // Documentation Tab Switching Logic
+            document.addEventListener('DOMContentLoaded', () => {
+                const navLinks = document.querySelectorAll('#docNav a');
+                const tabs = document.querySelectorAll('.doc-tab');
+
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+
+                        // Remove active class from all links and tabs
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        tabs.forEach(t => t.classList.remove('active'));
+
+                        // Add active class to clicked link
+                        link.classList.add('active');
+
+                        // Show corresponding tab
+                        const targetId = link.getAttribute('data-target');
+                        const targetTab = document.getElementById(targetId);
+                        if (targetTab) {
+                            targetTab.classList.add('active');
+                            // Smooth scroll to top of content area on mobile if needed
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    });
+                });
+            });
+        </script>
+</body>
+
+</html>
