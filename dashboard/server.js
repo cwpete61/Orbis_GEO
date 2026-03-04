@@ -28,14 +28,14 @@ function runScript(scriptPath, args, res) {
     let output = '';
     let error = '';
 
-    // Set a timeout of 60 seconds
+    // Set a timeout of 120 seconds
     const timeout = setTimeout(() => {
         process.kill();
         console.error(`Script timed out: ${scriptPath}`);
         if (!res.headersSent) {
-            res.status(500).json({ status: 'error', error: 'Script execution timed out (60s)' });
+            res.status(500).json({ status: 'error', error: `Script execution timed out (120s). Partial output: ${error}` });
         }
-    }, 60000);
+    }, 120000);
 
     process.stdout.on('data', (data) => {
         output += data.toString();
