@@ -7,6 +7,7 @@
     <title>Documentation - Orbis Local Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <script src="components/site-header.js" defer></script>
+    <script src="components/site-footer.js" defer></script>
 </head>
 
 <body>
@@ -58,10 +59,11 @@
                 </div>
 
                 <h3>What is the core objective of Orbis Local</h3>
-                <p>Orbis Local audits digital presence to ensure business data is accessible and authoritative for Large
-                    Language Models (LLMs). The platform identifies visibility gaps that prevent AI agents from
-                    recommending a brand during a user query. By optimizing for GEO, businesses secure their place in
-                    the next generation of automated search.</p>
+                <p>Orbis Local audits digital presence to ensure business data is accessible and authoritative for <a
+                        href="https://en.wikipedia.org/wiki/Large_language_model" target="_blank"
+                        style="color: var(--highlight);">Large Language Models (LLMs)</a>. The platform identifies
+                    visibility gaps that prevent AI agents from recommending a brand during a user query. By optimizing
+                    for GEO, businesses secure their place in the next generation of automated search.</p>
 
                 <div class="doc-feature-box"
                     style="background: #f9f9f9; border-left: 4px solid var(--highlight); color: #333;">
@@ -120,7 +122,8 @@
                     <div class="listicle-item" style="background: white; border: 1px solid #eee;">
                         <span class="listicle-num">5</span>
                         <div>
-                            <strong style="color: var(--primary);">Schema & Knowledge Graphs</strong>
+                            <strong style="color: var(--primary);">Schema & <a href="https://datacommons.org/"
+                                    target="_blank" style="color: var(--highlight);">Knowledge Graphs</a></strong>
                             <p style="color: #666;">Structured data provides a direct pipeline for LLMs to map business
                                 entities without complex parsing.</p>
                         </div>
@@ -177,9 +180,12 @@
                 </div>
 
                 <h3>Why are unlinked mentions important</h3>
-                <p>Unlinked mentions on high-authority sites like Reddit, Wikipedia, and technical forums signify
-                    established trust. AI engines correlate these mentions with real-world relevance, significantly
-                    boosting your visibility in generative responses compared to traditional backlinks alone.</p>
+                <p>Unlinked mentions on high-authority sites like <a href="https://en.wikipedia.org/wiki/Reddit"
+                        target="_blank" style="color: var(--highlight);">Reddit</a>, <a
+                        href="https://en.wikipedia.org/wiki/Wikipedia" target="_blank"
+                        style="color: var(--highlight);">Wikipedia</a>, and technical forums signify established trust.
+                    AI engines correlate these mentions with real-world relevance, significantly boosting your
+                    visibility in generative responses compared to traditional backlinks alone.</p>
 
                 <ul class="doc-bullets" style="color: #555;">
                     <li><strong>Reddit Sentiment</strong>: Provides models with real-world user feedback and authentic
@@ -189,6 +195,46 @@
                     <li><strong>LinkedIn Authority</strong>: Establishes corporate B2B credibility for enterprise
                         solutions.</li>
                 </ul>
+            </section>
+
+            <!-- Section 5 -->
+            <section id="docs-platforms" class="doc-tab">
+                <h2>How do different AI platforms process information</h2>
+                <p class="doc-lead">The "Generative Engines" are not monolithic. Each platform—OpenAI, Perplexity, and
+                    Google Gemini—uses distinct retrieval and synthesis logic to generate answers.</p>
+
+                <div class="doc-listicle" style="background: #f9f9f9; padding: 2rem; border-radius: 12px;">
+                    <div class="listicle-item" style="background: white; border: 1px solid #eee; margin-bottom: 1rem;">
+                        <span class="listicle-num">1</span>
+                        <div>
+                            <strong style="color: var(--primary);">OpenAI (ChatGPT)</strong>
+                            <p style="color: #666;">Prioritizes conversational flow and Bing real-time indexing. Success
+                                here requires mid-tail conversational phrasing and high-authority brand mentions.</p>
+                        </div>
+                    </div>
+                    <div class="listicle-item" style="background: white; border: 1px solid #eee; margin-bottom: 1rem;">
+                        <span class="listicle-num">2</span>
+                        <div>
+                            <strong style="color: var(--primary);">Perplexity AI</strong>
+                            <p style="color: #666;">Functions as a research engine. It favors outbound citations,
+                                structured lists, and extremely up-to-date data points from technical sources.</p>
+                        </div>
+                    </div>
+                    <div class="listicle-item" style="background: white; border: 1px solid #eee;">
+                        <span class="listicle-num">3</span>
+                        <div>
+                            <strong style="color: var(--primary);">Google Gemini (SGE)</strong>
+                            <p style="color: #666;">Relies heavily on Google's existing Knowledge Graph and Schema
+                                markup. Strict adherence to E-E-A-T and technical SEO is mandatory for visibility here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>What is platform-specific optimization</h3>
+                <p>Platform-specific optimization involves tailoring your content's technical structure to match the
+                    retrieval bias of the most relevant model for your industry. Orbis Local's Platform Readiness check
+                    simulates these models to ensure your brand is visible across all generative ecosystems.</p>
             </section>
 
             <!-- Section 6 -->
@@ -252,6 +298,8 @@
             </section>
         </main>
     </div>
+
+    <site-footer></site-footer>
 
     <script>
         // Documentation Tab Switching Logic
