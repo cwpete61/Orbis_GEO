@@ -71,3 +71,15 @@
 - [x] Implement sidebar layout with active tab highlighting <!-- id: 47 -->
 - [x] Create 7 interactive documentation tabs <!-- id: 48 -->
 - [x] Add rich content including listicles, charts, and graphs <!-- id: 49 -->
+
+## Phase 12: Deployment Debugging <!-- id: 50 -->
+**Status**: ✅ Complete
+- [x] Investigate GitHub Actions logs <!-- id: 51 -->
+- [x] Refactor `deploy.yml` for robustness <!-- id: 52 -->
+- [x] Verify successful deployment via GitHub Actions <!-- id: 53 -->
+
+## Phase 13: Case Studio Implementation <!-- id: 54 -->
+**Status**: 🚧 In Progress
+- [ ] Implement side-by-side competitive comparison matrix <!-- id: 55 -->
+- [ ] Populate with BPS Zero Fees vs Orbis Local case study data <!-- id: 56 -->
+- [ ] Add visual score delta indicators and platform specific analysis <!-- id: 57 -->
