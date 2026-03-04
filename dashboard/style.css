@@ -170,6 +170,19 @@ input {
     justify-content: center;
 }
 
+.delta-up {
+    color: #2ecc71;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.delta-steady {
+    color: #95a5a6;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
 .btn.primary {
     background: var(--highlight);
     color: white;
