@@ -1,0 +1,11 @@
+node_modules/
+dashboard/node_modules/
+__pycache__/
+*.pyc
+.venv/
+env/
+.git/
+.gitignore
+.gsd/
+*.log
+.DS_Store

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  orbis-local:
+    build: .
+    container_name: orbis-local-app
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount the static leads database file to track form submissions
+      - ./leads.json:/app/leads.json
+      # Optional: Mount the PDF to easily read it directly from the host machine without bash
+      - ./ORBIS-LOCAL-LIVE-REPORT.pdf:/app/ORBIS-LOCAL-LIVE-REPORT.pdf
+    environment:
+      - NODE_ENV=production
+    restart: always
