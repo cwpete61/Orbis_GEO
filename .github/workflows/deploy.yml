@@ -20,16 +20,11 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd ~/Orbis_GEO
-            git pull origin main
-            
-            # Recreate the .env file with the secret API key
-            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env
-            echo "NODE_ENV=production" >> .env
-            
-            # Ensure proper file creation instead of folders
-            touch leads.json
-            touch ORBIS-LOCAL-LIVE-REPORT.pdf
-            
-            docker compose build
-            docker compose up -d
+            cd ~/Orbis_GEO && \
+            git fetch origin main && \
+            git reset --hard origin/main && \
+            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env && \
+            echo "NODE_ENV=production" >> .env && \
+            touch leads.json && \
+            touch ORBIS-LOCAL-LIVE-REPORT.pdf && \
+            docker compose up -d --build
