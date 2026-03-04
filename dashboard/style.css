@@ -585,11 +585,11 @@ site-header {
 .main-nav {
     position: fixed !important;
     top: 0 !important;
-    left: 0;
-    z-index: 2000;
-    width: 100%;
-    margin-bottom: 0;
-    background: #130f40;
+    left: 0 !important;
+    z-index: 9999 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    background: #130f40 !important;
     /* Dark navy background */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     padding: 1rem 0;
@@ -597,6 +597,7 @@ site-header {
 
 .header-top {
     padding: 0 2rem;
+    margin-top: 2rem;
 }
 
 .main-nav ul {
