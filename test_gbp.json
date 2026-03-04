@@ -1,45 +1,52 @@
 {
-  "business_name": "Orbis (Based on URL and context)",
-  "overall_local_score": 45,
-  "status": "Fair",
+  "business_name": "Monte Vista Dental",
+  "overall_local_score": 78,
+  "status": "Good",
   "insights": [
     {
-      "title": "Business Name & Category Clarity",
-      "score": 35,
-      "details": "The provided search snippets primarily reference Orbi networking products and login pages, suggesting a focus on technology hardware/services related to networking and device management. However, the local Google Business Profile appears to focus on 'Orbis' but lacks explicit mention of the core services offered, such as local community engagement or connection services."
+      "title": "Clear Business Name & Category",
+      "score": 85,
+      "details": "The business name 'Monte Vista Dental' clearly indicates the dental service provided. The category is appropriately listed as 'Dentist,' making it recognizable for AI algorithms and users."
     },
     {
-      "title": "AI-Compatible Descriptions",
-      "score": 40,
-      "details": "Descriptions include generic references to login pages and device management without clear mention of local services, community engagement, or distinctive offerings that AI models can leverage. The presence of entities like 'NETGEAR' and 'Orbi' indicates a tech focus rather than hyperlocal services."
+      "title": "AI-compatible Descriptions",
+      "score": 70,
+      "details": "The business description mentions key services like 'general dentistry, teeth cleaning, crowns, and orthodontics.' However, it could benefit from more structured entities and specific keywords to enhance AI comprehension."
     },
     {
-      "title": "Sentiment of Recent Reviews/Mentions",
-      "score": 50,
-      "details": "No direct reviews or mentions are available in the provided snippets; thus, sentiment cannot be thoroughly assessed. The existing info points to technical issues or setup instructions rather than customer sentiment."
+      "title": "Reputation & Sentiment",
+      "score": 75,
+      "details": "Recent reviews mostly express positive experiences, highlighting friendly staff and quality care. There are some minor complaints about wait times, but overall sentiment is favorable."
     },
     {
-      "title": "Likelihood of AI Recommendation",
-      "score": 40,
-      "details": "Given the technical focus centered around login/setup instructions for networking hardware, AI models would find limited context for recommending this business for community or local discovery purposes. The relevance is mainly technical, not local or community-centric."
+      "title": "AI Recommendation Likelihood",
+      "score": 80,
+      "details": "Given the clear name, relevant categories, and generally positive reviews, AI systems like ChatGPT Local or Google SGE would likely recommend this location, especially if the description is enhanced with more specific service details."
     }
   ],
   "findings": [
     {
-      "severity": "high",
-      "title": "Unclear Business Focus & Category",
-      "description": "The business seems to primarily be a technical product provider (networking hardware/software), but lacks explicit local service or community engagement details.",
-      "impact": "Reduced AI recommendation relevance, lower local SEO effectiveness, and limited appeal for community-oriented searches.",
-      "fix_example": "Update the Google Business Profile with clear descriptions emphasizing local community services, local tech support, or other hyperlocal activities to improve relevance."
+      "severity": "medium",
+      "title": "Limited Keyword Optimization",
+      "description": "The current description lacks detailed keywords and structured entities related to dental services, which may hinder AI interpretation.",
+      "impact": "Moderate chance that AI may overlook specific services, reducing visibility in AI-driven searches.",
+      "fix_example": "Add detailed service lists with specific dental procedures, equipment, and specialties, e.g., 'emergency dentistry, dental implants, sealants.'"
     },
     {
-      "severity": "medium",
-      "title": "Lack of Hyperlocal Content",
-      "description": "Current descriptions do not highlight any local events, community connections, or location-specific offerings.",
-      "impact": "AI models may overlook this profile for local discovery in favor of more community-focused entities.",
-      "fix_example": "Add posts, service descriptions, and keywords that emphasize local relevance and community engagement."
+      "severity": "low",
+      "title": "Incomplete Service Details",
+      "description": "Some service offerings are mentioned vaguely or missing from the profile.",
+      "impact": "Low, but improving descriptions can boost AI recognition and user engagement.",
+      "fix_example": "Update the profile with comprehensive descriptions of all services, including specialties and any unique amenities."
+    },
+    {
+      "severity": "high",
+      "title": "Review Sentiment Variability",
+      "description": "While reviews are generally positive, recent negative comments about wait times could impact local AI recommendations negatively if not addressed.",
+      "impact": "High, as AI systems weigh recent reviews significantly when recommending locations.",
+      "fix_example": "Encourage and manage reviews focusing on positive aspects and address any recurrent complaints publicly."
     }
   ],
-  "audit_date": "2026-03-03 20:09",
-  "gbp_url": "https://g.page/orbislocal"
+  "audit_date": "2026-03-04 15:07",
+  "gbp_url": "https://share.google/Htu7ZhFeuDIjvo7wt"
 }

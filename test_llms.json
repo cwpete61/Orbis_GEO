@@ -1,5 +1,5 @@
 {
-  "url": "https://orbislocal.com/llms.txt",
+  "url": "https://pierrepauldriving.com/llms.txt",
   "exists": false,
   "format_valid": false,
   "has_title": false,
@@ -15,83 +15,83 @@
   ],
   "suggestions": [],
   "full_version": {
-    "url": "https://orbislocal.com/llms-full.txt",
+    "url": "https://pierrepauldriving.com/llms-full.txt",
     "exists": false
   },
-  "robots_url": "https://orbislocal.com/robots.txt",
-  "robots_found": false,
+  "robots_url": "https://pierrepauldriving.com/robots.txt",
+  "robots_found": true,
   "crawlers": {
     "GPTBot": {
       "platform": "ChatGPT / OpenAI",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for GPTBot \u2014 inheriting global allow"
     },
     "ChatGPT-User": {
       "platform": "ChatGPT Browsing",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for ChatGPT-User \u2014 inheriting global allow"
     },
     "ClaudeBot": {
       "platform": "Anthropic Claude",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for ClaudeBot \u2014 inheriting global allow"
     },
     "anthropic-ai": {
       "platform": "Anthropic AI",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for anthropic-ai \u2014 inheriting global allow"
     },
     "PerplexityBot": {
       "platform": "Perplexity AI",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for PerplexityBot \u2014 inheriting global allow"
     },
     "Googlebot": {
       "platform": "Google (AI Overviews)",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for Googlebot \u2014 inheriting global allow"
     },
     "Google-Extended": {
       "platform": "Google Gemini / Bard",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for Google-Extended \u2014 inheriting global allow"
     },
     "Bingbot": {
       "platform": "Bing / Copilot",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for Bingbot \u2014 inheriting global allow"
     },
     "cohere-ai": {
       "platform": "Cohere AI",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for cohere-ai \u2014 inheriting global allow"
     },
     "YouBot": {
       "platform": "You.com AI Search",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for YouBot \u2014 inheriting global allow"
     },
     "Applebot": {
       "platform": "Apple Siri / AI Features",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for Applebot \u2014 inheriting global allow"
     },
     "Meta-ExternalAgent": {
       "platform": "Meta AI",
-      "status": "Unknown",
-      "recommendation": "Consider explicitly allowing this crawler",
-      "detail": "robots.txt not found \u2014 crawler access is likely allowed by default"
+      "status": "Allowed",
+      "recommendation": "No action needed",
+      "detail": "No explicit rule for Meta-ExternalAgent \u2014 inheriting global allow"
     }
   }
 }

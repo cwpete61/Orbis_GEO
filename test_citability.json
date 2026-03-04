@@ -1,274 +1,109 @@
 {
-  "url": "https://orbislocal.com",
-  "total_blocks_analyzed": 7,
-  "average_citability_score": 36.3,
+  "url": "https://pierrepauldriving.com/",
+  "total_blocks_analyzed": 2,
+  "average_citability_score": 42.0,
   "optimal_length_passages": 0,
   "grade_distribution": {
     "A": 0,
     "B": 0,
-    "C": 0,
-    "D": 4,
-    "F": 3
+    "C": 1,
+    "D": 0,
+    "F": 1
   },
   "top_5_citable": [
     {
-      "heading": "Entity Clarity Score",
-      "word_count": 55,
-      "total_score": 48,
-      "grade": "D",
-      "label": "Low Citability",
+      "heading": "Our driving school offers lessons for teenage first-time drivers, new adult learners, and existing drivers with lapsed licenses.Here's why you'll be glad you enrolled in our driving lessons:",
+      "word_count": 133,
+      "total_score": 59,
+      "grade": "C",
+      "label": "Moderate Citability",
       "breakdown": {
-        "answer_block_quality": 20,
-        "self_containment": 17,
-        "structural_readability": 8,
+        "answer_block_quality": 22,
+        "self_containment": 22,
+        "structural_readability": 12,
         "statistical_density": 3,
         "uniqueness_signals": 0
       },
-      "preview": "Excellent. AI models clearly understand your service taxonomy. Competitor X has 40% more reviews in \"Downtown\". of local searches result in a visit within 24 hours of people who search..."
+      "preview": "Pick-up and drop-offbetween 7am and 11pm, so you can focus on driving lessons and not transport logistics.Watch yourdriving fears fadeandconfidence soaras you learn from ourexperienced, patient, and friendly DMV-certified instructors.Our..."
     },
     {
-      "heading": "Stop losing customers youcan't see.",
-      "word_count": 31,
-      "total_score": 47,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 25,
-        "self_containment": 14,
-        "structural_readability": 8,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "Get your BISON Strategic Analysis and discover exactly where your business is invisible \u2014 and how much revenue it's costing you. No credit card required \u00b7 Results in under 5..."
-    },
-    {
-      "heading": "Decoding Google Business Profile APIs: The Modern SEO Source of Truth",
-      "word_count": 21,
-      "total_score": 44,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 30,
-        "self_containment": 12,
-        "structural_readability": 2,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "Your GBP is an API hub, not a social profile. Learn how AI engines use hidden metadata to verify your business."
-    },
-    {
-      "heading": "The 2026 Guide to AI Search (GEO): Why Local SEO Is Changing Forever",
-      "word_count": 21,
-      "total_score": 40,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 15,
-        "structural_readability": 2,
-        "statistical_density": 2,
-        "uniqueness_signals": 0
-      },
-      "preview": "Everything you know about local ranking is being rewritten by Generative Engine Optimization. Learn how to secure your entity clarity today."
-    },
-    {
-      "heading": "Lightbox SEO",
-      "word_count": 24,
-      "total_score": 28,
+      "heading": "PERSONALIZED LESSONS",
+      "word_count": 25,
+      "total_score": 25,
       "grade": "F",
       "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 20,
-        "self_containment": 0,
-        "structural_readability": 8,
+        "answer_block_quality": 8,
+        "self_containment": 15,
+        "structural_readability": 2,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "\u201cOrbisLocal showed our clients exactly how much revenue they were handing to competitors \u2014 and gave them a clear path to win it back.\u201d"
+      "preview": "Afraid of the NY highways? Failed the road test thrice? Disappointed by other driving schools in Brooklyn? We'll make the best driver out of you."
     }
   ],
   "bottom_5_citable": [
     {
-      "heading": "Entity Clarity Delta",
-      "word_count": 20,
-      "total_score": 22,
-      "grade": "F",
-      "label": "Poor Citability",
-      "breakdown": {
-        "answer_block_quality": 6,
-        "self_containment": 12,
-        "structural_readability": 2,
-        "statistical_density": 2,
-        "uniqueness_signals": 0
-      },
-      "preview": "Does Google and AI clearly understand what you do? We analyze your category misalignment, service taxonomy gaps, and semantic ambiguity."
-    },
-    {
-      "heading": "Why is your businessinvisibleto AI?",
-      "word_count": 23,
+      "heading": "PERSONALIZED LESSONS",
+      "word_count": 25,
       "total_score": 25,
       "grade": "F",
       "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 13,
-        "self_containment": 10,
-        "structural_readability": 2,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "Stop guessing. OrbisLocal analyzes your Entity Clarity, Local Reach, and Intent Capture to tell you exactly why competitors win\u2014and how to fix it."
-    },
-    {
-      "heading": "Lightbox SEO",
-      "word_count": 24,
-      "total_score": 28,
-      "grade": "F",
-      "label": "Poor Citability",
-      "breakdown": {
-        "answer_block_quality": 20,
-        "self_containment": 0,
-        "structural_readability": 8,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "\u201cOrbisLocal showed our clients exactly how much revenue they were handing to competitors \u2014 and gave them a clear path to win it back.\u201d"
-    },
-    {
-      "heading": "The 2026 Guide to AI Search (GEO): Why Local SEO Is Changing Forever",
-      "word_count": 21,
-      "total_score": 40,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 21,
+        "answer_block_quality": 8,
         "self_containment": 15,
         "structural_readability": 2,
-        "statistical_density": 2,
-        "uniqueness_signals": 0
-      },
-      "preview": "Everything you know about local ranking is being rewritten by Generative Engine Optimization. Learn how to secure your entity clarity today."
-    },
-    {
-      "heading": "Decoding Google Business Profile APIs: The Modern SEO Source of Truth",
-      "word_count": 21,
-      "total_score": 44,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 30,
-        "self_containment": 12,
-        "structural_readability": 2,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Your GBP is an API hub, not a social profile. Learn how AI engines use hidden metadata to verify your business."
+      "preview": "Afraid of the NY highways? Failed the road test thrice? Disappointed by other driving schools in Brooklyn? We'll make the best driver out of you."
+    },
+    {
+      "heading": "Our driving school offers lessons for teenage first-time drivers, new adult learners, and existing drivers with lapsed licenses.Here's why you'll be glad you enrolled in our driving lessons:",
+      "word_count": 133,
+      "total_score": 59,
+      "grade": "C",
+      "label": "Moderate Citability",
+      "breakdown": {
+        "answer_block_quality": 22,
+        "self_containment": 22,
+        "structural_readability": 12,
+        "statistical_density": 3,
+        "uniqueness_signals": 0
+      },
+      "preview": "Pick-up and drop-offbetween 7am and 11pm, so you can focus on driving lessons and not transport logistics.Watch yourdriving fears fadeandconfidence soaras you learn from ourexperienced, patient, and friendly DMV-certified instructors.Our..."
     }
   ],
   "all_blocks": [
     {
-      "heading": "Why is your businessinvisibleto AI?",
-      "word_count": 23,
+      "heading": "PERSONALIZED LESSONS",
+      "word_count": 25,
       "total_score": 25,
       "grade": "F",
       "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 13,
-        "self_containment": 10,
+        "answer_block_quality": 8,
+        "self_containment": 15,
         "structural_readability": 2,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Stop guessing. OrbisLocal analyzes your Entity Clarity, Local Reach, and Intent Capture to tell you exactly why competitors win\u2014and how to fix it."
+      "preview": "Afraid of the NY highways? Failed the road test thrice? Disappointed by other driving schools in Brooklyn? We'll make the best driver out of you."
     },
     {
-      "heading": "Entity Clarity Score",
-      "word_count": 55,
-      "total_score": 48,
-      "grade": "D",
-      "label": "Low Citability",
+      "heading": "Our driving school offers lessons for teenage first-time drivers, new adult learners, and existing drivers with lapsed licenses.Here's why you'll be glad you enrolled in our driving lessons:",
+      "word_count": 133,
+      "total_score": 59,
+      "grade": "C",
+      "label": "Moderate Citability",
       "breakdown": {
-        "answer_block_quality": 20,
-        "self_containment": 17,
-        "structural_readability": 8,
+        "answer_block_quality": 22,
+        "self_containment": 22,
+        "structural_readability": 12,
         "statistical_density": 3,
         "uniqueness_signals": 0
       },
-      "preview": "Excellent. AI models clearly understand your service taxonomy. Competitor X has 40% more reviews in \"Downtown\". of local searches result in a visit within 24 hours of people who search..."
-    },
-    {
-      "heading": "Entity Clarity Delta",
-      "word_count": 20,
-      "total_score": 22,
-      "grade": "F",
-      "label": "Poor Citability",
-      "breakdown": {
-        "answer_block_quality": 6,
-        "self_containment": 12,
-        "structural_readability": 2,
-        "statistical_density": 2,
-        "uniqueness_signals": 0
-      },
-      "preview": "Does Google and AI clearly understand what you do? We analyze your category misalignment, service taxonomy gaps, and semantic ambiguity."
-    },
-    {
-      "heading": "Lightbox SEO",
-      "word_count": 24,
-      "total_score": 28,
-      "grade": "F",
-      "label": "Poor Citability",
-      "breakdown": {
-        "answer_block_quality": 20,
-        "self_containment": 0,
-        "structural_readability": 8,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "\u201cOrbisLocal showed our clients exactly how much revenue they were handing to competitors \u2014 and gave them a clear path to win it back.\u201d"
-    },
-    {
-      "heading": "Stop losing customers youcan't see.",
-      "word_count": 31,
-      "total_score": 47,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 25,
-        "self_containment": 14,
-        "structural_readability": 8,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "Get your BISON Strategic Analysis and discover exactly where your business is invisible \u2014 and how much revenue it's costing you. No credit card required \u00b7 Results in under 5..."
-    },
-    {
-      "heading": "The 2026 Guide to AI Search (GEO): Why Local SEO Is Changing Forever",
-      "word_count": 21,
-      "total_score": 40,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 21,
-        "self_containment": 15,
-        "structural_readability": 2,
-        "statistical_density": 2,
-        "uniqueness_signals": 0
-      },
-      "preview": "Everything you know about local ranking is being rewritten by Generative Engine Optimization. Learn how to secure your entity clarity today."
-    },
-    {
-      "heading": "Decoding Google Business Profile APIs: The Modern SEO Source of Truth",
-      "word_count": 21,
-      "total_score": 44,
-      "grade": "D",
-      "label": "Low Citability",
-      "breakdown": {
-        "answer_block_quality": 30,
-        "self_containment": 12,
-        "structural_readability": 2,
-        "statistical_density": 0,
-        "uniqueness_signals": 0
-      },
-      "preview": "Your GBP is an API hub, not a social profile. Learn how AI engines use hidden metadata to verify your business."
+      "preview": "Pick-up and drop-offbetween 7am and 11pm, so you can focus on driving lessons and not transport logistics.Watch yourdriving fears fadeandconfidence soaras you learn from ourexperienced, patient, and friendly DMV-certified instructors.Our..."
     }
   ]
 }

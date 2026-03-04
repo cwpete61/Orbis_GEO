@@ -1,22 +1,22 @@
 {
-  "brand_name": "Orbis Local",
+  "brand_name": "Pierre Paul",
   "url": "",
-  "brand_authority_score": 45,
+  "brand_authority_score": 40,
   "platforms": {
     "YouTube": {
       "platform": "YouTube",
       "correlation": 0.737,
       "weight": "25%",
-      "score": 45,
+      "score": 55,
       "has_channel": true,
       "sentiment": "neutral",
       "key_findings": [
-        "Multiple YouTube videos mention Orbis Local or related projects, indicating some presence.",
-        "The channel 'Prity Mou' has a brief mention with limited views and activity from 7 years ago.",
-        "Several videos focus on Orbis's blockchain and ICO projects, but overall channel activity appears limited."
+        "Multiple YouTube channels mention Pierre Paul, including official and fan channels.",
+        "The brand is referenced in a total of approximately 8 videos, mostly related to individual or unrelated content.",
+        "There is no evidence of a dedicated, active Pierre Paul channel with significant subscriber count."
       ],
-      "summary": "Orbis Local has a modest YouTube presence with some mentions and related content, but lacks an active, dedicated channel with substantial followers.",
-      "search_url": "https://www.youtube.com/results?search_query=Orbis+Local",
+      "summary": "Pierre Paul has a moderate presence on YouTube with some mentions across various videos, but lacks a dedicated active channel or widespread brand visibility.",
+      "search_url": "https://www.youtube.com/results?search_query=Pierre+Paul",
       "recommendations": [
         "Create a YouTube channel if none exists",
         "Publish educational/tutorial content related to your niche",
@@ -28,16 +28,17 @@
       "platform": "Reddit",
       "correlation": "High",
       "weight": "25%",
-      "score": 45,
+      "score": 55,
       "has_presence": true,
-      "sentiment": "neutral",
+      "sentiment": "mixed",
       "key_findings": [
-        "Multiple mentions of Orbis Local and related projects on Reddit, including user profiles and discussions.",
-        "Mentions are mostly in niche or related communities, with some references to blockchain and technology topics.",
-        "No evidence of an official Orbis Local presence or highly active brand engagement on Reddit."
+        "Multiple mentions of Pierre Paulin watches in dedicated watch subreddits, with reviews and comparisons.",
+        "Occasional references to Jason Pierre-Paul related to NFL discussions, but not directly about the brand.",
+        "Some community engagement around Pierre Paulin's watch designs, indicating recognition within niche communities.",
+        "Limited overall sentiment data, but the presence in specialized subreddits suggests recognition."
       ],
-      "summary": "Orbis Local has a limited and mostly neutral presence on Reddit, with some community mentions but no official or highly active brand presence.",
-      "search_url": "https://www.reddit.com/search/?q=Orbis+Local",
+      "summary": "Pierre Paul has a modest but notable presence on Reddit primarily within watch communities, with some mentions in sports discussions, reflecting niche recognition.",
+      "search_url": "https://www.reddit.com/search/?q=Pierre+Paul",
       "recommendations": [
         "Identify 3-5 subreddits where your target audience is active",
         "Participate authentically\u2014do not shill",
@@ -49,16 +50,16 @@
       "platform": "Wikipedia / Wikidata",
       "correlation": "High",
       "weight": "20%",
-      "score": 0,
+      "score": 10,
       "has_wikipedia": false,
       "wikipedia_url": "",
-      "wikidata_id": "",
+      "wikidata_id": "Q20727006",
       "key_findings": [
-        "No Wikipedia article exists for Orbis Local.",
-        "No Wikidata entry found for Orbis Local.",
-        "Brand is not mentioned in any of the Wikipedia articles retrieved."
+        "No dedicated Wikipedia article exists for 'Pierre Paul'.",
+        "The only related Wikipedia content references individuals with similar names, such as Pierre Paul Royer-Collard and Pierre-Paul Renders.",
+        "A Wikidata entry (Q20727006) exists for 'Pierre Paul', but lacks a comprehensive Wikipedia article."
       ],
-      "summary": "Orbis Local currently has no presence on Wikipedia or Wikidata, indicating limited or no notable coverage on these platforms.",
+      "summary": "Pierre Paul has minimal presence on Wikipedia, with no dedicated article but a Wikidata entry indicating limited recognition.",
       "recommendations": [
         "Build notability through press coverage first before seeking a Wikipedia article",
         "Ensure your Wikidata entry (Q-number) is complete even without a full article",
@@ -69,16 +70,16 @@
       "platform": "LinkedIn",
       "correlation": "Moderate",
       "weight": "15%",
-      "score": 45,
-      "has_presence": true,
+      "score": 15,
+      "has_presence": false,
       "sentiment": "unknown",
       "key_findings": [
-        "Multiple LinkedIn profiles with similar names, primarily for nonprofits and corporations.",
-        "No evidence of an active, dedicated LinkedIn company page specifically for Orbis Local.",
-        "Presence appears to be fragmented across different entities with different focuses."
+        "No official LinkedIn company page for Pierre Paul identified in search results.",
+        "Multiple unrelated company pages and profiles with similar or partial names appear, but none explicitly represent Pierre Paul.",
+        "Limited or no active brand presence or thought leadership content associated directly with Pierre Paul on LinkedIn."
       ],
-      "summary": "Orbis Local's specific presence on LinkedIn is minimal or non-existent, with existing profiles belonging to other similarly named organizations.",
-      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Orbis+Local",
+      "summary": "Pierre Paul lacks an identifiable or active official presence on LinkedIn based on current search results.",
+      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Pierre+Paul",
       "recommendations": [
         "Optimize company page with complete information and regular posting",
         "Encourage leadership to post thought leadership content weekly",
@@ -89,15 +90,15 @@
       "platform": "Local Directories",
       "correlation": "High (Local Entity)",
       "weight": "20%",
-      "score": 65,
+      "score": 75,
       "has_listings": true,
-      "sentiment": "neutral",
+      "sentiment": "positive",
       "key_findings": [
-        "Listings appear on Yelp with some reviews and ratings.",
-        "References to Orbis in YellowPages and Trustpilot indicate some presence and customer feedback.",
-        "No verified or prominent listing specifically under 'Orbis Local' on major directories like YellowPages or Yelp."
+        "Multiple listings for Pierre Paul Driving School on Yelp, with consistent information and recent updates.",
+        "Presence on YellowPages with at least two entries related to the driving school, indicating visibility in local directories.",
+        "Mentions on Trustpilot and other review platforms, though some reviews are for different entities sharing similar names."
       ],
-      "summary": "Orbis Local has a moderate presence across local directories with some reviews, but lacks verified, prominent listings on major platforms.",
+      "summary": "Pierre Paul has a solid presence on major local directories, primarily through Yelp and YellowPages, with generally positive visibility.",
       "recommendations": [
         "Claim your business profile on Yelp and YellowPages",
         "Encourage happy customers to leave reviews on Trustpilot",
@@ -109,13 +110,13 @@
       "platform": "Other Platforms",
       "correlation": "Supplementary",
       "weight": "15%",
-      "score": 75,
+      "score": 0,
       "key_findings": [
-        "Orbis is actively featured in podcasts discussing its global eye health initiatives.",
-        "There are multiple references to Orbis on news platforms, including regional and specialized health coverage.",
-        "Quora mentions are limited but present, mainly describing the platform rather than direct brand engagement."
+        "No search results found on Quora, news, or podcasts platforms.",
+        "Lack of any mentions or coverage on these platforms.",
+        "Brand presence appears absent across supplementary online channels."
       ],
-      "summary": "Orbis Local maintains a notable presence on podcasts and news platforms, with some Quora activity, reflecting a moderate but engaged platform presence.",
+      "summary": "Pierre Paul has no detectable presence on Quora, news, or podcasts platforms based on current search results.",
       "recommendations": [
         "Create Quora answers for top industry questions related to your brand",
         "Issue press releases for major company milestones",
@@ -130,12 +131,12 @@
       "has_presence": false,
       "sentiment": "unknown",
       "key_findings": [
-        "Search results primarily show general Google Maps links and unrelated content.",
-        "No specific Google Business Profile or reviews for Orbis Local are visible.",
-        "No evidence of claimed or verified GBP profile for Orbis Local in the search results."
+        "No verified Google Business Profile found for Pierre Paul on Google Maps.",
+        "Search results indicate no current presence or profile on GBP.",
+        "Existing reviews are associated with a different business (Pierre Paul Design) and not the brand in question."
       ],
-      "summary": "There is no detectable Google Maps presence for Orbis Local based on the current search results.",
-      "search_url": "https://www.google.com/maps/search/Orbis+Local",
+      "summary": "There is no active or verified Google Maps presence for Pierre Paul.",
+      "search_url": "https://www.google.com/maps/search/Pierre+Paul",
       "recommendations": [
         "Claim and verify your Google Business Profile",
         "Ensure NAP (Name, Address, Phone) consistency",
