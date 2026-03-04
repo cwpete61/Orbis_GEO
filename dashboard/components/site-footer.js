@@ -9,7 +9,7 @@ class SiteFooter extends HTMLElement {
 
     render() {
         this.innerHTML = `
-        <footer class="site-footer" style="background: #0b1a30; color: #ffffff; padding: 4rem 2rem; margin-top: 4rem;">
+        <footer class="site-footer" style="background: #130f40; color: #ffffff; padding: 4rem 2rem; margin-top: 4rem;">
             <div class="container" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem;">
                 
                 <!-- Company Info -->

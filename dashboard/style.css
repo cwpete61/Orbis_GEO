@@ -586,8 +586,8 @@ site-header {
     z-index: 1000;
     width: 100%;
     margin-bottom: 3rem;
-    background: #0b1a30;
-    /* Dark blue background */
+    background: #130f40;
+    /* Dark navy background */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     padding: 1rem 0;
 }
@@ -668,7 +668,7 @@ site-header {
 .doc-sidebar {
     flex: 0 0 280px;
     width: 280px;
-    background: #0b1a30;
+    background: #130f40;
     padding: 2rem 1.5rem;
     position: fixed;
     top: 0;
