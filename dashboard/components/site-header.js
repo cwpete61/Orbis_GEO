@@ -6,13 +6,13 @@ class SiteHeader extends HTMLElement {
     connectedCallback() {
         // Simple logic to set 'active' class based on current path
         const currentPath = window.location.pathname;
-        const page = currentPath.split('/').pop() || 'index.html';
+        const page = currentPath.split('/').pop() || '';
 
         this.innerHTML = `
             <header class="site-header">
                 <nav class="main-nav">
                     <ul>
-                        <li><a href="index.html" class="${page === 'index.html' || page === 'home.html' ? 'active' : ''}">Home</a></li>
+                        <li><a href="/" class="${page === '' || page === 'index.html' || page === 'home.html' ? 'active' : ''}">Home</a></li>
                         <li><a href="case-studio.html" class="${page === 'case-studio.html' ? 'active' : ''}">Case Studio</a></li>
                         <li><a href="more-orbis.html" class="${page === 'more-orbis.html' ? 'active' : ''}">More Orbis</a></li>
                         <li><a href="documentation.html" class="${page === 'documentation.html' ? 'active' : ''}">Documentation</a></li>

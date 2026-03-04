@@ -18,6 +18,12 @@ const transporter = nodemailer.createTransport({
 });
 
 app.use(express.json());
+
+// Redirect index.html to /
+app.get('/index.html', (req, res) => {
+    res.redirect(301, '/');
+});
+
 app.use(express.static(path.join(__dirname, '.')));
 app.use('/reports', express.static(path.join(__dirname, '..')));
 

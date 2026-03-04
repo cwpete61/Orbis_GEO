@@ -38,7 +38,7 @@ class SiteFooter extends HTMLElement {
                 <div class="footer-section">
                     <h3 style="color: #f0932b; margin-bottom: 1.5rem; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;">Quick Links</h3>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 0.8rem;"><a href="index.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Dashboard Home</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="/" style="color: rgba(255,255,255,0.8); text-decoration: none;">Dashboard Home</a></li>
                         <li style="margin-bottom: 0.8rem;"><a href="case-studio.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Case Studio</a></li>
                         <li style="margin-bottom: 0.8rem;"><a href="documentation.html" style="color: rgba(255,255,255,0.8); text-decoration: none;">Documentation</a></li>
                     </ul>
