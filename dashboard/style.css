@@ -555,9 +555,14 @@ main {
 }
 
 /* Site-Wide Header Nav */
+site-header {
+    display: block;
+    width: 100%;
+}
+
 .site-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     padding-top: 0;
     width: 100%;
 }
@@ -567,8 +572,9 @@ main {
     top: 0;
     z-index: 1000;
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     background: #0b1a30;
+    /* Dark blue background */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     padding: 1rem 0;
 }
@@ -581,7 +587,7 @@ main {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     gap: 2rem;
     flex-wrap: wrap;

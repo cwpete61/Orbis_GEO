@@ -47,6 +47,7 @@ credentials.*
 # Screenshots
 screenshots/
 *.png
+!dashboard/explainer-thumb.png
 *.jpg
 *.jpeg
 !schema/*.json
