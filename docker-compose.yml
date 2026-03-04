@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   orbis-local:
-    build: .
+    build:
+      context: .
+      network: host
     container_name: orbis-local-app
     ports:
       - "3000:3000"
