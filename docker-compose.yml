@@ -13,4 +13,6 @@ services:
       - ./ORBIS-LOCAL-LIVE-REPORT.pdf:/app/ORBIS-LOCAL-LIVE-REPORT.pdf
     environment:
       - NODE_ENV=production
+    env_file:
+      - .env
     restart: always
