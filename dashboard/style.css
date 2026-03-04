@@ -582,17 +582,16 @@ site-header {
     width: 100%;
 }
 
-.main-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1001;
-    width: 100%;
-    margin-bottom: 0;
-    background: #130f40;
-    /* Dark navy background */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    padding: 1rem 0;
+position: fixed !important;
+top: 0 !important;
+left: 0;
+z-index: 2000;
+width: 100%;
+margin-bottom: 0;
+background: #130f40;
+/* Dark navy background */
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+padding: 1rem 0;
 }
 
 .header-top {
@@ -666,6 +665,8 @@ site-header {
 #doc-main-layout {
     display: flex;
     min-height: 100vh;
+    padding-top: 80px;
+    /* Offset for fixed header */
 }
 
 .doc-sidebar {
