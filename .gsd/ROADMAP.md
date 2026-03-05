@@ -119,3 +119,9 @@
 **Status**: ✅ Complete
 - [x] Implement Outscraper webhooks and API triggers in `server.js`
 - [x] Integrate verified data into `brand_scanner.py` and `gbp_analyzer.py`
+
+## Phase 19: Aggressive GEO Expansion Sync
+**Status**: ✅ Complete
+- [x] Update Case Studio HTML labels to match new Local Visibility terminology
+- [x] Sync Case Studio JS to use the aggressive potential reach formula
+- [x] Ensure all mock data respects the new 20-40mi radial expansion metrics
