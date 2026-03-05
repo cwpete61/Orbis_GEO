@@ -284,8 +284,6 @@ def aggregate_data():
                         brand_auth_total += plat_score
                         brand_auth_count += 1
 
-                    data["platforms"] = processed_platforms
-
                     # Only fall back to average if brand_authority_score not already set
                     if data["scores"]["brand_authority"] == 0:
                         if brand_auth_count > 0:
@@ -338,6 +336,29 @@ def aggregate_data():
     total_score = sum(scores.values())
     if len(scores) > 0:
         data["geo_score"] = int(total_score / len(scores))
+        
+    # Calculate realistic AI Platform Readiness scores
+    plat_opt = scores.get("platform_optimization", 0)
+    cite = scores.get("ai_citability", 0)
+    eeat = scores.get("content_eeat", 0)
+    tech = scores.get("technical", 0)
+    schema = scores.get("schema", 0)
+    local = scores.get("local_authority", 0)
+    brand = scores.get("brand_authority", 0)
+    
+    chatgpt = int(min(max((plat_opt * 0.5) + (cite * 0.4) + (tech * 0.1), 0), 100))
+    perplexity = int(min(max((eeat * 0.4) + (cite * 0.4) + (tech * 0.2), 0), 100))
+    sge = int(min(max((schema * 0.3) + (local * 0.4) + (eeat * 0.3), 0), 100))
+    gemini = int(min(max((local * 0.4) + (cite * 0.3) + (tech * 0.3), 0), 100))
+    bing = int(min(max((brand * 0.4) + (schema * 0.4) + (local * 0.2), 0), 100))
+
+    data["platforms"] = {
+        "Google AI Overviews": sge,
+        "ChatGPT": chatgpt,
+        "Perplexity": perplexity,
+        "Gemini": gemini,
+        "Bing Copilot": bing
+    }
     
     # Enrich findings with AI for more detail and examples
     data["findings"] = enrich_findings_with_ai(data["findings"], data["brand_name"], data["url"])

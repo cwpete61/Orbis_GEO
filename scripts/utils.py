@@ -59,15 +59,18 @@ const puppeteer = require('puppeteer');
 }})();
 """
         try:
-            with open("temp_scraper.js", "w") as f:
+            scraper_path = _os.path.join("dashboard", "temp_scraper.js")
+            with open(scraper_path, "w") as f:
                 f.write(js_code)
-            result = subprocess.run(["node", "temp_scraper.js"], capture_output=True, text=True, timeout=20)
+            
+            # Run node from the dashboard directory to ensure it finds local node_modules
+            result = subprocess.run(["node", "temp_scraper.js"], cwd="dashboard", capture_output=True, text=True, timeout=20)
+            
             if result.stdout.strip():
                 address_str = result.stdout.strip()
                 print(f"[geocode] Puppeteer successfully found exact address: {address_str}", file=sys.stderr)
-            import os as _os
-            if _os.path.exists("temp_scraper.js"):
-                _os.remove("temp_scraper.js")
+            if _os.path.exists(scraper_path):
+                _os.remove(scraper_path)
         except Exception as e:
             print(f"[geocode] Puppeteer scrape failed: {e}", file=sys.stderr)
 
