@@ -83,3 +83,28 @@
 - [x] Implement side-by-side competitive comparison matrix <!-- id: 55 -->
 - [x] Populate with BPS Zero Fees vs Orbis Local case study data <!-- id: 56 -->
 - [x] Add visual score delta indicators and platform specific analysis <!-- id: 57 -->
+
+## Phase 14: Potential Visibility & PDF Refinement <!-- id: 58 -->
+**Status**: ✅ Complete
+- [x] Add potential visibility score calculation to `gbp_grid.py` <!-- id: 59 -->
+- [x] Update dashboard with current vs potential metrics <!-- id: 60 -->
+- [x] Fix PDF layout overlaps and add decorative Spacers <!-- id: 61 -->
+- [x] Integrate potential metrics into the final PDF report <!-- id: 62 -->
+
+## Phase 15: Milestone 1 Finalization & AI Simulation Prep <!-- id: 63 -->
+**Status**: ✅ Complete
+- [x] Conduct final quality audit of Branding & Data Foundation <!-- id: 64 -->
+- [x] Refactor common utility scripts for optimized AI model calls <!-- id: 65 -->
+- [x] Prepare documentation for advanced GEO simulations <!-- id: 66 -->
+
+# Milestone 2: Advanced AI Model Simulations <!-- id: 67 -->
+
+## Phase 16: Simulation Engine & Logic Foundation <!-- id: 68 -->
+**Status**: 🗓️ Planned
+- [ ] Create `scripts/sim_engine.py` for comparative GEO simulations <!-- id: 69 -->
+- [ ] Implement "Zero-Fee" baseline vs "Orbis" optimization logic <!-- id: 70 -->
+- [ ] Integrate OSM Nominatim API for GBP entity cross-validation (NAP+W check) <!-- id: 73 -->
+- [ ] Develop Confidence Scorer using OSM standard tags (`addr:street`, `website`, `brand:wikidata`) <!-- id: 74 -->
+- [ ] Update `gbp_analyzer.py` with OSM verification fallback mechanism <!-- id: 75 -->
+- [ ] Integrate simulation results into the Case Studio data flow <!-- id: 71 -->
+- [ ] Generate first automated simulation report (LightBox SEO) <!-- id: 72 -->

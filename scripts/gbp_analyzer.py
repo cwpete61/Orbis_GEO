@@ -40,6 +40,37 @@ def analyze_gbp(gbp_url):
     except Exception as e:
         results = [f"Search failed: {str(e)}"]
 
+    import requests
+
+    # Step 1.5: OSM Entity Verification 
+    osm_data_str = "No OSM data retrieved."
+    try:
+        # Try to extract a clean business name from a standard maps URL
+        possible_name = search_query
+        if "place/" in gbp_url:
+            parts = gbp_url.split("place/")[1].split("/")
+            if len(parts) > 0:
+                possible_name = parts[0].replace("+", " ")
+        
+        # We query the OSM Nominatim API searching for the query.
+        osm_url = f"https://nominatim.openstreetmap.org/search?q={requests.utils.quote(possible_name)}&format=jsonv2&addressdetails=1&extratags=1&limit=3"
+        headers = {'User-Agent': 'OrbisGEO-SEO/1.0 (Integration Test)'}
+        osm_response = requests.get(osm_url, headers=headers, timeout=5)
+        if osm_response.status_code == 200:
+            osm_results = osm_response.json()
+            osm_lines = []
+            for r in osm_results:
+                name = r.get('name', 'N/A')
+                display = r.get('display_name', 'N/A')
+                tags = r.get('extratags', {})
+                website = tags.get('website', tags.get('contact:website', 'N/A'))
+                wikidata = tags.get('wikidata', tags.get('brand:wikidata', 'N/A'))
+                osm_lines.append(f"- Name: {name} | Address: {display} | Website: {website} | Wikidata: {wikidata}")
+            if osm_lines:
+                osm_data_str = "\n".join(osm_lines)
+    except Exception as e:
+        osm_data_str = f"OSM Search failed: {str(e)}"
+
     # Step 2: AI Analysis
     prompt = f"""You are a Local GEO (Generative Engine Optimization) expert.
 Analyze the following search context for a Google Business Profile:
@@ -48,15 +79,19 @@ URL provided: {gbp_url}
 Search Context:
 {chr(10).join(results)}
 
+Open Street Maps (OSM) Entity Cross-Validation Data:
+{osm_data_str}
+
 Evaluate the "AI Readiness" of this local business. Consider:
 1. Is the business name and category clear?
 2. Does it have "AI-compatible" descriptions (full of entities, clear services)?
 3. What is the sentiment of recent reviews/mentions?
-4. How likely is an AI (like ChatGPT Local or Google SGE) to recommend this specific location?
+4. Entity Verification: Cross-reference the GBP Search Context against the OSM Entity Data. If the canonical OSM data (address, website, wikidata) does not match the GBP results, it indicates an entity mismatch.
 
 Return a JSON object:
 {{
     "business_name": "string",
+    "osm_verification_confidence": 0-100,
     "overall_local_score": 0-100,
     "status": "Excellent|Good|Fair|Poor",
     "insights": [
