@@ -120,7 +120,13 @@ def create_bar_chart(data, labels, width=400, height=200):
     chart.width = width - 80
     chart.data = [data]
     chart.categoryAxis.categoryNames = labels
-    chart.categoryAxis.labels.angle = 0
+    if len(labels) > 6:
+        chart.categoryAxis.labels.angle = 45
+        chart.categoryAxis.labels.dy = -15
+        chart.categoryAxis.labels.dx = 0
+        chart.categoryAxis.labels.textAnchor = 'end'
+    else:
+        chart.categoryAxis.labels.angle = 0
     chart.categoryAxis.labels.fontSize = 8
     chart.categoryAxis.labels.fontName = 'Helvetica'
     chart.valueAxis.valueMin = 0
@@ -139,17 +145,22 @@ def create_bar_chart(data, labels, width=400, height=200):
     return d
 
 
-def create_platform_chart(platforms, width=450, height=180):
+def create_platform_chart(platforms, width=450, height=None):
     """Create a chart showing platform readiness scores."""
+    bar_height = 22
+    spacing = 10
+    
+    if height is None:
+        height = max(180, len(platforms) * (bar_height + spacing) + 40)
+        
     d = Drawing(width, height)
 
-    bar_height = 22
     bar_max_width = 280
     start_y = height - 30
     label_x = 10
 
     for i, (name, score) in enumerate(platforms.items()):
-        y = start_y - (i * (bar_height + 10))
+        y = start_y - (i * (bar_height + spacing))
 
         # Platform name
         d.add(String(label_x, y + 5, name,
@@ -499,6 +510,28 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     elements.append(PageBreak())
 
     # ============================================================
+    # EXECUTIVE SUMMARY
+    # ============================================================
+    elements.append(Paragraph("Executive Summary", styles['SectionHeader']))
+    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
+
+    if executive_summary:
+        elements.append(Paragraph(executive_summary, styles['BodyText_Custom']))
+    else:
+        elements.append(Paragraph(
+            f"This report presents the findings of a comprehensive Generative Engine Optimization (GEO) "
+            f"audit conducted on <b>{brand_name}</b> ({url}). The analysis evaluated the website's readiness "
+            f"for AI-powered search engines including Google AI Overviews, ChatGPT, Perplexity, Gemini, "
+            f"and Bing Copilot. The overall GEO Readiness Score is <b>{geo_score}/100</b>, "
+            f"placing the site in the <b>{get_score_label(geo_score)}</b> tier.",
+            styles['BodyText_Custom']
+        ))
+
+    elements.append(Spacer(1, 16))
+
+    elements.append(PageBreak())
+
+    # ============================================================
     # GRID VISIBILITY
     # ============================================================
     elements.append(Paragraph("Grid Visibility", styles['SectionHeader']))
@@ -527,6 +560,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             if p["score"] <= 5:
                 d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
                 if d > max_reach: max_reach = d
+        max_reach_mi = max_reach * 0.621371  # Convert km to miles
                 
         # Calculate Potential Metrics
         pot_scores = [p.get("potential_score", p["score"]) for p in grid]
@@ -540,6 +574,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             if ps <= 5:
                 d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
                 if d > pot_max_reach: pot_max_reach = d
+        pot_max_reach_mi = pot_max_reach * 0.621371  # Convert km to miles
         
         # Current Stats Table
         elements.append(Paragraph("Current Visibility Status", styles['SubHeader']))
@@ -547,7 +582,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             [
                 Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Avg. Visibility</b></font><br/><br/><font size=18><b>Rank #{avg_rank:.1f}</b></font>", styles['BodyText_Custom']),
                 Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Search Fallout</b></font><br/><br/><font size=18><b>{int(fallout_percent)}%</b></font>", styles['BodyText_Custom']),
-                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Effective Reach</b></font><br/><br/><font size=18><b>{max_reach:.1f} km</b></font>", styles['BodyText_Custom'])
+                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Effective Reach</b></font><br/><br/><font size=18><b>{max_reach_mi:.1f} mi</b></font>", styles['BodyText_Custom'])
             ]
         ]
         st = Table(stats_data, colWidths=[160, 160, 160])
@@ -582,7 +617,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             [
                 Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Avg.</b></font><br/><br/><font size=18><b>Rank #{pot_avg_rank:.1f}</b></font>", styles['BodyText_Custom']),
                 Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Fallout</b></font><br/><br/><font size=18><b>{int(pot_fallout_percent)}%</b></font>", styles['BodyText_Custom']),
-                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Reach</b></font><br/><br/><font size=18><b>{pot_max_reach:.1f} km</b></font>", styles['BodyText_Custom'])
+                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Reach</b></font><br/><br/><font size=18><b>{pot_max_reach_mi:.1f} mi</b></font>", styles['BodyText_Custom'])
             ]
         ]
         pst = Table(pot_stats_data, colWidths=[160, 160, 160])
@@ -646,26 +681,6 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         ))
 
     elements.append(PageBreak())
-
-    # ============================================================
-    # EXECUTIVE SUMMARY
-    # ============================================================
-    elements.append(Paragraph("Executive Summary", styles['SectionHeader']))
-    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
-
-    if executive_summary:
-        elements.append(Paragraph(executive_summary, styles['BodyText_Custom']))
-    else:
-        elements.append(Paragraph(
-            f"This report presents the findings of a comprehensive Generative Engine Optimization (GEO) "
-            f"audit conducted on <b>{brand_name}</b> ({url}). The analysis evaluated the website's readiness "
-            f"for AI-powered search engines including Google AI Overviews, ChatGPT, Perplexity, Gemini, "
-            f"and Bing Copilot. The overall GEO Readiness Score is <b>{geo_score}/100</b>, "
-            f"placing the site in the <b>{get_score_label(geo_score)}</b> tier.",
-            styles['BodyText_Custom']
-        ))
-
-    elements.append(Spacer(1, 16))
 
     # ============================================================
     # SCORE BREAKDOWN
@@ -745,6 +760,90 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         pt_style.add('TEXTCOLOR', (1, i), (1, i), color)
     pt.setStyle(pt_style)
     elements.append(pt)
+
+    elements.append(PageBreak())
+
+    # ============================================================
+    # BRAND AUTHORITY & SOCIAL PRESENCE
+    # ============================================================
+    brand_platforms = data.get("brand_platforms", {})
+    if brand_platforms:
+        elements.append(Paragraph("Brand Authority & Social Presence", styles['SectionHeader']))
+        elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
+
+        elements.append(Paragraph(
+            "AI search engines build entity recognition from your brand's footprint across social platforms, "
+            "directories, and knowledge bases. Higher presence correlates directly with higher citation rates. "
+            "Scores below 30 indicate critical gaps that may prevent AI models from identifying your brand.",
+            styles['BodyText_Custom']
+        ))
+        elements.append(Spacer(1, 10))
+
+        # Brand Authority composite score
+        brand_auth_score = data.get("scores", {}).get("brand_authority", 0)
+        auth_color = get_score_color(brand_auth_score)
+        elements.append(Paragraph(
+            f"<font color='{auth_color.hexval()}' size=14><b>Brand Authority Score: {brand_auth_score}/100</b></font>"
+            f" ({get_score_label(brand_auth_score)})",
+            styles['BodyText_Custom']
+        ))
+        elements.append(Spacer(1, 12))
+
+        # Bar chart of platform scores
+        plat_names = []
+        plat_scores = []
+        for key, info in brand_platforms.items():
+            short_name = key.replace(" / Wikidata", "").replace("Google Maps ", "").replace("(GBP)", "GBP").replace("Other Platforms", "Other")
+            plat_names.append(short_name)
+            plat_scores.append(info.get("score", 0) if isinstance(info, dict) else 0)
+
+        if plat_scores:
+            elements.append(create_bar_chart(plat_scores, plat_names))
+            elements.append(Spacer(1, 15))
+
+        # Detail table: Platform | Score | Summary
+        bp_table_data = [["Platform", "Score", "Key Insight"]]
+        for key, info in brand_platforms.items():
+            if isinstance(info, dict):
+                score = info.get("score", 0)
+                summary = info.get("summary", "No data available.")
+                # Truncate long summaries for table readability
+                if len(summary) > 120:
+                    summary = summary[:117] + "..."
+                bp_table_data.append([
+                    Paragraph(key, styles['TableBody']),
+                    f"{score}/100",
+                    Paragraph(summary, styles['TableBody'])
+                ])
+
+        if len(bp_table_data) > 1:
+            bp_table = Table(bp_table_data, colWidths=[120, 60, 300])
+            bp_style = make_table_style()
+            for i in range(1, len(bp_table_data)):
+                s_val = int(float(bp_table_data[i][1].split("/")[0]))
+                bp_style.add('TEXTCOLOR', (1, i), (1, i), get_score_color(s_val))
+            bp_table.setStyle(bp_style)
+            elements.append(bp_table)
+
+        elements.append(Spacer(1, 15))
+
+        # Top recommendations from all platforms
+        elements.append(Paragraph("Priority Actions", styles['SubHeader']))
+        all_recs = []
+        for key, info in brand_platforms.items():
+            if isinstance(info, dict) and info.get("score", 100) < 50:
+                recs = info.get("recommendations", [])
+                if recs:
+                    all_recs.append(f"<b>{key}:</b> {recs[0]}")
+        
+        if all_recs:
+            for rec in all_recs[:6]:
+                elements.append(Paragraph(rec, styles['Recommendation'], bulletText='▸'))
+        else:
+            elements.append(Paragraph(
+                "All platforms show adequate presence. Continue monitoring and improving engagement.",
+                styles['BodyText_Custom']
+            ))
 
     elements.append(PageBreak())
 

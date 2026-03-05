@@ -53,6 +53,15 @@ if not OPENAI_API_KEY:
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 
+def extract_domain(url: str) -> str:
+    """Extract clean domain from a URL for search disambiguation."""
+    if not url:
+        return ""
+    domain = url.replace("https://", "").replace("http://", "").split("/")[0]
+    domain = domain.replace("www.", "")
+    return domain
+
+
 def ddg_search(query: str, max_results: int = 6) -> list[str]:
     """Perform a DuckDuckGo search and return a list of snippet strings."""
     snippets = []
@@ -66,6 +75,20 @@ def ddg_search(query: str, max_results: int = 6) -> list[str]:
     except Exception as e:
         snippets.append(f"Search failed: {e}")
     return snippets
+
+
+def validate_snippets(brand: str, snippets: list[str]) -> bool:
+    """Check if any DDG snippets actually mention the brand name.
+    Returns True if the brand appears meaningfully in at least one snippet."""
+    if not snippets:
+        return False
+    brand_lower = brand.lower()
+    for s in snippets:
+        if "Search failed" in s:
+            continue
+        if brand_lower in s.lower():
+            return True
+    return False
 
 
 def analyze_with_ai(brand: str, platform: str, snippets: list[str], criteria: str) -> dict:
@@ -111,11 +134,14 @@ Respond ONLY with a valid JSON object with this exact structure:
         }
 
 
-def check_youtube(brand: str) -> dict:
+def check_youtube(brand: str, url: str = "") -> dict:
     """Check YouTube brand presence."""
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    
     # Search for channel specifically, but also standard videos
-    snippets = ddg_search(f'"{brand}" youtube channel', max_results=3)
-    snippets += ddg_search(f'site:youtube.com "{brand}"', max_results=3)
+    snippets = ddg_search(f'"{brand}"{domain_term} youtube channel', max_results=3)
+    snippets += ddg_search(f'site:youtube.com "{brand}"{domain_term}', max_results=3)
     
     # Check for general video mentions, requiring the brand name in quotes
     snippets += ddg_search(f'site:youtube.com "{brand}" review', max_results=4)
@@ -141,6 +167,9 @@ CRITICAL INSTRUCTIONS FOR AI:
         analysis["score"] = 0
         analysis["has_presence"] = False
         analysis["summary"] = "No YouTube presence detected."
+    elif not validate_snippets(brand, snippets) and not any("youtube.com" in s for s in snippets):
+        # No brand mention in snippets AND no youtube URLs — cap score
+        analysis["score"] = min(analysis.get("score", 0), 10)
     elif analysis.get("score", 0) > 40 and not any("youtube.com" in s for s in snippets):
          # Downgrade if AI scored too high but no youtube url is in the snippets at all
          analysis["score"] = min(analysis.get("score", 0), 20)
@@ -164,10 +193,13 @@ CRITICAL INSTRUCTIONS FOR AI:
     }
 
 
-def check_reddit(brand: str) -> dict:
+def check_reddit(brand: str, url: str = "") -> dict:
     """Check Reddit brand presence."""
-    snippets = ddg_search(f'"{brand}" site:reddit.com recommendations', max_results=6)
-    snippets += ddg_search(f'"{brand}" reddit review discussion', max_results=4)
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    
+    snippets = ddg_search(f'"{brand}"{domain_term} site:reddit.com recommendations', max_results=6)
+    snippets += ddg_search(f'"{brand}"{domain_term} reddit review discussion', max_results=4)
 
     criteria = """Score based on:
 - 90-100: Frequently recommended in relevant subreddits, predominantly positive, active official presence
@@ -179,11 +211,13 @@ def check_reddit(brand: str) -> dict:
 
     analysis = analyze_with_ai(brand, "Reddit", snippets, criteria)
     
-    # Force 0 if DDG failed or hallucinated
+    # Force 0 if DDG failed, hallucinated, or brand not in snippets
     if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
         analysis["score"] = 0
         analysis["has_presence"] = False
         analysis["summary"] = "No Reddit presence detected."
+    elif not validate_snippets(brand, snippets) and not any("reddit.com" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
 
     return {
         "platform": "Reddit",
@@ -204,26 +238,34 @@ def check_reddit(brand: str) -> dict:
     }
 
 
-def check_wikipedia(brand: str) -> dict:
+def check_wikipedia(brand: str, url: str = "") -> dict:
     """Check Wikipedia/Wikidata brand presence via API."""
     has_wiki = False
     wiki_url = ""
     wikidata_id = ""
+    domain = extract_domain(url)
 
-    # Check Wikipedia API directly
+    # Check Wikipedia API directly — require EXACT title match (case-insensitive)
     try:
         from urllib.parse import quote_plus
         api_url = f"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={quote_plus(brand)}&format=json"
         r = requests.get(api_url, headers={"User-Agent": "GEO-Audit/1.0"}, timeout=10)
         data = r.json()
         results = data.get("query", {}).get("search", [])
-        if results and brand.lower() in results[0].get("title", "").lower():
-            has_wiki = True
-            wiki_url = f"https://en.wikipedia.org/wiki/{results[0]['title'].replace(' ', '_')}"
+        if results:
+            top_title = results[0].get("title", "")
+            # Strict match: title must BE the brand name, not just contain it as a substring
+            if top_title.lower().strip() == brand.lower().strip():
+                has_wiki = True
+                wiki_url = f"https://en.wikipedia.org/wiki/{top_title.replace(' ', '_')}"
+            elif len(brand) > 3 and brand.lower() in top_title.lower():
+                # For longer brand names, substring is ok
+                has_wiki = True
+                wiki_url = f"https://en.wikipedia.org/wiki/{top_title.replace(' ', '_')}"
     except Exception:
         pass
 
-    # Check Wikidata
+    # Check Wikidata — also require more explicit match for short names
     try:
         from urllib.parse import quote_plus
         wd_url = f"https://www.wikidata.org/w/api.php?action=wbsearchentities&search={quote_plus(brand)}&language=en&format=json"
@@ -231,12 +273,19 @@ def check_wikipedia(brand: str) -> dict:
         wd = r2.json()
         entities = wd.get("search", [])
         if entities:
-            wikidata_id = entities[0].get("id", "")
+            # For short brand names, verify the Wikidata label matches more closely
+            wd_label = entities[0].get("label", "").lower()
+            if len(brand) <= 3:
+                if wd_label == brand.lower():
+                    wikidata_id = entities[0].get("id", "")
+            else:
+                wikidata_id = entities[0].get("id", "")
     except Exception:
         pass
 
-    # Supplement with search snippets
-    snippets = ddg_search(f'"{brand}" site:wikipedia.org', max_results=4)
+    # Supplement with search snippets — include domain for disambiguation
+    domain_term = f" {domain}" if domain else ""
+    snippets = ddg_search(f'"{brand}"{domain_term} site:wikipedia.org', max_results=4)
 
     criteria = f"""The brand "{brand}" {'HAS a Wikipedia article at ' + wiki_url if has_wiki else 'does NOT have a Wikipedia article'}.
 {'It HAS a Wikidata entry: ' + wikidata_id if wikidata_id else 'No Wikidata entry found.'}.
@@ -273,10 +322,13 @@ Score based on:
     }
 
 
-def check_linkedin(brand: str) -> dict:
+def check_linkedin(brand: str, url: str = "") -> dict:
     """Check LinkedIn brand presence."""
-    snippets = ddg_search(f'"{brand}" site:linkedin.com/company', max_results=5)
-    snippets += ddg_search(f'"{brand}" company linkedin followers employees', max_results=3)
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    
+    snippets = ddg_search(f'"{brand}"{domain_term} site:linkedin.com/company', max_results=5)
+    snippets += ddg_search(f'"{brand}"{domain_term} company linkedin followers employees', max_results=3)
 
     criteria = """Score based on:
 - 90-100: Active company page with 10K+ followers, regular thought leadership posts
@@ -288,11 +340,13 @@ def check_linkedin(brand: str) -> dict:
 
     analysis = analyze_with_ai(brand, "LinkedIn", snippets, criteria)
     
-    # Force 0 if DDG failed or hallucinated
+    # Force 0 if DDG failed, hallucinated, or brand not in snippets
     if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
         analysis["score"] = 0
         analysis["has_presence"] = False
         analysis["summary"] = "No LinkedIn presence detected."
+    elif not validate_snippets(brand, snippets) and not any("linkedin.com" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
         
     return {
         "platform": "LinkedIn",
@@ -312,11 +366,158 @@ def check_linkedin(brand: str) -> dict:
     }
 
 
-def check_other_platforms(brand: str) -> dict:
+def check_facebook(brand: str, url: str = "") -> dict:
+    """Check Facebook brand presence."""
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    snippets = ddg_search(f'"{brand}"{domain_term} site:facebook.com', max_results=5)
+    criteria = """Score based on:
+- 90-100: Active verified official page with thousands of followers and regular posts
+- 70-89: Official page exists with good following but moderate activity
+- 50-69: Basic page exists, limited followers/posts
+- 30-49: Unofficial or community pages only
+- 10-29: Sparse mentions by other users
+- 0-9: No Facebook presence"""
+    analysis = analyze_with_ai(brand, "Facebook", snippets, criteria)
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No Facebook presence detected."
+    elif not validate_snippets(brand, snippets) and not any("facebook.com" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
+    return {
+        "platform": "Facebook",
+        "correlation": "Moderate",
+        "weight": "8%",
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.facebook.com/search/pages/?q={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Create or claim your official Facebook page",
+            "Post regular updates, events, and community engaging content",
+            "Encourage and respond to customer reviews on Facebook",
+        ]
+    }
+
+def check_instagram(brand: str, url: str = "") -> dict:
+    """Check Instagram brand presence."""
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    snippets = ddg_search(f'"{brand}"{domain_term} site:instagram.com', max_results=5)
+    criteria = """Score based on:
+- 90-100: Official verified profile with thousands of followers and active engagement
+- 70-89: Official profile exists, good following, moderate activity
+- 50-69: Basic profile exists, limited followers/posts
+- 30-49: Unofficial or hashtag mentions only
+- 10-29: Sparse mentions by other users
+- 0-9: No Instagram presence"""
+    analysis = analyze_with_ai(brand, "Instagram", snippets, criteria)
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No Instagram presence detected."
+    elif not validate_snippets(brand, snippets) and not any("instagram.com" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
+    return {
+        "platform": "Instagram",
+        "correlation": "Moderate",
+        "weight": "8%",
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.instagram.com/explore/search/keyword/?q={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Create or claim your official Instagram profile",
+            "Post high-quality visual content regularly",
+            "Engage with followers and relevant niche hashtags",
+        ]
+    }
+
+def check_twitter(brand: str, url: str = "") -> dict:
+    """Check Twitter/X brand presence."""
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    snippets = ddg_search(f'"{brand}"{domain_term} site:twitter.com OR site:x.com', max_results=5)
+    criteria = """Score based on:
+- 90-100: Official verified account with thousands of followers and active posting
+- 70-89: Official account exists, good following, moderate activity
+- 50-69: Basic account exists, limited followers/posts
+- 30-49: Unofficial or customer chatter only
+- 10-29: Sparse passing mentions by other users
+- 0-9: No Twitter/X presence"""
+    analysis = analyze_with_ai(brand, "Twitter/X", snippets, criteria)
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No Twitter/X presence detected."
+    elif not validate_snippets(brand, snippets) and not any("twitter.com" in s for s in snippets) and not any("x.com" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
+    return {
+        "platform": "Twitter/X",
+        "correlation": "Moderate",
+        "weight": "8%",
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://twitter.com/search?q={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Create or claim your official Twitter/X account",
+            "Engage proactively with industry news and customer support",
+            "Post frequently to build brand authority signals",
+        ]
+    }
+
+def check_tiktok(brand: str, url: str = "") -> dict:
+    """Check TikTok brand presence."""
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    snippets = ddg_search(f'"{brand}"{domain_term} site:tiktok.com', max_results=5)
+    criteria = """Score based on:
+- 90-100: Official verified account with thousands of followers and viral/active content
+- 70-89: Official account exists, good following, moderate activity
+- 50-69: Basic account exists or many user-generated videos about brand
+- 30-49: Sparse user-generated mentions
+- 10-29: Extremely rare mentions
+- 0-9: No TikTok presence"""
+    analysis = analyze_with_ai(brand, "TikTok", snippets, criteria)
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No TikTok presence detected."
+    elif not validate_snippets(brand, snippets) and not any("tiktok.com" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
+    return {
+        "platform": "TikTok",
+        "correlation": "Moderate",
+        "weight": "8%",
+        "score": analysis.get("score", 0),
+        "has_presence": analysis.get("has_presence", False),
+        "sentiment": analysis.get("sentiment", "unknown"),
+        "key_findings": analysis.get("key_findings", []),
+        "summary": analysis.get("summary", ""),
+        "search_url": f"https://www.tiktok.com/search?q={brand.replace(' ', '+')}",
+        "recommendations": [
+            "Create or claim your official TikTok profile",
+            "Share engaging, short-form video content",
+            "Collaborate with TikTok creators in your niche",
+        ]
+    }
+
+def check_other_platforms(brand: str, url: str = "") -> dict:
     """Check other supplementary platforms (Quora, News, GitHub etc)."""
-    snippets = ddg_search(f'"{brand}" site:quora.com', max_results=3)
-    snippets += ddg_search(f'"{brand}" news press coverage 2024 2025', max_results=4)
-    snippets += ddg_search(f'"{brand}" podcast mention', max_results=3)
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    
+    snippets = ddg_search(f'"{brand}"{domain_term} site:quora.com', max_results=3)
+    snippets += ddg_search(f'"{brand}"{domain_term} news press coverage 2024 2025', max_results=4)
+    snippets += ddg_search(f'"{brand}"{domain_term} podcast mention', max_results=3)
 
     criteria = """Score based on presence across Quora, news/press, GitHub, podcasts:
 - 90-100: Strong press coverage, Quora answers, podcast appearances
@@ -327,10 +528,12 @@ def check_other_platforms(brand: str) -> dict:
 
     analysis = analyze_with_ai(brand, "Other Platforms (Quora, News, Podcasts)", snippets, criteria)
     
-    # Force 0 if DDG failed or hallucinated
+    # Force 0 if DDG failed, hallucinated, or brand not in snippets
     if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
         analysis["score"] = 0
         analysis["summary"] = "No supplementary platform presence detected."
+    elif not validate_snippets(brand, snippets):
+        analysis["score"] = min(analysis.get("score", 0), 15)
 
     return {
         "platform": "Other Platforms",
@@ -347,13 +550,16 @@ def check_other_platforms(brand: str) -> dict:
     }
 
 
-def check_directories(brand_name: str) -> dict:
+def check_directories(brand_name: str, url: str = "") -> dict:
     """Check brand presence on major local directories."""
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    
     # Search for brand on specific directory sites
-    snippets = ddg_search(f'"{brand_name}" site:yelp.com', max_results=3)
-    snippets += ddg_search(f'"{brand_name}" site:yellowpages.com', max_results=3)
-    snippets += ddg_search(f'"{brand_name}" site:trustpilot.com', max_results=3)
-    snippets += ddg_search(f'"{brand_name}" local directory business listing', max_results=3)
+    snippets = ddg_search(f'"{brand_name}"{domain_term} site:yelp.com', max_results=3)
+    snippets += ddg_search(f'"{brand_name}"{domain_term} site:yellowpages.com', max_results=3)
+    snippets += ddg_search(f'"{brand_name}"{domain_term} site:trustpilot.com', max_results=3)
+    snippets += ddg_search(f'"{brand_name}"{domain_term} local directory business listing', max_results=3)
 
     criteria = """Score based on presence across Yelp, YellowPages, Trustpilot, etc:
 - 90-100: Verified listings on 3+ major directories with positive reviews
@@ -364,11 +570,13 @@ def check_directories(brand_name: str) -> dict:
 
     analysis = analyze_with_ai(brand_name, "Local Directories", snippets, criteria)
     
-    # Force 0 if DDG failed or hallucinated
+    # Force 0 if DDG failed, hallucinated, or brand not in snippets
     if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
         analysis["score"] = 0
         analysis["has_presence"] = False
         analysis["summary"] = "No local directory presence detected."
+    elif not validate_snippets(brand_name, snippets):
+        analysis["score"] = min(analysis.get("score", 0), 15)
 
     return {
         "platform": "Local Directories",
@@ -388,10 +596,13 @@ def check_directories(brand_name: str) -> dict:
     }
 
 
-def check_google_maps_presence(brand: str) -> dict:
+def check_google_maps_presence(brand: str, url: str = "") -> dict:
     """Check brand presence on Google Maps / GBP via search snippets."""
-    snippets = ddg_search(f'"{brand}" site:google.com/maps', max_results=5)
-    snippets += ddg_search(f'"{brand}" Google Business Profile review', max_results=3)
+    domain = extract_domain(url)
+    domain_term = f" {domain}" if domain else ""
+    
+    snippets = ddg_search(f'"{brand}"{domain_term} site:google.com/maps', max_results=5)
+    snippets += ddg_search(f'"{brand}"{domain_term} Google Business Profile review', max_results=3)
 
     criteria = """Score based on:
 - 90-100: Verified Google Business Profile with 4.5+ rating and 100+ reviews
@@ -404,11 +615,13 @@ def check_google_maps_presence(brand: str) -> dict:
     # We reuse the analyze_with_ai but with a local context focus
     analysis = analyze_with_ai(brand, "Google Maps (GBP)", snippets, criteria)
     
-    # Force 0 if DDG failed or hallucinated
+    # Force 0 if DDG failed, hallucinated, or brand not in snippets
     if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
         analysis["score"] = 0
         analysis["has_presence"] = False
         analysis["summary"] = "No Google Maps presence detected."
+    elif not validate_snippets(brand, snippets) and not any("google.com/maps" in s for s in snippets):
+        analysis["score"] = min(analysis.get("score", 0), 10)
 
     return {
         "platform": "Google Maps (GBP)",
@@ -431,27 +644,28 @@ def check_google_maps_presence(brand: str) -> dict:
 
 def calculate_brand_authority(platforms: dict) -> int:
     """Calculate composite Brand Authority Score from platform scores."""
-    weights = {
-        "youtube": 0.25,
-        "reddit": 0.25,
-        "wikipedia": 0.20,
-        "linkedin": 0.15,
-        "other": 0.15,
-    }
     youtube_score = platforms.get("YouTube", {}).get("score", 0)
     reddit_score = platforms.get("Reddit", {}).get("score", 0)
     wikipedia_score = platforms.get("Wikipedia / Wikidata", {}).get("score", 0)
     linkedin_score = platforms.get("LinkedIn", {}).get("score", 0)
     directory_score = platforms.get("Local Directories", {}).get("score", 0)
+    facebook_score = platforms.get("Facebook", {}).get("score", 0)
+    instagram_score = platforms.get("Instagram", {}).get("score", 0)
+    twitter_score = platforms.get("Twitter/X", {}).get("score", 0)
+    tiktok_score = platforms.get("TikTok", {}).get("score", 0)
     other_score = platforms.get("Other Platforms", {}).get("score", 0)
 
     total = (
-        youtube_score * 0.20
-        + reddit_score * 0.20
-        + wikipedia_score * 0.15
-        + linkedin_score * 0.15
-        + directory_score * 0.20
-        + other_score * 0.10
+        youtube_score * 0.15
+        + reddit_score * 0.15
+        + wikipedia_score * 0.10
+        + directory_score * 0.15
+        + linkedin_score * 0.08
+        + facebook_score * 0.08
+        + instagram_score * 0.08
+        + twitter_score * 0.08
+        + tiktok_score * 0.08
+        + other_score * 0.05
     )
     return min(int(total), 100)
 
@@ -459,31 +673,50 @@ def calculate_brand_authority(platforms: dict) -> int:
 def scan_brand(brand_name: str, url: str = "") -> dict:
     """Main entrypoint: Perform full brand scan using AI-powered analysis."""
     print(f"[brand_scanner] Starting brand analysis for: {brand_name}", file=sys.stderr)
+    if url:
+        print(f"[brand_scanner] Using URL for disambiguation: {url}", file=sys.stderr)
 
-    youtube = check_youtube(brand_name)
+    youtube = check_youtube(brand_name, url)
     print(f"[brand_scanner] YouTube: {youtube['score']}/100", file=sys.stderr)
 
-    reddit = check_reddit(brand_name)
+    reddit = check_reddit(brand_name, url)
     print(f"[brand_scanner] Reddit: {reddit['score']}/100", file=sys.stderr)
 
-    wikipedia = check_wikipedia(brand_name)
+    wikipedia = check_wikipedia(brand_name, url)
     print(f"[brand_scanner] Wikipedia: {wikipedia['score']}/100", file=sys.stderr)
 
-    linkedin = check_linkedin(brand_name)
+    linkedin = check_linkedin(brand_name, url)
     print(f"[brand_scanner] LinkedIn: {linkedin['score']}/100", file=sys.stderr)
 
-    directories = check_directories(brand_name)
+    directories = check_directories(brand_name, url)
     print(f"[brand_scanner] Directories: {directories['score']}/100", file=sys.stderr)
 
-    other = check_other_platforms(brand_name)
+    facebook = check_facebook(brand_name, url)
+    print(f"[brand_scanner] Facebook: {facebook['score']}/100", file=sys.stderr)
+
+    instagram = check_instagram(brand_name, url)
+    print(f"[brand_scanner] Instagram: {instagram['score']}/100", file=sys.stderr)
+
+    twitter = check_twitter(brand_name, url)
+    print(f"[brand_scanner] Twitter/X: {twitter['score']}/100", file=sys.stderr)
+
+    tiktok = check_tiktok(brand_name, url)
+    print(f"[brand_scanner] TikTok: {tiktok['score']}/100", file=sys.stderr)
+
+    other = check_other_platforms(brand_name, url)
     print(f"[brand_scanner] Other: {other['score']}/100", file=sys.stderr)
 
-    google_maps = check_google_maps_presence(brand_name)
+    google_maps = check_google_maps_presence(brand_name, url)
+    print(f"[brand_scanner] Google Maps: {google_maps['score']}/100", file=sys.stderr)
 
     platforms = {
         "YouTube": youtube,
         "Reddit": reddit,
         "Wikipedia / Wikidata": wikipedia,
+        "Facebook": facebook,
+        "Instagram": instagram,
+        "Twitter/X": twitter,
+        "TikTok": tiktok,
         "LinkedIn": linkedin,
         "Local Directories": directories,
         "Other Platforms": other,
