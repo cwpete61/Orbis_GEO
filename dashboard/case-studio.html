@@ -148,7 +148,7 @@
                         <span class="brand-badge baseline">CURRENT STATE</span>
                         <h3>LightBox SEO</h3>
                         <div class="big-score" id="sim-baseline-score">—</div>
-                        <p>Avg. Rank (Current)</p>
+                        <p>Local Visibility (Current)</p>
                     </div>
                 </div>
 
@@ -157,7 +157,7 @@
                         <span class="brand-badge optimized">OPTIMIZED (GEO/SEO)</span>
                         <h3>LightBox SEO</h3>
                         <div class="big-score" id="sim-optimized-score">—</div>
-                        <p>Avg. Rank (Potential)</p>
+                        <p>Local Visibility (Potential)</p>
                     </div>
                     <div class="growth-box" id="sim-delta-box">Run Simulation ↓</div>
                 </div>
@@ -277,14 +277,27 @@
             });
         }
 
-        function renderStats(containerId, avg, label) {
+        function renderStats(containerId, centerRank, label) {
             const el = document.getElementById(containerId);
-            const cls = avg <= 5 ? 'good' : avg <= 10 ? 'warn' : 'bad';
+            const cls = centerRank <= 5 ? 'good' : centerRank <= 10 ? 'warn' : 'bad';
             const fallout = /* % of points ranked > 10 */ 0;
             el.innerHTML = `
-                <div class="sim-stat"><div class="stat-val ${cls}">${avg.toFixed(1)}</div><div class="stat-lbl">Avg Rank (${label})</div></div>
-                <div class="sim-stat"><div class="stat-val">${(avg / 20 * 100).toFixed(0)}%</div><div class="stat-lbl">Visibility Score</div></div>
+                <div class="sim-stat"><div class="stat-val ${cls}">${centerRank.toFixed(1)}</div><div class="stat-lbl">Local Visibility (${label})</div></div>
+                <div class="sim-stat"><div class="stat-val">${(Math.max(0, 20 - centerRank) / 20 * 100).toFixed(0)}%</div><div class="stat-lbl">Visibility Score</div></div>
             `;
+        }
+
+        function getCenterRank(grid, centerLat, centerLng) {
+            let centerRank = 0;
+            let minDist = Infinity;
+            grid.forEach(point => {
+                const dist = Math.sqrt(Math.pow(point.lat - centerLat, 2) + Math.pow(point.lng - centerLng, 2));
+                if (dist < minDist) {
+                    minDist = dist;
+                    centerRank = point.score;
+                }
+            });
+            return centerRank;
         }
 
         async function runSimulation() {
@@ -307,16 +320,22 @@
                 const optimized = result.optimized;
                 const comparison = result.comparison;
 
+                const centerLat = 40.6030;
+                const centerLng = -75.4740;
+
+                const baselineCenterRank = getCenterRank(baseline.grid, centerLat, centerLng);
+                const optimizedCenterRank = getCenterRank(optimized.grid, centerLat, centerLng);
+
                 renderGrid('baselineGrid', baseline.grid);
                 renderGrid('optimizedGrid', optimized.grid);
-                renderStats('baselineStats', comparison.avg_baseline, 'Current');
-                renderStats('optimizedStats', comparison.avg_optimized, 'Optimized');
+                renderStats('baselineStats', baselineCenterRank, 'Current');
+                renderStats('optimizedStats', optimizedCenterRank, 'Optimized');
 
-                document.getElementById('sim-baseline-score').textContent = '#' + comparison.avg_baseline.toFixed(1);
-                document.getElementById('sim-optimized-score').textContent = '#' + comparison.avg_optimized.toFixed(1);
+                document.getElementById('sim-baseline-score').textContent = '#' + baselineCenterRank.toFixed(1);
+                document.getElementById('sim-optimized-score').textContent = '#' + optimizedCenterRank.toFixed(1);
 
-                const pct = ((comparison.delta / comparison.avg_baseline) * 100).toFixed(0);
-                document.getElementById('sim-delta-box').textContent = `▲ ~${pct}% Better GEO Rank`;
+                const pct = ((baselineCenterRank - optimizedCenterRank) / baselineCenterRank * 100).toFixed(0);
+                document.getElementById('sim-delta-box').textContent = `▲ ~${pct}% Better Local Vis.`;
 
                 document.getElementById('simGrids').style.display = 'grid';
             } catch (e) {
