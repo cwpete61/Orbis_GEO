@@ -39,12 +39,16 @@
             </section>
             <section class="control-panel glass">
                 <div class="input-group">
-                    <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)"
-                        title="Use your GBP name (exact match)">
-                    <input type="text" id="targetUrl" placeholder="Target URL (https://...)"
-                        title="Paste your business URL here.">
-                    <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)"
-                        title="Go to maps.google.com. Type your business name. Click the share icon, copy the share link and paste it here">
+                    <div class="tooltip-wrapper" data-tooltip="Use your GBP name (exact match)">
+                        <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)">
+                    </div>
+                    <div class="tooltip-wrapper" data-tooltip="Paste your business URL here.">
+                        <input type="text" id="targetUrl" placeholder="Target URL (https://...)">
+                    </div>
+                    <div class="tooltip-wrapper"
+                        data-tooltip="Go to maps.google.com. Type your business name. Click the share icon, copy the share link and paste it here">
+                        <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)">
+                    </div>
                 </div>
 
                 <div class="actions">
