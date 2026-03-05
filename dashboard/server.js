@@ -123,6 +123,11 @@ app.post('/api/audit', async (req, res) => {
             });
         });
 
+        if (process.env.OUTSCRAPER_API_KEY) {
+            triggerOutscraperTask('contacts', url || brand);
+            if (gbpUrl) triggerOutscraperTask('maps', gbpUrl);
+        }
+
         await run('scripts/brand_scanner.py', [brand]);
         await run('scripts/fetch_page.py', [url]);
         await run('scripts/citability_scorer.py', [url]);
@@ -139,7 +144,38 @@ app.post('/api/audit', async (req, res) => {
     }
 });
 
+// Outscraper Webhook Trigger Helper
+async function triggerOutscraperTask(type, query) {
+    const apiKey = process.env.OUTSCRAPER_API_KEY;
+    if (!apiKey) return null;
+
+    const webhookUrl = "https://audit.myorbislocal.com/api/webhooks/outscraper";
+    let endpoint = "";
+
+    if (type === 'maps') {
+        endpoint = `https://api.outscraper.com/maps/search-v3?query=${encodeURIComponent(query)}&async=true&webhook=${encodeURIComponent(webhookUrl)}`;
+    } else if (type === 'contacts') {
+        endpoint = `https://api.outscraper.com/emails-and-contacts?query=${encodeURIComponent(query)}&async=true&webhook=${encodeURIComponent(webhookUrl)}`;
+    } else {
+        return null;
+    }
+
+    try {
+        // Node 18+ has native fetch
+        const response = await fetch(endpoint, {
+            headers: { 'X-API-KEY': apiKey }
+        });
+        const data = await response.json();
+        console.log(`[Outscraper] Triggered ${type} task for "${query}". Task ID: ${data.id || 'unknown'}`);
+        return data.id;
+    } catch (e) {
+        console.error(`[Outscraper] Error triggering ${type}:`, e);
+        return null;
+    }
+}
+
 // API: Run Specific Step
+
 app.post('/api/step', (req, res) => {
     const { step, brand, url, gbpUrl } = req.body;
 
@@ -156,6 +192,66 @@ app.post('/api/step', (req, res) => {
     if (!scripts[step]) return res.status(400).json({ error: 'Invalid step' });
 
     runScript(scripts[step][0], scripts[step][1], res);
+});
+
+// API: Outscraper Webhook
+app.post('/api/webhooks/outscraper', async (req, res) => {
+    // Outscraper sends results here when async scraping tasks finish
+    const payload = req.body;
+
+    if (!payload || !payload.id) {
+        return res.status(400).json({ error: 'Invalid Outscraper payload' });
+    }
+
+    const taskId = payload.id;
+    const taskStatus = payload.status;
+    const data = payload.data || [];
+
+    console.log(`[Webhook] Received Outscraper data for task ${taskId} (Status: ${taskStatus})`);
+
+    const fs = require('fs');
+    const path = require('path');
+
+    // Attempt to determine if this is Google Maps data or Emails & Contacts data
+    // based on the structure of the returned objects in the first result
+    let taskType = 'unknown';
+    if (data.length > 0 && data[0] && Array.isArray(data[0])) {
+        const item = data[0][0]; // Outscraper often returns an array of arrays
+        if (item && item.type) {
+            taskType = 'maps';
+        } else if (item && item.emails !== undefined) {
+            taskType = 'contacts';
+        }
+    } else if (data.length > 0 && data[0]) {
+        // Alternative structure
+        const item = data[0];
+        if (item.type) taskType = 'maps';
+        else if (item.emails !== undefined) taskType = 'contacts';
+    }
+
+    // Save the raw verified data to be ingested by the python scripts later
+    const outputPath = path.join(__dirname, '..', `outscraper_${taskType}_${taskId}.json`);
+    fs.writeFileSync(outputPath, JSON.stringify(data, null, 2));
+
+    // Maintain a master reference of completed verified data
+    const masterRefPath = path.join(__dirname, '..', 'outscraper_results.json');
+    let resultsRef = {};
+    if (fs.existsSync(masterRefPath)) {
+        try {
+            resultsRef = JSON.parse(fs.readFileSync(masterRefPath));
+        } catch (e) { }
+    }
+
+    resultsRef[taskId] = {
+        type: taskType,
+        status: taskStatus,
+        file: outputPath,
+        updatedAt: new Date().toISOString()
+    };
+
+    fs.writeFileSync(masterRefPath, JSON.stringify(resultsRef, null, 2));
+
+    res.json({ status: 'success', received: true });
 });
 
 // API: GBP Grid Data Directly
