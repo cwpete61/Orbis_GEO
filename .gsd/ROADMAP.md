@@ -110,7 +110,7 @@
 - [x] Generate first automated simulation report (LightBox SEO) <!-- id: 72 -->
 
 ## Phase 17: Deep-Dive Data Strategy <!-- id: 76 -->
-**Status**: 🗓️ Planned
-- [ ] Implement a data schema to structure simulation results (`sim_schema.json`) <!-- id: 77 -->
-- [ ] Connect simulation results to dashboard UI chart components <!-- id: 78 -->
-- [ ] Update `generate_live_pdf.py` to include a full page "Simulation Comparison" block <!-- id: 79 -->
+**Status**: ✅ Complete
+- [x] Implement a data schema to structure simulation results (`sim_schema.json`) <!-- id: 77 -->
+- [x] Connect simulation results to dashboard UI chart components <!-- id: 78 -->
+- [x] Update `generate_live_pdf.py` to include a full page "Simulation Comparison" block <!-- id: 79 -->
