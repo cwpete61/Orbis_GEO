@@ -166,9 +166,11 @@
             <div class="report-viewer glass">
                 <div class="report-header">
                     <h2>GEO Audit Complete</h2>
-                    <button onclick="showView('dashboardView')" class="btn secondary">Back to Dashboard</button>
-                    <a id="downloadReport" href="/api/view-report" target="_blank" class="btn success-btn">Download
-                        PDF</a>
+                    <div class="report-actions">
+                        <button onclick="showView('dashboardView')" class="btn secondary">Back to Dashboard</button>
+                        <a id="downloadReport" href="/api/view-report" target="_blank" class="btn success-btn">Download
+                            PDF</a>
+                    </div>
                 </div>
                 <div class="report-frame-container">
                     <iframe id="reportFrame" src="about:blank"></iframe>

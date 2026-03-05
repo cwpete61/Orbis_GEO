@@ -356,25 +356,28 @@ async function initVisibilityMap() {
             });
         }
 
+        const KM_TO_MI = 0.621371;
+
         // Calculate Current Metrics
         const currentScores = data.grid.map(p => p.score);
         const avgRank = (currentScores.reduce((a, b) => a + b, 0) / currentScores.length).toFixed(1);
         const falloutCount = currentScores.filter(s => s > 12).length;
         const falloutPercent = Math.round((falloutCount / currentScores.length) * 100);
 
-        let maxReach = 0;
+        let maxReachKm = 0;
         data.grid.forEach(point => {
             if (point.score <= 5) {
                 const dist = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
-                if (dist > maxReach) maxReach = dist;
+                if (dist > maxReachKm) maxReachKm = dist;
             }
         });
 
-        // 2. Calculate Potential Metrics from Simulation
-        let potMaxReach = 0;
-        let potFalloutPercent = falloutPercent;
+        // 2. Calculate Potential Metrics from grid potential_score or Simulation
+        let potMaxReachKm = 0;
+        let potFalloutPercent = 0;
 
         if (simData && simData.optimized && simData.optimized.grid) {
+            // Use full simulation data when available
             const potentialScores = simData.optimized.grid.map(p => p.score);
             const potFalloutCount = potentialScores.filter(s => s > 12).length;
             potFalloutPercent = Math.round((potFalloutCount / potentialScores.length) * 100);
@@ -383,16 +386,31 @@ async function initVisibilityMap() {
                 const pScore = point.score;
                 if (pScore <= 5) {
                     const dist = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
-                    if (dist > potMaxReach) potMaxReach = dist;
+                    if (dist > potMaxReachKm) potMaxReachKm = dist;
+                }
+            });
+        } else {
+            // Fallback: use the grid's own potential_score data
+            const potScores = data.grid.map(p => p.potential_score !== undefined ? p.potential_score : p.score);
+            const potFalloutCount = potScores.filter(s => s > 12).length;
+            potFalloutPercent = Math.round((potFalloutCount / potScores.length) * 100);
+
+            data.grid.forEach(point => {
+                const ps = point.potential_score !== undefined ? point.potential_score : point.score;
+                if (ps <= 5) {
+                    const dist = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
+                    if (dist > potMaxReachKm) potMaxReachKm = dist;
                 }
             });
         }
 
-        // Update UI tiles
+        // Convert km to miles and update UI tiles
+        const maxReachMi = maxReachKm * KM_TO_MI;
+        const potMaxReachMi = potMaxReachKm * KM_TO_MI;
         document.getElementById('metric-avg-visibility').textContent = `Rank #${avgRank}`;
         document.getElementById('metric-fallout').textContent = `${falloutPercent}%`;
-        document.getElementById('metric-reach').textContent = `${maxReach.toFixed(1)} km`;
-        document.getElementById('metric-potential-reach').textContent = `${potMaxReach.toFixed(1)} km`;
+        document.getElementById('metric-reach').textContent = `${maxReachMi.toFixed(1)} mi`;
+        document.getElementById('metric-potential-reach').textContent = `${potMaxReachMi.toFixed(1)} mi`;
         document.getElementById('metric-potential-fallout').textContent = `${potFalloutPercent}%`;
 
         // Add 25 grid points
@@ -412,8 +430,10 @@ async function initVisibilityMap() {
         });
 
         // Add business center
+        const userEnteredBrand = document.getElementById('brandName') ? document.getElementById('brandName').value : '';
+        const displayBrand = userEnteredBrand || data.brand_name;
         L.marker([data.center.lat, data.center.lng]).addTo(mapInstance)
-            .bindPopup(`<b>${data.brand_name}</b><br>${data.center.address}`).openPopup();
+            .bindPopup(`<b>${displayBrand}</b><br>${data.center.address}`).openPopup();
 
         // Fix map resize issue in hidden containers
         setTimeout(() => {
