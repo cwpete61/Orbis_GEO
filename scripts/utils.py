@@ -23,17 +23,34 @@ def geocode_business(brand_name, gbp_url):
     """
     Find coordinates based on brand/URL context.
     Pipeline:
-    1. If Google Maps URL, use Puppeteer to scrape the exact physical address.
-    2. Feed precise address to Open Street Maps (Nominatim API) for Lat/Lng.
+    1. Direct brand search via Open Street Maps (Nominatim API).
+    2. If Google Maps URL, use Puppeteer to scrape the exact physical address.
     3. Fallback to OpenAI if all else fails.
     """
-    address_str = ""
+    import requests
     
-    # Stage 1: Puppeteer Google Maps Scrape
+    # Stage 1: OSM Nominatim Direct Brand Search
+    try:
+        print(f"[geocode] Querying OSM for precise coordinates of brand: {brand_name}", file=sys.stderr)
+        osm_url = "https://nominatim.openstreetmap.org/search"
+        res = requests.get(osm_url, params={'q': brand_name, 'format': 'json', 'limit': 1}, 
+                           headers={'User-Agent': 'OrbisGEO-SEO/1.0'}, timeout=10)
+        data = res.json()
+        if data:
+            address_str = data[0].get('display_name', f"Location for {brand_name}")
+            return {
+                "lat": float(data[0]['lat']),
+                "lng": float(data[0]['lon']),
+                "address": address_str
+            }
+    except Exception as e:
+        print(f"[geocode] Direct OSM Search Failed: {e}", file=sys.stderr)
+
+    # Stage 2: Puppeteer Google Maps Scrape
+    address_str = ""
     if "maps.app.goo.gl" in gbp_url or "google.com/maps" in gbp_url:
         print(f"[geocode] Attempting headless extraction of exact address from: {gbp_url}", file=sys.stderr)
         
-        # We write a temporary JS script to run puppeteer
         js_code = f"""
 const puppeteer = require('puppeteer');
 (async () => {{
@@ -58,12 +75,13 @@ const puppeteer = require('puppeteer');
     }}
 }})();
 """
+        import subprocess
         try:
+            import os as _os
             scraper_path = _os.path.join("dashboard", "temp_scraper.js")
             with open(scraper_path, "w") as f:
                 f.write(js_code)
             
-            # Run node from the dashboard directory to ensure it finds local node_modules
             result = subprocess.run(["node", "temp_scraper.js"], cwd="dashboard", capture_output=True, text=True, timeout=20)
             
             if result.stdout.strip():
@@ -74,14 +92,11 @@ const puppeteer = require('puppeteer');
         except Exception as e:
             print(f"[geocode] Puppeteer scrape failed: {e}", file=sys.stderr)
 
-    # Stage 2: OSM Nominatim Geocoding
+    # Stage 3: OSM Nominatim Geocoding of scraped address
     if address_str:
-        import requests
         try:
             print(f"[geocode] Querying OSM for precise coordinates of: {address_str}", file=sys.stderr)
             osm_url = "https://nominatim.openstreetmap.org/search"
-            # Take just the first part of the address (e.g. "716 Washington St, Allentown")
-            # to make OSM's life easier if Google included weird suite numbers
             clean_addr = address_str.split('\n')[0].strip()
             
             res = requests.get(osm_url, params={'q': clean_addr, 'format': 'json', 'limit': 1}, 
@@ -96,9 +111,10 @@ const puppeteer = require('puppeteer');
         except Exception as e:
             print(f"[geocode] OSM Failed: {e}", file=sys.stderr)
 
-    # Stage 3: AI Fallback
+    # Stage 4: AI Fallback
     print(f"[geocode] Falling back to AI geocoding for {brand_name}...", file=sys.stderr)
     from openai import OpenAI
+    import os
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 

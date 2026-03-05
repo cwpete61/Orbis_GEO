@@ -293,6 +293,10 @@ def aggregate_data():
                 if "Local Directories" in brand_data.get("platforms", {}):
                     data["directories"] = brand_data["platforms"]["Local Directories"]
 
+                # Pass full per-platform brand data for the Brand Authority page
+                if "platforms" in brand_data:
+                    data["brand_platforms"] = brand_data["platforms"]
+
         except Exception as e:
             print(f"Error reading test_brand.json: {e}")
 

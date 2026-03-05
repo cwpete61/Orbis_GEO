@@ -690,7 +690,8 @@ site-header {
 
 .map-section h3 {
     margin-bottom: 1.5rem;
-    color: var(--secondary);
+    color: #ffffff;
+    /* White text for better contrast */
     font-size: 1.4rem;
 }
 

@@ -146,7 +146,7 @@ app.post('/api/step', (req, res) => {
     const scripts = {
         'fetch': ['scripts/fetch_page.py', [url]],
         'score': ['scripts/citability_scorer.py', [url]],
-        'brand': ['scripts/brand_scanner.py', [brand]],
+        'brand': ['scripts/brand_scanner.py', [brand, url || '']],
         'crawlers': ['scripts/llmstxt_generator.py', [url]],
         'gbp': ['scripts/gbp_analyzer.py', [gbpUrl]],
         'grid': ['scripts/gbp_grid.py', [brand, gbpUrl]],

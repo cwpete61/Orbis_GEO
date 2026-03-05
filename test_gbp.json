@@ -1,41 +1,49 @@
 {
-  "business_name": "Not Provided",
+  "business_name": "string",
   "osm_verification_confidence": 0,
-  "overall_local_score": 35,
-  "status": "Fair",
+  "overall_local_score": 0,
+  "status": "Poor",
   "insights": [
     {
-      "title": "Business Name and Category Clarity",
+      "title": "Business Name & Category Clarity",
       "score": 40,
-      "details": "The business name appears generic or unclear, with limited descriptive keywords aligning with typical local service terms; the category may lack specificity or clarity, reducing AI-readiness."
+      "details": "The business name and category lack specificity, which can hinder discoverability and AI understanding. Clear, descriptive names and categories enhance recognition."
     },
     {
       "title": "AI-Compatible Descriptions",
       "score": 30,
-      "details": "Descriptions do not contain sufficient entities or detailed service keywords, limiting the scope for AI-enhanced optimization and context understanding."
+      "details": "Descriptions are generic and do not incorporate relevant entities or keywords related to services offered. Rich, entity-driven descriptions improve AI processing."
     },
     {
-      "title": "Review Sentiment",
-      "score": 50,
-      "details": "Recent reviews show mixed sentiment with some positive mentions; however, limited quantity or consistency hampers full sentiment analysis and influence on AI-based relevance."
-    }
+      "title": "Review Sentiment & Mentions",
+      "score": 25,
+      "details": "Recent reviews/mentions show mixed or negative sentiment with minimal mentions of specific services or features, reducing AI interpretability."
+    },
+    "Entity Verification Confidence is very low (0%), indicating no OSM data match and possibly significant entity discrepancy or incomplete data."
   ],
   "findings": [
     {
       "severity": "critical",
-      "title": "OSM Data Mismatch",
-      "description": "No matching OSM entity was found to verify the local business details; discrepancies between GBP and OSM data suggest potential mismatch or missing data.",
-      "impact": "Reduces trustworthiness of location data, hampers cross-platform validation, and impairs AI-driven recommendations or localization efforts.",
-      "fix_example": "Verify and update the business address, website, and category in authoritative sources and ensure consistency across GBP and OSM inputs."
+      "title": "Entity Mismatch / Data Absence",
+      "description": "No matching OSM data suggests that the business presence isn't verified or may be incorrectly listed.",
+      "impact": "Limits local SEO efficacy, confuses AI systems, and reduces trustworthiness.",
+      "fix_example": "Update and verify the GBP with accurate address, website, and service info; add complete OSM data if possible."
     },
     {
       "severity": "high",
-      "title": "Limited Entity Data",
-      "description": "Lack of detailed structured data and entity references in business descriptions.",
-      "impact": "Limits AI models' ability to accurately interpret and optimize the business profile for local SEO.",
-      "fix_example": "Incorporate detailed service descriptions with relevant entities, keywords, and location-specific information."
+      "title": "Lack of Rich Descriptive Content",
+      "description": "The current description does not include relevant entities or keywords, limiting AI compatibility.",
+      "impact": "Reduces discoverability and AI understanding, impacting ranking and local visibility.",
+      "fix_example": "Revise the business description to include relevant services, keywords, and entities such as 'consulting', 'software solutions', 'customer support'."
+    },
+    {
+      "severity": "medium",
+      "title": "Negative or Insufficient Review Sentiment",
+      "description": "Limited positive feedback and sparse mention of specific services.",
+      "impact": "Weakens AI's contextual understanding and hampers reputation signals.",
+      "fix_example": "Encourage satisfied customers to leave detailed reviews mentioning specific services and positive experiences."
     }
   ],
-  "audit_date": "2026-03-04 21:11",
-  "gbp_url": "https://maps.app.goo.gl/EEKjPP9oKbUENTkR8"
+  "audit_date": "2026-03-05 10:32",
+  "gbp_url": "https://maps.app.goo.gl/o1H5n9vT"
 }

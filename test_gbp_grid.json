@@ -1,162 +1,162 @@
 {
-  "brand_name": "LightBox SEO",
+  "brand_name": "Lightbox SEO",
   "center": {
-    "lat": 40.6131541,
-    "lng": -75.4777872,
-    "address": "716 Washington St, Allentown, PA 18102"
+    "lat": 37.7749356,
+    "lng": -122.4194228,
+    "address": "Lightbox SEO, 123 Market St, San Francisco, CA 94103, USA"
   },
   "grid": [
     {
-      "lat": 40.568109,
-      "lng": -75.537126,
-      "score": 18,
-      "potential_score": 9
+      "lat": 37.729891,
+      "lng": -122.476411,
+      "score": 20,
+      "potential_score": 20
     },
     {
-      "lat": 40.568109,
-      "lng": -75.507456,
-      "score": 11,
-      "potential_score": 6
+      "lat": 37.729891,
+      "lng": -122.447917,
+      "score": 20,
+      "potential_score": 19
     },
     {
-      "lat": 40.568109,
-      "lng": -75.477787,
+      "lat": 37.729891,
+      "lng": -122.419423,
+      "score": 20,
+      "potential_score": 15
+    },
+    {
+      "lat": 37.729891,
+      "lng": -122.390929,
+      "score": 20,
+      "potential_score": 19
+    },
+    {
+      "lat": 37.729891,
+      "lng": -122.362434,
+      "score": 20,
+      "potential_score": 20
+    },
+    {
+      "lat": 37.752413,
+      "lng": -122.476411,
+      "score": 20,
+      "potential_score": 19
+    },
+    {
+      "lat": 37.752413,
+      "lng": -122.447917,
+      "score": 15,
+      "potential_score": 8
+    },
+    {
+      "lat": 37.752413,
+      "lng": -122.419423,
       "score": 8,
-      "potential_score": 5
+      "potential_score": 4
     },
     {
-      "lat": 40.568109,
-      "lng": -75.448118,
-      "score": 10,
-      "potential_score": 6
+      "lat": 37.752413,
+      "lng": -122.390929,
+      "score": 15,
+      "potential_score": 8
     },
     {
-      "lat": 40.568109,
-      "lng": -75.418449,
-      "score": 17,
-      "potential_score": 9
+      "lat": 37.752413,
+      "lng": -122.362434,
+      "score": 20,
+      "potential_score": 19
     },
     {
-      "lat": 40.590632,
-      "lng": -75.537126,
-      "score": 11,
-      "potential_score": 6
+      "lat": 37.774936,
+      "lng": -122.476411,
+      "score": 20,
+      "potential_score": 15
     },
     {
-      "lat": 40.590632,
-      "lng": -75.507456,
-      "score": 4,
-      "potential_score": 3
-    },
-    {
-      "lat": 40.590632,
-      "lng": -75.477787,
-      "score": 2,
-      "potential_score": 2
-    },
-    {
-      "lat": 40.590632,
-      "lng": -75.448118,
-      "score": 5,
-      "potential_score": 3
-    },
-    {
-      "lat": 40.590632,
-      "lng": -75.418449,
-      "score": 12,
-      "potential_score": 6
-    },
-    {
-      "lat": 40.613154,
-      "lng": -75.537126,
+      "lat": 37.774936,
+      "lng": -122.447917,
       "score": 8,
-      "potential_score": 5
+      "potential_score": 4
     },
     {
-      "lat": 40.613154,
-      "lng": -75.507456,
-      "score": 2,
-      "potential_score": 2
-    },
-    {
-      "lat": 40.613154,
-      "lng": -75.477787,
+      "lat": 37.774936,
+      "lng": -122.419423,
       "score": 1,
       "potential_score": 1
     },
     {
-      "lat": 40.613154,
-      "lng": -75.448118,
-      "score": 4,
-      "potential_score": 2
+      "lat": 37.774936,
+      "lng": -122.390929,
+      "score": 8,
+      "potential_score": 4
     },
     {
-      "lat": 40.613154,
-      "lng": -75.418449,
-      "score": 10,
-      "potential_score": 5
+      "lat": 37.774936,
+      "lng": -122.362434,
+      "score": 20,
+      "potential_score": 15
     },
     {
-      "lat": 40.635677,
-      "lng": -75.537126,
-      "score": 10,
-      "potential_score": 6
+      "lat": 37.797458,
+      "lng": -122.476411,
+      "score": 20,
+      "potential_score": 19
     },
     {
-      "lat": 40.635677,
-      "lng": -75.507456,
-      "score": 5,
-      "potential_score": 3
+      "lat": 37.797458,
+      "lng": -122.447917,
+      "score": 15,
+      "potential_score": 8
     },
     {
-      "lat": 40.635677,
-      "lng": -75.477787,
-      "score": 4,
-      "potential_score": 2
+      "lat": 37.797458,
+      "lng": -122.419423,
+      "score": 8,
+      "potential_score": 4
     },
     {
-      "lat": 40.635677,
-      "lng": -75.448118,
-      "score": 6,
-      "potential_score": 3
+      "lat": 37.797458,
+      "lng": -122.390929,
+      "score": 15,
+      "potential_score": 8
     },
     {
-      "lat": 40.635677,
-      "lng": -75.418449,
-      "score": 11,
-      "potential_score": 6
+      "lat": 37.797458,
+      "lng": -122.362434,
+      "score": 20,
+      "potential_score": 19
     },
     {
-      "lat": 40.658199,
-      "lng": -75.537126,
-      "score": 17,
-      "potential_score": 9
+      "lat": 37.819981,
+      "lng": -122.476411,
+      "score": 20,
+      "potential_score": 20
     },
     {
-      "lat": 40.658199,
-      "lng": -75.507456,
-      "score": 12,
-      "potential_score": 6
+      "lat": 37.819981,
+      "lng": -122.447917,
+      "score": 20,
+      "potential_score": 19
     },
     {
-      "lat": 40.658199,
-      "lng": -75.477787,
-      "score": 10,
-      "potential_score": 5
+      "lat": 37.819981,
+      "lng": -122.419423,
+      "score": 20,
+      "potential_score": 15
     },
     {
-      "lat": 40.658199,
-      "lng": -75.448118,
-      "score": 11,
-      "potential_score": 6
+      "lat": 37.819981,
+      "lng": -122.390929,
+      "score": 20,
+      "potential_score": 19
     },
     {
-      "lat": 40.658199,
-      "lng": -75.418449,
-      "score": 16,
-      "potential_score": 9
+      "lat": 37.819981,
+      "lng": -122.362434,
+      "score": 20,
+      "potential_score": 20
     }
   ],
-  "audit_date": "2026-03-04 22:08",
+  "audit_date": "2026-03-05 10:32",
   "radius_km": 5
 }

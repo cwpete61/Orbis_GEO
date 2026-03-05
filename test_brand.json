@@ -1,22 +1,22 @@
 {
-  "brand_name": "LB",
+  "brand_name": "Lightbox SEO",
   "url": "",
-  "brand_authority_score": 61,
+  "brand_authority_score": 36,
   "platforms": {
     "YouTube": {
       "platform": "YouTube",
       "correlation": 0.737,
       "weight": "25%",
-      "score": 0,
-      "has_channel": false,
-      "sentiment": "unknown",
+      "score": 85,
+      "has_channel": true,
+      "sentiment": "neutral",
       "key_findings": [
-        "No official YouTube channel URL containing 'youtube.com/@' or 'youtube.com/channel/' for LB.",
-        "Multiple search results mention LB in video titles, but none link to an official LB YouTube channel.",
-        "Presence is limited to video mentions and content unrelated to an official brand account."
+        "Multiple YouTube videos mention Lightbox SEO, including the 'SEO Spotlight Podcast' episodes.",
+        "Videos are about SEO and website security, with Lightbox SEO contact info included.",
+        "No official Lightbox SEO YouTube channel or verified handle found in search results."
       ],
-      "summary": "LB does not have an official YouTube presence based on the search results.",
-      "search_url": "https://www.youtube.com/results?search_query=LB",
+      "summary": "Lightbox SEO has a notable presence on YouTube through multiple video mentions, but lacks an official channel.",
+      "search_url": "https://www.youtube.com/results?search_query=Lightbox+SEO",
       "recommendations": [
         "Create a YouTube channel if none exists",
         "Publish educational/tutorial content related to your niche",
@@ -28,16 +28,16 @@
       "platform": "Reddit",
       "correlation": "High",
       "weight": "25%",
-      "score": 75,
+      "score": 55,
       "has_presence": true,
-      "sentiment": "positive",
+      "sentiment": "mixed",
       "key_findings": [
-        "Multiple mentions of LB in book recommendation threads, especially in r/redrising, indicating community interest.",
-        "Mentions of LB in other subreddits like r/fut and r/My600lbLife are limited and context-specific, not directly related to the brand.",
-        "Some discussions reference LB in stock and business contexts, but these are less frequent and not central to the brand's Reddit presence."
+        "Multiple Reddit threads mention Lightbox in various contexts related to web development and SEO.",
+        "There are discussions about Lightbox's impact on SEO and AdSense, indicating some community awareness.",
+        "Official or dedicated Lightbox SEO presence on Reddit appears limited, with no direct brand accounts or highly active official profiles."
       ],
-      "summary": "LB has a regular and generally positive presence on Reddit, primarily within book communities, with some peripheral mentions in other subreddits.",
-      "search_url": "https://www.reddit.com/search/?q=LB",
+      "summary": "Lightbox SEO has a moderate presence on Reddit with occasional mentions and mixed community sentiment.",
+      "search_url": "https://www.reddit.com/search/?q=Lightbox+SEO",
       "recommendations": [
         "Identify 3-5 subreddits where your target audience is active",
         "Participate authentically\u2014do not shill",
@@ -49,36 +49,116 @@
       "platform": "Wikipedia / Wikidata",
       "correlation": "High",
       "weight": "20%",
-      "score": 95,
-      "has_wikipedia": true,
-      "wikipedia_url": "https://en.wikipedia.org/wiki/LB",
-      "wikidata_id": "Q822",
+      "score": 0,
+      "has_wikipedia": false,
+      "wikipedia_url": "",
+      "wikidata_id": "",
       "key_findings": [
-        "The brand 'LB' has a dedicated Wikipedia article at https://en.wikipedia.org/wiki/LB.",
-        "It also has a Wikidata entry (Q822) with complete properties.",
-        "The article appears to be detailed, indicating a strong online presence."
+        "No Wikipedia article exists specifically for 'Lightbox SEO'.",
+        "No Wikidata entry related to 'Lightbox SEO' has been found.",
+        "Search results show articles about 'Lightbox' in various contexts unrelated to 'Lightbox SEO'."
       ],
-      "summary": "LB maintains a prominent and well-documented presence on Wikipedia with a dedicated article and Wikidata entry.",
+      "summary": "Lightbox SEO currently lacks a presence on Wikipedia and Wikidata, indicating minimal or no recognition on these platforms.",
       "recommendations": [
         "Build notability through press coverage first before seeking a Wikipedia article",
         "Ensure your Wikidata entry (Q-number) is complete even without a full article",
         "Contribute to industry articles where your brand can be naturally cited"
       ]
     },
-    "LinkedIn": {
-      "platform": "LinkedIn",
+    "Facebook": {
+      "platform": "Facebook",
       "correlation": "Moderate",
-      "weight": "15%",
+      "weight": "8%",
       "score": 75,
       "has_presence": true,
       "sentiment": "positive",
       "key_findings": [
-        "Multiple active LinkedIn pages with varying follower counts, some exceeding 9,000 followers.",
-        "Presence includes companies with clear branding and regular activity, such as LB Foster and LB B&B Associates.",
-        "Several pages are dedicated to different subsidiaries or related entities, indicating a broad but somewhat fragmented presence."
+        "Official Facebook page exists for Lightbox SEO in Allentown, PA.",
+        "Page was last updated on June 2, 2024, indicating recent activity.",
+        "The page appears to have a moderate level of activity and followers."
       ],
-      "summary": "LB has a solid LinkedIn presence with active pages and substantial followers, though the presence is spread across multiple entities.",
-      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=LB",
+      "summary": "Lightbox SEO maintains an active and verified Facebook presence with a decent following and recent updates.",
+      "search_url": "https://www.facebook.com/search/pages/?q=Lightbox+SEO",
+      "recommendations": [
+        "Create or claim your official Facebook page",
+        "Post regular updates, events, and community engaging content",
+        "Encourage and respond to customer reviews on Facebook"
+      ]
+    },
+    "Instagram": {
+      "platform": "Instagram",
+      "correlation": "Moderate",
+      "weight": "8%",
+      "score": 0,
+      "has_presence": false,
+      "sentiment": "unknown",
+      "key_findings": [
+        "No official or unofficial Instagram profile found for Lightbox SEO.",
+        "Search results indicate no presence or mentions on Instagram.",
+        "Lack of activity or engagement data related to the brand on the platform."
+      ],
+      "summary": "No Instagram presence detected.",
+      "search_url": "https://www.instagram.com/explore/search/keyword/?q=Lightbox+SEO",
+      "recommendations": [
+        "Create or claim your official Instagram profile",
+        "Post high-quality visual content regularly",
+        "Engage with followers and relevant niche hashtags"
+      ]
+    },
+    "Twitter/X": {
+      "platform": "Twitter/X",
+      "correlation": "Moderate",
+      "weight": "8%",
+      "score": 15,
+      "has_presence": true,
+      "sentiment": "unknown",
+      "key_findings": [
+        "Only one recent post with the hashtag #lightboxwebsite, indicating minimal activity.",
+        "No evidence of an official verified account or substantial follower base.",
+        "Mentions are limited to a single discussion and some general help links, suggesting low brand engagement."
+      ],
+      "summary": "Lightbox SEO has a minimal and inactive presence on Twitter/X with limited user engagement.",
+      "search_url": "https://twitter.com/search?q=Lightbox+SEO",
+      "recommendations": [
+        "Create or claim your official Twitter/X account",
+        "Engage proactively with industry news and customer support",
+        "Post frequently to build brand authority signals"
+      ]
+    },
+    "TikTok": {
+      "platform": "TikTok",
+      "correlation": "Moderate",
+      "weight": "8%",
+      "score": 0,
+      "has_presence": false,
+      "sentiment": "unknown",
+      "key_findings": [
+        "No official TikTok account found for Lightbox SEO.",
+        "Search results indicate no user-generated content or mentions.",
+        "Lack of activity suggests minimal or no presence on TikTok."
+      ],
+      "summary": "No TikTok presence detected.",
+      "search_url": "https://www.tiktok.com/search?q=Lightbox+SEO",
+      "recommendations": [
+        "Create or claim your official TikTok profile",
+        "Share engaging, short-form video content",
+        "Collaborate with TikTok creators in your niche"
+      ]
+    },
+    "LinkedIn": {
+      "platform": "LinkedIn",
+      "correlation": "Moderate",
+      "weight": "15%",
+      "score": 45,
+      "has_presence": true,
+      "sentiment": "negative",
+      "key_findings": [
+        "The LinkedIn company page for LightboxDigital has only 37 followers, indicating low engagement.",
+        "There is limited information about active posting or thought leadership on the company profile.",
+        "Most search results point to LightboxSEO in Allentown, PA, with no clear indication of a strong or active LinkedIn presence for Lightbox SEO."
+      ],
+      "summary": "Lightbox SEO's LinkedIn presence appears minimal and inactive, suggesting limited brand visibility on the platform.",
+      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Lightbox+SEO",
       "recommendations": [
         "Optimize company page with complete information and regular posting",
         "Encourage leadership to post thought leadership content weekly",
@@ -89,15 +169,15 @@
       "platform": "Local Directories",
       "correlation": "High (Local Entity)",
       "weight": "20%",
-      "score": 65,
-      "has_listings": true,
-      "sentiment": "mixed",
+      "score": 15,
+      "has_listings": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "Multiple listings on YellowPages for different locations and services, including general contractors and water supply companies.",
-        "Presence on Trustpilot with reviews for LB Telecom and LB Clothing, indicating some brand recognition.",
-        "Limited or no verified listings on major directories like Yelp specifically for the core brand LB, with some mentions of dissolved or unrelated entities."
+        "No results found on major local directories like Yelp or YellowPages.",
+        "Presence is limited to review platforms such as Trustpilot with some customer feedback.",
+        "Reviews indicate positive customer experiences but lack verified directory listings."
       ],
-      "summary": "LB has a moderate presence across local directories and review platforms, with some verified listings and mixed reviews, but lacks widespread verified directory presence for its core brand.",
+      "summary": "Lightbox SEO shows minimal local directory presence with reviews but lacks verified listings on major platforms.",
       "recommendations": [
         "Claim your business profile on Yelp and YellowPages",
         "Encourage happy customers to leave reviews on Trustpilot",
@@ -109,13 +189,13 @@
       "platform": "Other Platforms",
       "correlation": "Supplementary",
       "weight": "15%",
-      "score": 75,
+      "score": 45,
       "key_findings": [
-        "Multiple press releases and news updates about LandBridge Company LLC are available across various news platforms.",
-        "There are active podcast episodes discussing topics related to LB, indicating some media engagement.",
-        "Quora features general knowledge content but lacks direct brand-specific engagement or authoritative answers from LB."
+        "No Quora answers or discussions related to Lightbox SEO were found.",
+        "Limited to no press coverage or mentions on news and press platforms specifically about Lightbox SEO.",
+        "Mentions of Lightbox SEO are primarily on its own website and in case studies, with some related content about SEO and security podcasts."
       ],
-      "summary": "LB has a moderate presence on other platforms with some news coverage and podcast activity, but limited direct engagement on Quora.",
+      "summary": "Lightbox SEO has minimal to no presence on external platforms such as Quora, news, or podcasts, indicating limited brand visibility beyond its own website.",
       "recommendations": [
         "Create Quora answers for top industry questions related to your brand",
         "Issue press releases for major company milestones",
@@ -130,12 +210,12 @@
       "has_presence": false,
       "sentiment": "unknown",
       "key_findings": [
-        "Search results primarily show general Google Maps links and guides, with no specific mention of LB's Google Business Profile.",
-        "No direct evidence of LB having a claimed or verified profile on Google Maps.",
-        "Search results focus on general Google Maps usage and review guides, not on LB's local presence."
+        "No Google Maps (GBP) profile found for Lightbox SEO.",
+        "Search results indicate no existing presence on Google Maps.",
+        "Brand likely lacks a claimed or verified Google Business Profile."
       ],
-      "summary": "There is no clear evidence of LB having an active or verified presence on Google Maps based on the search results.",
-      "search_url": "https://www.google.com/maps/search/LB",
+      "summary": "No Google Maps presence detected.",
+      "search_url": "https://www.google.com/maps/search/Lightbox+SEO",
       "recommendations": [
         "Claim and verify your Google Business Profile",
         "Ensure NAP (Name, Address, Phone) consistency",
