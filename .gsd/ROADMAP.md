@@ -125,8 +125,8 @@
 - [x] Update Case Studio HTML labels to match new Local Visibility terminology
 - [x] Sync Case Studio JS to use the aggressive potential reach formula
 ## Phase 20: Production Hardening & Math Validation
-**Status**: 🏗 In Progress
-- [ ] Normalize center-point visibility logic to prevent automatic #1 ranking
-- [ ] Audit Fallout vs Reach math for consistency across Dashboard and PDF
-- [ ] Implement robust error handling for API timeouts in UI logs
+**Status**: ✅ Complete
+- [x] Normalize center-point visibility logic to prevent automatic #1 ranking
+- [x] Audit Fallout vs Reach math for consistency across Dashboard and PDF
+- [x] Implement robust error handling for API timeouts in UI logs
 
