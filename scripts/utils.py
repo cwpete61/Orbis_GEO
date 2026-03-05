@@ -1,5 +1,6 @@
 import math
 import os
+import sys
 import json
 from dotenv import load_dotenv
 
@@ -16,8 +17,84 @@ def get_distance_py(lat1, lon1, lat2, lon2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return R * c
 
+import subprocess
+
 def geocode_business(brand_name, gbp_url):
-    """Use OpenAI to 'guess' or find coordinates based on brand/URL context."""
+    """
+    Find coordinates based on brand/URL context.
+    Pipeline:
+    1. If Google Maps URL, use Puppeteer to scrape the exact physical address.
+    2. Feed precise address to Open Street Maps (Nominatim API) for Lat/Lng.
+    3. Fallback to OpenAI if all else fails.
+    """
+    address_str = ""
+    
+    # Stage 1: Puppeteer Google Maps Scrape
+    if "maps.app.goo.gl" in gbp_url or "google.com/maps" in gbp_url:
+        print(f"[geocode] Attempting headless extraction of exact address from: {gbp_url}", file=sys.stderr)
+        
+        # We write a temporary JS script to run puppeteer
+        js_code = f"""
+const puppeteer = require('puppeteer');
+(async () => {{
+    try {{
+        const browser = await puppeteer.launch({{ headless: "new", args: ['--no-sandbox'] }});
+        const page = await browser.newPage();
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64)');
+        await page.goto('{gbp_url}', {{ waitUntil: 'networkidle2', timeout: 15000 }});
+        const address = await page.evaluate(() => {{
+            const btn = document.querySelector('button[data-item-id="address"]');
+            if (btn) return btn.getAttribute('aria-label') || btn.innerText;
+            const divs = Array.from(document.querySelectorAll('div'));
+            for (let d of divs) {{
+                if (d.innerText && d.innerText.match(/,\\s*[A-Z]{{2}}\\s*\\d{{5}}/)) return d.innerText;
+            }}
+            return "";
+        }});
+        console.log(address.replace('Address: ', '').trim());
+        await browser.close();
+    }} catch(e) {{
+        console.log("");
+    }}
+}})();
+"""
+        try:
+            with open("temp_scraper.js", "w") as f:
+                f.write(js_code)
+            result = subprocess.run(["node", "temp_scraper.js"], capture_output=True, text=True, timeout=20)
+            if result.stdout.strip():
+                address_str = result.stdout.strip()
+                print(f"[geocode] Puppeteer successfully found exact address: {address_str}", file=sys.stderr)
+            import os as _os
+            if _os.path.exists("temp_scraper.js"):
+                _os.remove("temp_scraper.js")
+        except Exception as e:
+            print(f"[geocode] Puppeteer scrape failed: {e}", file=sys.stderr)
+
+    # Stage 2: OSM Nominatim Geocoding
+    if address_str:
+        import requests
+        try:
+            print(f"[geocode] Querying OSM for precise coordinates of: {address_str}", file=sys.stderr)
+            osm_url = "https://nominatim.openstreetmap.org/search"
+            # Take just the first part of the address (e.g. "716 Washington St, Allentown")
+            # to make OSM's life easier if Google included weird suite numbers
+            clean_addr = address_str.split('\n')[0].strip()
+            
+            res = requests.get(osm_url, params={'q': clean_addr, 'format': 'json', 'limit': 1}, 
+                               headers={'User-Agent': 'OrbisGEO-SEO/1.0'}, timeout=10)
+            data = res.json()
+            if data:
+                return {
+                    "lat": float(data[0]['lat']),
+                    "lng": float(data[0]['lon']),
+                    "address": address_str
+                }
+        except Exception as e:
+            print(f"[geocode] OSM Failed: {e}", file=sys.stderr)
+
+    # Stage 3: AI Fallback
+    print(f"[geocode] Falling back to AI geocoding for {brand_name}...", file=sys.stderr)
     from openai import OpenAI
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
@@ -30,8 +107,7 @@ GBP URL: {gbp_url}
 
 IMPORTANT:
 1. If the URL is a shortened 'maps.app.goo.gl' link, use your knowledge of Google Maps patterns to find the destination.
-2. If the brand is 'LightBox SEO' and the URL points to Allentown, PA, the coordinates are approximately 40.6030, -75.4740.
-3. Return the coordinates for the SPECIFIC address associated with the brand and URL provided.
+2. Return the coordinates for the SPECIFIC address associated with the brand and URL provided.
 
 Return ONLY a JSON object:
 {{
@@ -48,7 +124,6 @@ Return ONLY a JSON object:
         )
         return json.loads(response.choices[0].message.content)
     except Exception as e:
-        # Default to a generic location if geocoding fails (e.g., center of a city or 0,0)
         return {"lat": 34.0522, "lng": -118.2437, "address": "Default Location (Los Angeles)"}
 
 def get_score_color_hex(score):
