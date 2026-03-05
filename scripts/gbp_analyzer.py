@@ -13,6 +13,32 @@ except ImportError:
     print(json.dumps({"error": "Missing dependencies. Run: pip install duckduckgo_search openai python-dotenv"}))
     sys.exit(1)
 
+def load_outscraper_maps():
+    import glob
+    import os
+    import json
+    # Outscraper webhook saves files as outscraper_maps_taskId.json
+    latest_file = max(glob.glob('outscraper_maps_*.json'), key=os.path.getctime, default="test_outscraper_maps.json")
+    if not os.path.exists(latest_file):
+        return None
+    try:
+        with open(latest_file, 'r') as f:
+            data = json.load(f)
+        if isinstance(data, list) and len(data) > 0:
+            item = data[0]
+            if isinstance(item, list) and len(item) > 0:
+                item = item[0]
+            if isinstance(item, dict):
+                return {
+                    "rating": item.get('rating'),
+                    "reviews_data": item.get('reviews_data', []),
+                    "reviews": item.get('reviews'), # count
+                    "attributes": item.get('about', {})
+                }
+        return None
+    except:
+        return None
+
 def analyze_gbp(gbp_url):
     """Analyze a Google Business Profile for GEO-SEO optimization."""
     api_key = os.getenv("OPENAI_API_KEY")
@@ -72,6 +98,11 @@ def analyze_gbp(gbp_url):
         osm_data_str = f"OSM Search failed: {str(e)}"
 
     # Step 2: AI Analysis
+    outscraper_data = load_outscraper_maps()
+    outscraper_str = "No verified Outscraper data available."
+    if outscraper_data:
+        outscraper_str = f"- Rating: {outscraper_data.get('rating')}\n- Reviews count: {outscraper_data.get('reviews')}\n- Attributes: {json.dumps(outscraper_data.get('attributes'))}"
+
     prompt = f"""You are a Local GEO (Generative Engine Optimization) expert.
 Analyze the following search context for a Google Business Profile:
 URL provided: {gbp_url}
@@ -81,6 +112,9 @@ Search Context:
 
 Open Street Maps (OSM) Entity Cross-Validation Data:
 {osm_data_str}
+
+Outscraper Verified Data:
+{outscraper_str}
 
 Evaluate the "AI Readiness" of this local business. Consider:
 1. Is the business name and category clear?

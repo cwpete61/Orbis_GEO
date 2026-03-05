@@ -669,6 +669,35 @@ def calculate_brand_authority(platforms: dict) -> int:
     )
     return min(int(total), 100)
 
+def load_outscraper_socials():
+    """Load verified social links from Outscraper contacts scrape if available."""
+    import glob
+    import os
+    latest_file = max(glob.glob('outscraper_contacts_*.json'), key=os.path.getctime, default="test_outscraper_contacts.json")
+    if not os.path.exists(latest_file):
+        return {}
+    
+    try:
+        with open(latest_file, 'r') as f:
+            data = json.load(f)
+        
+        socials = {}
+        if isinstance(data, list) and len(data) > 0:
+            item = data[0]
+            if isinstance(item, list) and len(item) > 0:
+                item = item[0]
+            
+            # outscraper usually provides these fields if found
+            if 'facebook' in item and item['facebook']: socials['Facebook'] = item['facebook']
+            if 'instagram' in item and item['instagram']: socials['Instagram'] = item['instagram']
+            if 'twitter' in item and item['twitter']: socials['Twitter/X'] = item['twitter']
+            if 'linkedin' in item and item['linkedin']: socials['LinkedIn'] = item['linkedin']
+            if 'youtube' in item and item['youtube']: socials['YouTube'] = item['youtube']
+            if 'tiktok' in item and item['tiktok']: socials['TikTok'] = item['tiktok']
+        return socials
+    except:
+        return {}
+
 
 def scan_brand(brand_name: str, url: str = "") -> dict:
     """Main entrypoint: Perform full brand scan using AI-powered analysis."""
@@ -722,6 +751,18 @@ def scan_brand(brand_name: str, url: str = "") -> dict:
         "Other Platforms": other,
         "Google Maps (GBP)": google_maps,
     }
+
+    verified_socials = load_outscraper_socials()
+    # Boost platforms if we have verified links
+    for plat_name, link in verified_socials.items():
+        if plat_name in platforms:
+            if platforms[plat_name]["score"] < 80:
+                platforms[plat_name]["score"] = 95
+            platforms[plat_name]["has_presence"] = True
+            platforms[plat_name]["summary"] = f"Verified via Outscraper: {link}"
+            if "key_findings" not in platforms[plat_name]:
+                platforms[plat_name]["key_findings"] = []
+            platforms[plat_name]["key_findings"].insert(0, f"Verified Profile URL: {link}")
 
     brand_authority = calculate_brand_authority(platforms)
     print(f"[brand_scanner] Brand Authority Score: {brand_authority}/100", file=sys.stderr)

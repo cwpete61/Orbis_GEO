@@ -114,3 +114,8 @@
 - [x] Implement a data schema to structure simulation results (`sim_schema.json`) <!-- id: 77 -->
 - [x] Connect simulation results to dashboard UI chart components <!-- id: 78 -->
 - [x] Update `generate_live_pdf.py` to include a full page "Simulation Comparison" block <!-- id: 79 -->
+
+## Phase 18: Outscraper Verification Integration
+**Status**: ✅ Complete
+- [x] Implement Outscraper webhooks and API triggers in `server.js`
+- [x] Integrate verified data into `brand_scanner.py` and `gbp_analyzer.py`
