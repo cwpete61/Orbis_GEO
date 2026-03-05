@@ -84,7 +84,11 @@ def generate_optimization_roadmap(data):
             "url": data.get("url"),
             "scores": data.get("scores"),
             "top_findings": [f.get("title") for f in data.get("findings", [])[:5]],
-            "has_gbp": data.get("gbp") is not None
+            "has_gbp": data.get("gbp") is not None,
+            "visibility": {
+                "avg_rank": (sum([p['score'] for p in data['gbp_grid']['grid']]) / 25.0) if data.get('gbp_grid') else "N/A",
+                "fallout": len([p for p in data.get('gbp_grid', {}).get('grid', []) if p['score'] > 12]) if data.get('gbp_grid') else "N/A"
+            }
         }
 
         prompt = f"""You are a GEO (Generative Engine Optimization) and SEO expert.
@@ -304,7 +308,6 @@ def aggregate_data():
                 if "overall_local_score" in gbp_data:
                     data["scores"]["local_authority"] = int(gbp_data["overall_local_score"])
                 
-                # Append GBP findings to main findings list
                 if "findings" in gbp_data:
                     for f in gbp_data["findings"]:
                         # Tag as GBP finding
@@ -312,6 +315,25 @@ def aggregate_data():
                         data["findings"].append(f)
         except Exception as e:
             print(f"Error reading test_gbp.json: {e}")
+
+    # 5. Read GBP Grid Data
+    if os.path.exists("test_gbp_grid.json"):
+        try:
+            with open("test_gbp_grid.json", "r") as f:
+                grid_data = json.load(f)
+                data["gbp_grid"] = grid_data
+        except Exception as e:
+            print(f"Error reading test_gbp_grid.json: {e}")
+
+    # 6. Read Simulation Engine Data
+    if os.path.exists("test_sim.json"):
+        try:
+            with open("test_sim.json", "r") as f:
+                sim_data = json.load(f)
+                data["simulation"] = sim_data
+        except Exception as e:
+            print(f"Error reading test_sim.json: {e}")
+
     scores = data["scores"]
     total_score = sum(scores.values())
     if len(scores) > 0:

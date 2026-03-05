@@ -29,6 +29,10 @@ function showView(viewId) {
         view.style.display = 'none';
     });
     document.getElementById(viewId).style.display = 'block';
+
+    if (viewId === 'reportView') {
+        initVisibilityMap();
+    }
 }
 
 async function runStep(step, isSequence = false) {
@@ -89,7 +93,7 @@ async function runFullAuditSequence(isAutoFlow = false) {
         setStatus(`Full Audit In Progress`, true);
     }
 
-    const steps = ['fetch', 'score', 'brand', 'crawlers', 'gbp', 'report'];
+    const steps = ['fetch', 'score', 'brand', 'crawlers', 'gbp', 'grid', 'report'];
     let success = true;
 
     for (let i = 0; i < steps.length; i++) {
@@ -192,7 +196,7 @@ function updateGeneratingProgress(step, index, total) {
 }
 
 // Global steps definition for helper functions
-const steps = ['fetch', 'score', 'brand', 'crawlers', 'gbp', 'report'];
+const steps = ['fetch', 'score', 'brand', 'crawlers', 'gbp', 'grid', 'report'];
 
 function startGeneratingAnimations() {
     const aiMessages = [
@@ -320,3 +324,114 @@ document.getElementById('clearLogs').addEventListener('click', () => {
     logOutput.innerHTML = 'Waiting for command...';
     setStatus('Ready');
 });
+
+let mapInstance = null;
+async function initVisibilityMap() {
+    try {
+        const response = await fetch('/api/gbp-grid-data');
+        if (!response.ok) return;
+        const data = await response.json();
+
+        // 1. Fetch simulation data if available
+        let simData = null;
+        try {
+            const simRes = await fetch('/api/simulation-data');
+            if (simRes.ok) simData = await simRes.json();
+        } catch (simErr) {
+            console.warn("Simulation data not available yet.");
+        }
+
+        if (!mapInstance) {
+            mapInstance = L.map('map').setView([data.center.lat, data.center.lng], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(mapInstance);
+        } else {
+            mapInstance.setView([data.center.lat, data.center.lng], 13);
+            // Clear existing markers if any
+            mapInstance.eachLayer((layer) => {
+                if (layer instanceof L.CircleMarker) {
+                    mapInstance.removeLayer(layer);
+                }
+            });
+        }
+
+        // Calculate Current Metrics
+        const currentScores = data.grid.map(p => p.score);
+        const avgRank = (currentScores.reduce((a, b) => a + b, 0) / currentScores.length).toFixed(1);
+        const falloutCount = currentScores.filter(s => s > 12).length;
+        const falloutPercent = Math.round((falloutCount / currentScores.length) * 100);
+
+        let maxReach = 0;
+        data.grid.forEach(point => {
+            if (point.score <= 5) {
+                const dist = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
+                if (dist > maxReach) maxReach = dist;
+            }
+        });
+
+        // 2. Calculate Potential Metrics from Simulation
+        let potMaxReach = 0;
+        let potFalloutPercent = falloutPercent;
+
+        if (simData && simData.optimized && simData.optimized.grid) {
+            const potentialScores = simData.optimized.grid.map(p => p.score);
+            const potFalloutCount = potentialScores.filter(s => s > 12).length;
+            potFalloutPercent = Math.round((potFalloutCount / potentialScores.length) * 100);
+
+            simData.optimized.grid.forEach(point => {
+                const pScore = point.score;
+                if (pScore <= 5) {
+                    const dist = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
+                    if (dist > potMaxReach) potMaxReach = dist;
+                }
+            });
+        }
+
+        // Update UI tiles
+        document.getElementById('metric-avg-visibility').textContent = `Rank #${avgRank}`;
+        document.getElementById('metric-fallout').textContent = `${falloutPercent}%`;
+        document.getElementById('metric-reach').textContent = `${maxReach.toFixed(1)} km`;
+        document.getElementById('metric-potential-reach').textContent = `${potMaxReach.toFixed(1)} km`;
+        document.getElementById('metric-potential-fallout').textContent = `${potFalloutPercent}%`;
+
+        // Add 25 grid points
+        data.grid.forEach(point => {
+            let color = '#e74c3c'; // Red (Fallout)
+            if (point.score <= 5) color = '#2ecc71'; // Green (High Visibility)
+            else if (point.score <= 12) color = '#f1c40f'; // Yellow (Moderate)
+
+            L.circleMarker([point.lat, point.lng], {
+                radius: 8,
+                fillColor: color,
+                color: "#fff",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(mapInstance).bindPopup(`Visibility Rank: ${point.score}`);
+        });
+
+        // Add business center
+        L.marker([data.center.lat, data.center.lng]).addTo(mapInstance)
+            .bindPopup(`<b>${data.brand_name}</b><br>${data.center.address}`).openPopup();
+
+        // Fix map resize issue in hidden containers
+        setTimeout(() => {
+            if (mapInstance) mapInstance.invalidateSize();
+        }, 300);
+
+    } catch (e) {
+        console.error("Map initialization failed:", e);
+    }
+}
+
+function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}

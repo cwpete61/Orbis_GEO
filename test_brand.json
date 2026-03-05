@@ -1,22 +1,22 @@
 {
-  "brand_name": "Pierre Paul",
+  "brand_name": "LB",
   "url": "",
-  "brand_authority_score": 40,
+  "brand_authority_score": 61,
   "platforms": {
     "YouTube": {
       "platform": "YouTube",
       "correlation": 0.737,
       "weight": "25%",
-      "score": 55,
-      "has_channel": true,
-      "sentiment": "neutral",
+      "score": 0,
+      "has_channel": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "Multiple YouTube channels mention Pierre Paul, including official and fan channels.",
-        "The brand is referenced in a total of approximately 8 videos, mostly related to individual or unrelated content.",
-        "There is no evidence of a dedicated, active Pierre Paul channel with significant subscriber count."
+        "No official YouTube channel URL containing 'youtube.com/@' or 'youtube.com/channel/' for LB.",
+        "Multiple search results mention LB in video titles, but none link to an official LB YouTube channel.",
+        "Presence is limited to video mentions and content unrelated to an official brand account."
       ],
-      "summary": "Pierre Paul has a moderate presence on YouTube with some mentions across various videos, but lacks a dedicated active channel or widespread brand visibility.",
-      "search_url": "https://www.youtube.com/results?search_query=Pierre+Paul",
+      "summary": "LB does not have an official YouTube presence based on the search results.",
+      "search_url": "https://www.youtube.com/results?search_query=LB",
       "recommendations": [
         "Create a YouTube channel if none exists",
         "Publish educational/tutorial content related to your niche",
@@ -28,17 +28,16 @@
       "platform": "Reddit",
       "correlation": "High",
       "weight": "25%",
-      "score": 55,
+      "score": 75,
       "has_presence": true,
-      "sentiment": "mixed",
+      "sentiment": "positive",
       "key_findings": [
-        "Multiple mentions of Pierre Paulin watches in dedicated watch subreddits, with reviews and comparisons.",
-        "Occasional references to Jason Pierre-Paul related to NFL discussions, but not directly about the brand.",
-        "Some community engagement around Pierre Paulin's watch designs, indicating recognition within niche communities.",
-        "Limited overall sentiment data, but the presence in specialized subreddits suggests recognition."
+        "Multiple mentions of LB in book recommendation threads, especially in r/redrising, indicating community interest.",
+        "Mentions of LB in other subreddits like r/fut and r/My600lbLife are limited and context-specific, not directly related to the brand.",
+        "Some discussions reference LB in stock and business contexts, but these are less frequent and not central to the brand's Reddit presence."
       ],
-      "summary": "Pierre Paul has a modest but notable presence on Reddit primarily within watch communities, with some mentions in sports discussions, reflecting niche recognition.",
-      "search_url": "https://www.reddit.com/search/?q=Pierre+Paul",
+      "summary": "LB has a regular and generally positive presence on Reddit, primarily within book communities, with some peripheral mentions in other subreddits.",
+      "search_url": "https://www.reddit.com/search/?q=LB",
       "recommendations": [
         "Identify 3-5 subreddits where your target audience is active",
         "Participate authentically\u2014do not shill",
@@ -50,16 +49,16 @@
       "platform": "Wikipedia / Wikidata",
       "correlation": "High",
       "weight": "20%",
-      "score": 10,
-      "has_wikipedia": false,
-      "wikipedia_url": "",
-      "wikidata_id": "Q20727006",
+      "score": 95,
+      "has_wikipedia": true,
+      "wikipedia_url": "https://en.wikipedia.org/wiki/LB",
+      "wikidata_id": "Q822",
       "key_findings": [
-        "No dedicated Wikipedia article exists for 'Pierre Paul'.",
-        "The only related Wikipedia content references individuals with similar names, such as Pierre Paul Royer-Collard and Pierre-Paul Renders.",
-        "A Wikidata entry (Q20727006) exists for 'Pierre Paul', but lacks a comprehensive Wikipedia article."
+        "The brand 'LB' has a dedicated Wikipedia article at https://en.wikipedia.org/wiki/LB.",
+        "It also has a Wikidata entry (Q822) with complete properties.",
+        "The article appears to be detailed, indicating a strong online presence."
       ],
-      "summary": "Pierre Paul has minimal presence on Wikipedia, with no dedicated article but a Wikidata entry indicating limited recognition.",
+      "summary": "LB maintains a prominent and well-documented presence on Wikipedia with a dedicated article and Wikidata entry.",
       "recommendations": [
         "Build notability through press coverage first before seeking a Wikipedia article",
         "Ensure your Wikidata entry (Q-number) is complete even without a full article",
@@ -70,16 +69,16 @@
       "platform": "LinkedIn",
       "correlation": "Moderate",
       "weight": "15%",
-      "score": 15,
-      "has_presence": false,
-      "sentiment": "unknown",
+      "score": 75,
+      "has_presence": true,
+      "sentiment": "positive",
       "key_findings": [
-        "No official LinkedIn company page for Pierre Paul identified in search results.",
-        "Multiple unrelated company pages and profiles with similar or partial names appear, but none explicitly represent Pierre Paul.",
-        "Limited or no active brand presence or thought leadership content associated directly with Pierre Paul on LinkedIn."
+        "Multiple active LinkedIn pages with varying follower counts, some exceeding 9,000 followers.",
+        "Presence includes companies with clear branding and regular activity, such as LB Foster and LB B&B Associates.",
+        "Several pages are dedicated to different subsidiaries or related entities, indicating a broad but somewhat fragmented presence."
       ],
-      "summary": "Pierre Paul lacks an identifiable or active official presence on LinkedIn based on current search results.",
-      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Pierre+Paul",
+      "summary": "LB has a solid LinkedIn presence with active pages and substantial followers, though the presence is spread across multiple entities.",
+      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=LB",
       "recommendations": [
         "Optimize company page with complete information and regular posting",
         "Encourage leadership to post thought leadership content weekly",
@@ -90,15 +89,15 @@
       "platform": "Local Directories",
       "correlation": "High (Local Entity)",
       "weight": "20%",
-      "score": 75,
+      "score": 65,
       "has_listings": true,
-      "sentiment": "positive",
+      "sentiment": "mixed",
       "key_findings": [
-        "Multiple listings for Pierre Paul Driving School on Yelp, with consistent information and recent updates.",
-        "Presence on YellowPages with at least two entries related to the driving school, indicating visibility in local directories.",
-        "Mentions on Trustpilot and other review platforms, though some reviews are for different entities sharing similar names."
+        "Multiple listings on YellowPages for different locations and services, including general contractors and water supply companies.",
+        "Presence on Trustpilot with reviews for LB Telecom and LB Clothing, indicating some brand recognition.",
+        "Limited or no verified listings on major directories like Yelp specifically for the core brand LB, with some mentions of dissolved or unrelated entities."
       ],
-      "summary": "Pierre Paul has a solid presence on major local directories, primarily through Yelp and YellowPages, with generally positive visibility.",
+      "summary": "LB has a moderate presence across local directories and review platforms, with some verified listings and mixed reviews, but lacks widespread verified directory presence for its core brand.",
       "recommendations": [
         "Claim your business profile on Yelp and YellowPages",
         "Encourage happy customers to leave reviews on Trustpilot",
@@ -110,13 +109,13 @@
       "platform": "Other Platforms",
       "correlation": "Supplementary",
       "weight": "15%",
-      "score": 0,
+      "score": 75,
       "key_findings": [
-        "No search results found on Quora, news, or podcasts platforms.",
-        "Lack of any mentions or coverage on these platforms.",
-        "Brand presence appears absent across supplementary online channels."
+        "Multiple press releases and news updates about LandBridge Company LLC are available across various news platforms.",
+        "There are active podcast episodes discussing topics related to LB, indicating some media engagement.",
+        "Quora features general knowledge content but lacks direct brand-specific engagement or authoritative answers from LB."
       ],
-      "summary": "Pierre Paul has no detectable presence on Quora, news, or podcasts platforms based on current search results.",
+      "summary": "LB has a moderate presence on other platforms with some news coverage and podcast activity, but limited direct engagement on Quora.",
       "recommendations": [
         "Create Quora answers for top industry questions related to your brand",
         "Issue press releases for major company milestones",
@@ -131,12 +130,12 @@
       "has_presence": false,
       "sentiment": "unknown",
       "key_findings": [
-        "No verified Google Business Profile found for Pierre Paul on Google Maps.",
-        "Search results indicate no current presence or profile on GBP.",
-        "Existing reviews are associated with a different business (Pierre Paul Design) and not the brand in question."
+        "Search results primarily show general Google Maps links and guides, with no specific mention of LB's Google Business Profile.",
+        "No direct evidence of LB having a claimed or verified profile on Google Maps.",
+        "Search results focus on general Google Maps usage and review guides, not on LB's local presence."
       ],
-      "summary": "There is no active or verified Google Maps presence for Pierre Paul.",
-      "search_url": "https://www.google.com/maps/search/Pierre+Paul",
+      "summary": "There is no clear evidence of LB having an active or verified presence on Google Maps based on the search results.",
+      "search_url": "https://www.google.com/maps/search/LB",
       "recommendations": [
         "Claim and verify your Google Business Profile",
         "Ensure NAP (Name, Address, Phone) consistency",

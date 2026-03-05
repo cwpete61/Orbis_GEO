@@ -1,52 +1,41 @@
 {
-  "business_name": "Monte Vista Dental",
-  "overall_local_score": 78,
-  "status": "Good",
+  "business_name": "Not Provided",
+  "osm_verification_confidence": 0,
+  "overall_local_score": 35,
+  "status": "Fair",
   "insights": [
     {
-      "title": "Clear Business Name & Category",
-      "score": 85,
-      "details": "The business name 'Monte Vista Dental' clearly indicates the dental service provided. The category is appropriately listed as 'Dentist,' making it recognizable for AI algorithms and users."
+      "title": "Business Name and Category Clarity",
+      "score": 40,
+      "details": "The business name appears generic or unclear, with limited descriptive keywords aligning with typical local service terms; the category may lack specificity or clarity, reducing AI-readiness."
     },
     {
-      "title": "AI-compatible Descriptions",
-      "score": 70,
-      "details": "The business description mentions key services like 'general dentistry, teeth cleaning, crowns, and orthodontics.' However, it could benefit from more structured entities and specific keywords to enhance AI comprehension."
+      "title": "AI-Compatible Descriptions",
+      "score": 30,
+      "details": "Descriptions do not contain sufficient entities or detailed service keywords, limiting the scope for AI-enhanced optimization and context understanding."
     },
     {
-      "title": "Reputation & Sentiment",
-      "score": 75,
-      "details": "Recent reviews mostly express positive experiences, highlighting friendly staff and quality care. There are some minor complaints about wait times, but overall sentiment is favorable."
-    },
-    {
-      "title": "AI Recommendation Likelihood",
-      "score": 80,
-      "details": "Given the clear name, relevant categories, and generally positive reviews, AI systems like ChatGPT Local or Google SGE would likely recommend this location, especially if the description is enhanced with more specific service details."
+      "title": "Review Sentiment",
+      "score": 50,
+      "details": "Recent reviews show mixed sentiment with some positive mentions; however, limited quantity or consistency hampers full sentiment analysis and influence on AI-based relevance."
     }
   ],
   "findings": [
     {
-      "severity": "medium",
-      "title": "Limited Keyword Optimization",
-      "description": "The current description lacks detailed keywords and structured entities related to dental services, which may hinder AI interpretation.",
-      "impact": "Moderate chance that AI may overlook specific services, reducing visibility in AI-driven searches.",
-      "fix_example": "Add detailed service lists with specific dental procedures, equipment, and specialties, e.g., 'emergency dentistry, dental implants, sealants.'"
-    },
-    {
-      "severity": "low",
-      "title": "Incomplete Service Details",
-      "description": "Some service offerings are mentioned vaguely or missing from the profile.",
-      "impact": "Low, but improving descriptions can boost AI recognition and user engagement.",
-      "fix_example": "Update the profile with comprehensive descriptions of all services, including specialties and any unique amenities."
+      "severity": "critical",
+      "title": "OSM Data Mismatch",
+      "description": "No matching OSM entity was found to verify the local business details; discrepancies between GBP and OSM data suggest potential mismatch or missing data.",
+      "impact": "Reduces trustworthiness of location data, hampers cross-platform validation, and impairs AI-driven recommendations or localization efforts.",
+      "fix_example": "Verify and update the business address, website, and category in authoritative sources and ensure consistency across GBP and OSM inputs."
     },
     {
       "severity": "high",
-      "title": "Review Sentiment Variability",
-      "description": "While reviews are generally positive, recent negative comments about wait times could impact local AI recommendations negatively if not addressed.",
-      "impact": "High, as AI systems weigh recent reviews significantly when recommending locations.",
-      "fix_example": "Encourage and manage reviews focusing on positive aspects and address any recurrent complaints publicly."
+      "title": "Limited Entity Data",
+      "description": "Lack of detailed structured data and entity references in business descriptions.",
+      "impact": "Limits AI models' ability to accurately interpret and optimize the business profile for local SEO.",
+      "fix_example": "Incorporate detailed service descriptions with relevant entities, keywords, and location-specific information."
     }
   ],
-  "audit_date": "2026-03-04 15:07",
-  "gbp_url": "https://share.google/Htu7ZhFeuDIjvo7wt"
+  "audit_date": "2026-03-04 21:11",
+  "gbp_url": "https://maps.app.goo.gl/EEKjPP9oKbUENTkR8"
 }

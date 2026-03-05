@@ -1,0 +1,162 @@
+{
+  "brand_name": "LB",
+  "center": {
+    "lat": 40.698692,
+    "lng": -73.988805,
+    "address": "LB, 150 E 58th St, New York, NY 10155, USA"
+  },
+  "grid": [
+    {
+      "lat": 40.653647,
+      "lng": -74.048219,
+      "score": 18,
+      "potential_score": 9
+    },
+    {
+      "lat": 40.653647,
+      "lng": -74.018512,
+      "score": 11,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.653647,
+      "lng": -73.988805,
+      "score": 8,
+      "potential_score": 5
+    },
+    {
+      "lat": 40.653647,
+      "lng": -73.959098,
+      "score": 10,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.653647,
+      "lng": -73.929391,
+      "score": 17,
+      "potential_score": 9
+    },
+    {
+      "lat": 40.676169,
+      "lng": -74.048219,
+      "score": 11,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.676169,
+      "lng": -74.018512,
+      "score": 4,
+      "potential_score": 3
+    },
+    {
+      "lat": 40.676169,
+      "lng": -73.988805,
+      "score": 2,
+      "potential_score": 2
+    },
+    {
+      "lat": 40.676169,
+      "lng": -73.959098,
+      "score": 5,
+      "potential_score": 3
+    },
+    {
+      "lat": 40.676169,
+      "lng": -73.929391,
+      "score": 12,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.698692,
+      "lng": -74.048219,
+      "score": 8,
+      "potential_score": 5
+    },
+    {
+      "lat": 40.698692,
+      "lng": -74.018512,
+      "score": 2,
+      "potential_score": 2
+    },
+    {
+      "lat": 40.698692,
+      "lng": -73.988805,
+      "score": 1,
+      "potential_score": 1
+    },
+    {
+      "lat": 40.698692,
+      "lng": -73.959098,
+      "score": 4,
+      "potential_score": 2
+    },
+    {
+      "lat": 40.698692,
+      "lng": -73.929391,
+      "score": 10,
+      "potential_score": 5
+    },
+    {
+      "lat": 40.721215,
+      "lng": -74.048219,
+      "score": 10,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.721215,
+      "lng": -74.018512,
+      "score": 5,
+      "potential_score": 3
+    },
+    {
+      "lat": 40.721215,
+      "lng": -73.988805,
+      "score": 4,
+      "potential_score": 2
+    },
+    {
+      "lat": 40.721215,
+      "lng": -73.959098,
+      "score": 6,
+      "potential_score": 3
+    },
+    {
+      "lat": 40.721215,
+      "lng": -73.929391,
+      "score": 11,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.743737,
+      "lng": -74.048219,
+      "score": 17,
+      "potential_score": 9
+    },
+    {
+      "lat": 40.743737,
+      "lng": -74.018512,
+      "score": 12,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.743737,
+      "lng": -73.988805,
+      "score": 10,
+      "potential_score": 5
+    },
+    {
+      "lat": 40.743737,
+      "lng": -73.959098,
+      "score": 11,
+      "potential_score": 6
+    },
+    {
+      "lat": 40.743737,
+      "lng": -73.929391,
+      "score": 16,
+      "potential_score": 9
+    }
+  ],
+  "audit_date": "2026-03-04 21:11",
+  "radius_km": 5
+}

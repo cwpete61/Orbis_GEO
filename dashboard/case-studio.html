@@ -12,6 +12,123 @@
     <link rel="stylesheet" href="style.css">
     <script src="components/site-header.js?v=2" defer></script>
     <script src="components/site-footer.js?v=2" defer></script>
+    <style>
+        .sim-section {
+            margin: 2rem 0;
+        }
+
+        .sim-grid-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .sim-grid-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .sim-grid-label.optimized {
+            color: #2ecc71;
+        }
+
+        .sim-map {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+        }
+
+        .sim-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #111;
+            transition: transform 0.2s;
+        }
+
+        .sim-cell:hover {
+            transform: scale(1.1);
+        }
+
+        .sim-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sim-stat {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .sim-stat .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .sim-stat .stat-lbl {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+        }
+
+        .sim-stat .stat-val.good {
+            color: #2ecc71;
+        }
+
+        .sim-stat .stat-val.warn {
+            color: #f1c40f;
+        }
+
+        .sim-stat .stat-val.bad {
+            color: #e74c3c;
+        }
+
+        .simulate-btn {
+            background: linear-gradient(135deg, #6c63ff, #2ecc71);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .simulate-btn:hover {
+            opacity: 0.85;
+        }
+
+        .sim-loading {
+            opacity: 0.6;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .sim-grid-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -20,7 +137,7 @@
     <div class="container">
         <header class="case-header">
             <h1 class="logo">ORBIS CASE STUDIO</h1>
-            <p class="tagline">Competitive Analysis: BPS Zero Fees vs. Orbis Local</p>
+            <p class="tagline">Live GEO Simulation: LightBox SEO — Allentown, PA</p>
         </header>
 
         <main id="caseStudioView">
@@ -28,23 +145,45 @@
                 <!-- Brand Cards -->
                 <div class="brand-card glass">
                     <div class="brand-header">
-                        <span class="brand-badge baseline">BASELINE</span>
-                        <h3>BPS Zero Fees</h3>
-                        <div class="big-score">31</div>
-                        <p>Total Brand Authority</p>
+                        <span class="brand-badge baseline">CURRENT STATE</span>
+                        <h3>LightBox SEO</h3>
+                        <div class="big-score" id="sim-baseline-score">—</div>
+                        <p>Avg. Rank (Current)</p>
                     </div>
                 </div>
 
                 <div class="brand-card glass optimized">
                     <div class="brand-header">
-                        <span class="brand-badge optimized">OPTIMIZED</span>
-                        <h3>Orbis Local</h3>
-                        <div class="big-score">45</div>
-                        <p>Total Brand Authority</p>
+                        <span class="brand-badge optimized">OPTIMIZED (GEO/SEO)</span>
+                        <h3>LightBox SEO</h3>
+                        <div class="big-score" id="sim-optimized-score">—</div>
+                        <p>Avg. Rank (Potential)</p>
                     </div>
-                    <div class="growth-box">+45% Visibility Growth</div>
+                    <div class="growth-box" id="sim-delta-box">Run Simulation ↓</div>
                 </div>
             </div>
+
+            <!-- Live Simulation Section -->
+            <section class="glass sim-section">
+                <h2>GEO Visibility Simulation Grid</h2>
+                <p style="opacity:0.7;font-size:0.9rem;">Click below to generate a live baseline vs. optimized
+                    visibility comparison for <strong>LightBox SEO</strong> at 716 Washington St, Allentown, PA.</p>
+                <button class="simulate-btn" id="runSimBtn" onclick="runSimulation()">▶ Run Live GEO Simulation</button>
+                <div class="sim-loading" id="simLoading">⚙ Calculating simulation... this may take a few seconds.</div>
+
+                <div class="sim-grid-wrapper" id="simGrids" style="display:none;">
+                    <div>
+                        <div class="sim-grid-label">📍 Current Visibility (Unoptimized)</div>
+                        <div class="sim-map" id="baselineGrid"></div>
+                        <div class="sim-stats" id="baselineStats"></div>
+                    </div>
+                    <div>
+                        <div class="sim-grid-label optimized">🚀 Potential Visibility (With Orbis GEO)</div>
+                        <div class="sim-map" id="optimizedGrid"></div>
+                        <div class="sim-stats" id="optimizedStats"></div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Comparison Matrix -->
             <section class="glass comparison-matrix">
@@ -52,28 +191,25 @@
                 <div class="matrix-table">
                     <div class="matrix-row header">
                         <div class="matrix-col">Platform</div>
-                        <div class="matrix-col">BPS Zero Fees</div>
-                        <div class="matrix-col">Orbis Local</div>
+                        <div class="matrix-col">Current State</div>
+                        <div class="matrix-col">After Orbis GEO</div>
                         <div class="matrix-col">Impact</div>
                     </div>
 
-                    <!-- YouTube -->
                     <div class="matrix-row">
                         <div class="matrix-col"><strong>YouTube</strong></div>
-                        <div class="matrix-col score-low">31%</div>
-                        <div class="matrix-col score-med">45% <span class="delta-up">▲ 14%</span></div>
+                        <div class="matrix-col score-low">45%</div>
+                        <div class="matrix-col score-high">75% <span class="delta-up">▲ 30%</span></div>
                         <div class="matrix-col">High Citability</div>
                     </div>
 
-                    <!-- Local Directories -->
                     <div class="matrix-row">
                         <div class="matrix-col"><strong>Local Directories</strong></div>
                         <div class="matrix-col score-low">45%</div>
-                        <div class="matrix-col score-high">65% <span class="delta-up">▲ 20%</span></div>
+                        <div class="matrix-col score-high">80% <span class="delta-up">▲ 35%</span></div>
                         <div class="matrix-col">Trust Signal</div>
                     </div>
 
-                    <!-- Other Platforms -->
                     <div class="matrix-row">
                         <div class="matrix-col"><strong>News & Podcasts</strong></div>
                         <div class="matrix-col score-low">45%</div>
@@ -81,20 +217,18 @@
                         <div class="matrix-col">Domain Authority</div>
                     </div>
 
-                    <!-- LinkedIn -->
                     <div class="matrix-row">
                         <div class="matrix-col"><strong>LinkedIn</strong></div>
-                        <div class="matrix-col score-zero">0%</div>
-                        <div class="matrix-col score-med">45% <span class="delta-up">▲ 45%</span></div>
+                        <div class="matrix-col score-zero">45%</div>
+                        <div class="matrix-col score-med">70% <span class="delta-up">▲ 25%</span></div>
                         <div class="matrix-col">B2B Engagement</div>
                     </div>
 
-                    <!-- Google Maps -->
                     <div class="matrix-row">
                         <div class="matrix-col"><strong>Google Maps (GBP)</strong></div>
                         <div class="matrix-col score-zero">0%</div>
-                        <div class="matrix-col score-zero">0% <span class="delta-steady">● 0%</span></div>
-                        <div class="matrix-col warning">Critical Gap</div>
+                        <div class="matrix-col score-high">85% <span class="delta-up">▲ 85%</span></div>
+                        <div class="matrix-col warning">Critical Gap → Fixed</div>
                     </div>
                 </div>
             </section>
@@ -103,24 +237,96 @@
             <div class="analysis-grid">
                 <div class="glass analysis-box">
                     <h3>The Competitive Advantage</h3>
-                    <p>While BPS Zero Fees has scattered mentions, <strong>Orbis Local</strong> has successfully built a
-                        "Fragmented Authority" across News, Podcasts, and Local Directories. This multi-channel
-                        footprint is exactly what Generative Engines look for when selecting sources for AI Overviews.
-                    </p>
+                    <p>LightBox SEO currently has a <strong>strong citation opportunity</strong> and is in a position to
+                        dominate local GEO in Allentown. With a verified GBP, optimized service pages, and consistent
+                        NAP across directories, they can build a "Fragmented Authority" footprint that Generative
+                        Engines prefer.</p>
                 </div>
                 <div class="glass analysis-box">
                     <h3>Room for Growth</h3>
-                    <p>Both brands currently share a <strong>Critical Gap</strong>: No verified Google Business Profile.
-                        In the 2026 search ecosystem, an unclaimed GBP is a total blackout for AI Local Search.
-                        Addressing this immediately would drive Orbis Local's score above 70%.</p>
+                    <p>The <strong>Critical Gap</strong> is an unclaimed or under-optimized Google Business Profile. In
+                        the 2026 search ecosystem, this is a total blackout for AI Local Search. Addressing this plus
+                        implementing service-page GEO targeting would immediately push LightBox SEO into the top 3 for
+                        Allentown SEO queries.</p>
                 </div>
             </div>
         </main>
     </div>
 
     <site-footer></site-footer>
-    <!-- Scanner line for transitions -->
     <div class="scanner-line"></div>
+
+    <script>
+        function getColor(score) {
+            if (score <= 3) return '#2ecc71';
+            if (score <= 7) return '#f1c40f';
+            if (score <= 12) return '#e67e22';
+            return '#e74c3c';
+        }
+
+        function renderGrid(containerId, grid) {
+            const el = document.getElementById(containerId);
+            el.innerHTML = '';
+            grid.forEach(pt => {
+                const cell = document.createElement('div');
+                cell.className = 'sim-cell';
+                cell.style.background = getColor(pt.score);
+                cell.title = `Rank ~${pt.score} at (${pt.lat.toFixed(3)}, ${pt.lng.toFixed(3)})`;
+                cell.textContent = pt.score;
+                el.appendChild(cell);
+            });
+        }
+
+        function renderStats(containerId, avg, label) {
+            const el = document.getElementById(containerId);
+            const cls = avg <= 5 ? 'good' : avg <= 10 ? 'warn' : 'bad';
+            const fallout = /* % of points ranked > 10 */ 0;
+            el.innerHTML = `
+                <div class="sim-stat"><div class="stat-val ${cls}">${avg.toFixed(1)}</div><div class="stat-lbl">Avg Rank (${label})</div></div>
+                <div class="sim-stat"><div class="stat-val">${(avg / 20 * 100).toFixed(0)}%</div><div class="stat-lbl">Visibility Score</div></div>
+            `;
+        }
+
+        async function runSimulation() {
+            document.getElementById('simLoading').style.display = 'block';
+            document.getElementById('runSimBtn').disabled = true;
+            document.getElementById('simGrids').style.display = 'none';
+
+            try {
+                const res = await fetch('/api/simulate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ brand: 'LightBox SEO', lat: 40.6030, lng: -75.4740, score: 42 })
+                });
+                const data = await res.json();
+
+                if (data.status !== 'success') throw new Error(data.error || 'Simulation failed');
+                const result = JSON.parse(data.output);
+
+                const baseline = result.baseline;
+                const optimized = result.optimized;
+                const comparison = result.comparison;
+
+                renderGrid('baselineGrid', baseline.grid);
+                renderGrid('optimizedGrid', optimized.grid);
+                renderStats('baselineStats', comparison.avg_baseline, 'Current');
+                renderStats('optimizedStats', comparison.avg_optimized, 'Optimized');
+
+                document.getElementById('sim-baseline-score').textContent = '#' + comparison.avg_baseline.toFixed(1);
+                document.getElementById('sim-optimized-score').textContent = '#' + comparison.avg_optimized.toFixed(1);
+
+                const pct = ((comparison.delta / comparison.avg_baseline) * 100).toFixed(0);
+                document.getElementById('sim-delta-box').textContent = `▲ ~${pct}% Better GEO Rank`;
+
+                document.getElementById('simGrids').style.display = 'grid';
+            } catch (e) {
+                alert('Simulation error: ' + e.message);
+            } finally {
+                document.getElementById('simLoading').style.display = 'none';
+                document.getElementById('runSimBtn').disabled = false;
+            }
+        }
+    </script>
     <script src="app.js"></script>
 </body>
 

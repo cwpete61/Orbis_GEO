@@ -79,18 +79,7 @@ def get_score_color(score):
         return DANGER
 
 
-def get_score_label(score):
-    """Return label based on score value."""
-    if score >= 85:
-        return "Excellent"
-    elif score >= 70:
-        return "Good"
-    elif score >= 55:
-        return "Moderate"
-    elif score >= 40:
-        return "Below Average"
-    else:
-        return "Needs Attention"
+from utils import get_distance_py, get_score_label
 
 
 def create_score_gauge(score, width=120, height=120):
@@ -706,6 +695,148 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         elements.append(Paragraph(
             "No Google Business Profile was provided for analysis. Local AI search visibility "
             "may be limited without a verified and optimized GBP.",
+            styles['BodyText_Custom']
+        ))
+
+    elements.append(PageBreak())
+
+    # ============================================================
+    # GEO VISIBILITY & SEARCH FALLOUT
+    # ============================================================
+    elements.append(Paragraph("GEO Visibility & Search Fallout", styles['SectionHeader']))
+    elements.append(HRFlowable(width="100%", thickness=1, color=ACCENT, spaceAfter=12))
+
+    gbp_grid = data.get("gbp_grid", {})
+    if gbp_grid and "grid" in gbp_grid:
+        grid = gbp_grid["grid"]
+        center = gbp_grid.get("center", {})
+        
+        # Calculate Current Metrics
+        scores_vals = [p["score"] for p in grid]
+        avg_rank = sum(scores_vals) / len(scores_vals)
+        fallout_count = len([s for s in scores_vals if s > 12])
+        fallout_percent = (fallout_count / len(scores_vals)) * 100
+        
+        max_reach = 0
+        for p in grid:
+            if p["score"] <= 5:
+                d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
+                if d > max_reach: max_reach = d
+                
+        # Calculate Potential Metrics
+        pot_scores = [p.get("potential_score", p["score"]) for p in grid]
+        pot_avg_rank = sum(pot_scores) / len(pot_scores)
+        pot_fallout_count = len([s for s in pot_scores if s > 12])
+        pot_fallout_percent = (pot_fallout_count / len(pot_scores)) * 100
+        
+        pot_max_reach = 0
+        for p in grid:
+            ps = p.get("potential_score", p["score"])
+            if ps <= 5:
+                d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
+                if d > pot_max_reach: pot_max_reach = d
+        
+        # Current Stats Table
+        elements.append(Paragraph("Current Visibility Status", styles['SubHeader']))
+        stats_data = [
+            [
+                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Avg. Visibility</b></font><br/><br/><font size=18><b>Rank #{avg_rank:.1f}</b></font>", styles['BodyText_Custom']),
+                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Search Fallout</b></font><br/><br/><font size=18><b>{int(fallout_percent)}%</b></font>", styles['BodyText_Custom']),
+                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Effective Reach</b></font><br/><br/><font size=18><b>{max_reach:.1f} km</b></font>", styles['BodyText_Custom'])
+            ]
+        ]
+        st = Table(stats_data, colWidths=[160, 160, 160])
+        st.setStyle(TableStyle([
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+        ]))
+        elements.append(st)
+        
+        elements.append(Spacer(1, 15))
+        
+        # Potential Stats Table (Optimized)
+        elements.append(Paragraph("Potential Visibility (Optimized SEO/GEO)", styles['SubHeader']))
+        
+        # Check if actual simulation data exists to override the simplistic potential metrics
+        sim_data = data.get("simulation")
+        if sim_data and sim_data.get("optimized"):
+            opt_data = sim_data["optimized"]
+            pot_avg_rank = opt_data.get("average_visibility", pot_avg_rank)
+            pot_fallout_percent = opt_data.get("search_fallout_percent", pot_fallout_percent)
+            
+            # Recalculate pot_max_reach safely via grid data if present
+            if "grid" in opt_data:
+                pot_max_reach = 0
+                for p in opt_data["grid"]:
+                    if p["score"] <= 5:
+                        d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
+                        if d > pot_max_reach: pot_max_reach = d
+
+        pot_stats_data = [
+            [
+                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Avg.</b></font><br/><br/><font size=18><b>Rank #{pot_avg_rank:.1f}</b></font>", styles['BodyText_Custom']),
+                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Fallout</b></font><br/><br/><font size=18><b>{int(pot_fallout_percent)}%</b></font>", styles['BodyText_Custom']),
+                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Reach</b></font><br/><br/><font size=18><b>{pot_max_reach:.1f} km</b></font>", styles['BodyText_Custom'])
+            ]
+        ]
+        pst = Table(pot_stats_data, colWidths=[160, 160, 160])
+        pst.setStyle(TableStyle([
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+            ('BACKGROUND', (0, 0), (-1, -1), HexColor("#f0fff4")), # Light green bg for potential
+        ]))
+        elements.append(pst)
+        
+        elements.append(Spacer(1, 25))
+        
+        # Add Simulation Insights if available
+        if sim_data and "delta" in sim_data:
+            elements.append(Paragraph("GEO Optimization Simulation Insights", styles['SubHeader']))
+            delta = sim_data["delta"]
+            
+            sim_insights = [
+                ["Metric", "Current", "Optimized", "Improvement"],
+                ["Average Rank", f"#{avg_rank:.1f}", f"#{pot_avg_rank:.1f}", f"{delta.get('visibility_improvement_points', 0):.1f} pos"],
+                ["Search Fallout", f"{int(fallout_percent)}%", f"{int(pot_fallout_percent)}%", f"{delta.get('fallout_reduction_percent', 0):.1f}% reduction"],
+                ["Local Authority", f"{sim_data.get('baseline', {}).get('local_authority_score', 0)}", f"{sim_data.get('optimized', {}).get('local_authority_score', 0)}", f"+{sim_data.get('optimized', {}).get('local_authority_score', 0) - sim_data.get('baseline', {}).get('local_authority_score', 0)}"]
+            ]
+            
+            sit = Table(sim_insights, colWidths=[120, 80, 80, 120])
+            sit.setStyle(make_table_style())
+            elements.append(sit)
+            elements.append(Spacer(1, 15))
+
+
+        elements.append(Paragraph("Geographic Ranking Distribution (5x5 Grid)", styles['SubHeader']))
+        elements.append(Spacer(1, 10))
+        
+        # 5x5 Grid Table
+        grid_rows_data = []
+        for i in range(5):
+            row = []
+            for j in range(5):
+                idx = i * 5 + j
+                score_val = grid[idx]["score"]
+                cell_color = SUCCESS if score_val <= 5 else (WARNING if score_val <= 12 else DANGER)
+                row.append(Paragraph(f"<font color='{white.hexval()}'><b>{score_val}</b></font>", 
+                           ParagraphStyle(f'CellStyle{idx}', alignment=TA_CENTER, backColor=cell_color, borderPadding=5)))
+            grid_rows_data.append(row)
+            
+        gt = Table(grid_rows_data, colWidths=[50, 50, 50, 50, 50])
+        gt.setStyle(TableStyle([
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('GRID', (0, 0), (-1, -1), 1, white),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+            ('TOPPADDING', (0, 0), (-1, -1), 5),
+        ]))
+        elements.append(gt)
+    else:
+        elements.append(Paragraph(
+            "Geographic visibility analysis provides insights into search 'fallout' zones where "
+            "your brand loses citable authority. Run the 'grid' audit step to populate this section.",
             styles['BodyText_Custom']
         ))
 

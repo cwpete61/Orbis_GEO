@@ -127,7 +127,10 @@ app.post('/api/audit', async (req, res) => {
         await run('scripts/fetch_page.py', [url]);
         await run('scripts/citability_scorer.py', [url]);
         await run('scripts/llmstxt_generator.py', [url]);
-        if (gbpUrl) await run('scripts/gbp_analyzer.py', [gbpUrl]);
+        if (gbpUrl) {
+            await run('scripts/gbp_analyzer.py', [gbpUrl]);
+            await run('scripts/gbp_grid.py', [brand, gbpUrl]);
+        }
         await run('scripts/generate_live_pdf.py', []);
 
         res.json({ status: 'Complete', message: 'Full Audit and PDF Report generated successfully.' });
@@ -146,6 +149,7 @@ app.post('/api/step', (req, res) => {
         'brand': ['scripts/brand_scanner.py', [brand]],
         'crawlers': ['scripts/llmstxt_generator.py', [url]],
         'gbp': ['scripts/gbp_analyzer.py', [gbpUrl]],
+        'grid': ['scripts/gbp_grid.py', [brand, gbpUrl]],
         'report': ['scripts/generate_live_pdf.py', []]
     };
 
@@ -153,6 +157,41 @@ app.post('/api/step', (req, res) => {
 
     runScript(scripts[step][0], scripts[step][1], res);
 });
+
+// API: GBP Grid Data Directly
+app.get('/api/gbp-grid-data', (req, res) => {
+    const fs = require('fs');
+    const path = require('path');
+    const gridPath = path.join(__dirname, '..', 'test_gbp_grid.json');
+    if (fs.existsSync(gridPath)) {
+        res.json(JSON.parse(fs.readFileSync(gridPath)));
+    } else {
+        res.status(404).json({ error: 'Grid data not found' });
+    }
+});
+
+// API: Simulation Engine Data Directly
+app.get('/api/simulation-data', (req, res) => {
+    const fs = require('fs');
+    const path = require('path');
+    const simPath = path.join(__dirname, '..', 'test_sim.json');
+    if (fs.existsSync(simPath)) {
+        res.json(JSON.parse(fs.readFileSync(simPath)));
+    } else {
+        res.status(404).json({ error: 'Simulation data not found' });
+    }
+});
+
+// API: Run GEO Simulation (Baseline vs Optimized comparison)
+app.post('/api/simulate', (req, res) => {
+    const { brand, lat, lng, score } = req.body;
+    if (!brand || !lat || !lng) {
+        return res.status(400).json({ error: 'brand, lat, and lng are required' });
+    }
+    const args = [brand, String(lat), String(lng), String(score || 50)];
+    runScript('scripts/sim_engine.py', args, res);
+});
+
 
 // API: View/Download Report
 app.get('/api/view-report', (req, res) => {

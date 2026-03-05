@@ -113,18 +113,38 @@ Respond ONLY with a valid JSON object with this exact structure:
 
 def check_youtube(brand: str) -> dict:
     """Check YouTube brand presence."""
-    snippets = ddg_search(f'"{brand}" site:youtube.com', max_results=6)
-    snippets += ddg_search(f'{brand} youtube channel review', max_results=4)
+    # Search for channel specifically, but also standard videos
+    snippets = ddg_search(f'"{brand}" youtube channel', max_results=3)
+    snippets += ddg_search(f'site:youtube.com "{brand}"', max_results=3)
+    
+    # Check for general video mentions, requiring the brand name in quotes
+    snippets += ddg_search(f'site:youtube.com "{brand}" review', max_results=4)
 
     criteria = """Score based on:
-- 90-100: Active channel with 10K+ subscribers, brand mentioned in 20+ videos
-- 70-89: Active channel with 1K+ subscribers, mentioned in 10-19 videos
-- 50-69: Channel exists, mentioned in 5-9 videos
-- 30-49: Channel exists but inactive, mentioned in 1-4 videos
-- 10-29: No channel, 1-2 video mentions only
-- 0-9: No YouTube presence"""
+- 90-100: Verified official channel (youtube.com/@BrandName or /channel/) AND active highly relevant video mentions.
+- 70-89: Brand clearly has videos (youtube.com/watch?v=...) OR channel, and is heavily reviewed/mentioned in 10+ videos.
+- 50-69: Brand has some videos (youtube.com/watch?v=...) directly published by them, OR mentioned in 5-9 highly relevant videos.
+- 30-49: No official channel found, mentioned in 1-4 videos by others.
+- 10-29: Extremely rare 1-2 video mentions.
+- 0-9: No YouTube presence at all.
+
+CRITICAL INSTRUCTIONS FOR AI:
+1. Examine the URLs in the search results closely.
+2. If NO result URLs start with 'https://www.youtube.com/', then the brand DOES NOT have a highly relevant YouTube presence.
+3. If they only have /watch?v= links but NO @channel links, they can still score up to 85 if the videos are clearly about their brand.
+4. If there are NO search results containing the exact phrase for the brand, the score MUST be 0. Do not guess."""
 
     analysis = analyze_with_ai(brand, "YouTube", snippets, criteria)
+    
+    # Force a score of 0 if DDG found literally nothing or LLM hallucinated
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No YouTube presence detected."
+    elif analysis.get("score", 0) > 40 and not any("youtube.com" in s for s in snippets):
+         # Downgrade if AI scored too high but no youtube url is in the snippets at all
+         analysis["score"] = min(analysis.get("score", 0), 20)
+
     return {
         "platform": "YouTube",
         "correlation": 0.737,
@@ -147,7 +167,7 @@ def check_youtube(brand: str) -> dict:
 def check_reddit(brand: str) -> dict:
     """Check Reddit brand presence."""
     snippets = ddg_search(f'"{brand}" site:reddit.com recommendations', max_results=6)
-    snippets += ddg_search(f'{brand} reddit review discussion', max_results=4)
+    snippets += ddg_search(f'"{brand}" reddit review discussion', max_results=4)
 
     criteria = """Score based on:
 - 90-100: Frequently recommended in relevant subreddits, predominantly positive, active official presence
@@ -158,6 +178,13 @@ def check_reddit(brand: str) -> dict:
 - 0-9: No Reddit presence"""
 
     analysis = analyze_with_ai(brand, "Reddit", snippets, criteria)
+    
+    # Force 0 if DDG failed or hallucinated
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No Reddit presence detected."
+
     return {
         "platform": "Reddit",
         "correlation": "High",
@@ -249,7 +276,7 @@ Score based on:
 def check_linkedin(brand: str) -> dict:
     """Check LinkedIn brand presence."""
     snippets = ddg_search(f'"{brand}" site:linkedin.com/company', max_results=5)
-    snippets += ddg_search(f'{brand} company linkedin followers employees', max_results=3)
+    snippets += ddg_search(f'"{brand}" company linkedin followers employees', max_results=3)
 
     criteria = """Score based on:
 - 90-100: Active company page with 10K+ followers, regular thought leadership posts
@@ -260,6 +287,13 @@ def check_linkedin(brand: str) -> dict:
 - 0-9: No LinkedIn company page"""
 
     analysis = analyze_with_ai(brand, "LinkedIn", snippets, criteria)
+    
+    # Force 0 if DDG failed or hallucinated
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No LinkedIn presence detected."
+        
     return {
         "platform": "LinkedIn",
         "correlation": "Moderate",
@@ -292,6 +326,12 @@ def check_other_platforms(brand: str) -> dict:
 - 0-29: Essentially no supplementary platform presence"""
 
     analysis = analyze_with_ai(brand, "Other Platforms (Quora, News, Podcasts)", snippets, criteria)
+    
+    # Force 0 if DDG failed or hallucinated
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["summary"] = "No supplementary platform presence detected."
+
     return {
         "platform": "Other Platforms",
         "correlation": "Supplementary",
@@ -323,6 +363,13 @@ def check_directories(brand_name: str) -> dict:
 - 0-29: No identifiable local directory presence"""
 
     analysis = analyze_with_ai(brand_name, "Local Directories", snippets, criteria)
+    
+    # Force 0 if DDG failed or hallucinated
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No local directory presence detected."
+
     return {
         "platform": "Local Directories",
         "correlation": "High (Local Entity)",
@@ -344,7 +391,7 @@ def check_directories(brand_name: str) -> dict:
 def check_google_maps_presence(brand: str) -> dict:
     """Check brand presence on Google Maps / GBP via search snippets."""
     snippets = ddg_search(f'"{brand}" site:google.com/maps', max_results=5)
-    snippets += ddg_search(f'{brand} Google Business Profile review', max_results=3)
+    snippets += ddg_search(f'"{brand}" Google Business Profile review', max_results=3)
 
     criteria = """Score based on:
 - 90-100: Verified Google Business Profile with 4.5+ rating and 100+ reviews
@@ -356,6 +403,13 @@ def check_google_maps_presence(brand: str) -> dict:
 
     # We reuse the analyze_with_ai but with a local context focus
     analysis = analyze_with_ai(brand, "Google Maps (GBP)", snippets, criteria)
+    
+    # Force 0 if DDG failed or hallucinated
+    if not snippets or all("Search failed" in s for s in snippets) or "No search results found" in "\n".join(snippets):
+        analysis["score"] = 0
+        analysis["has_presence"] = False
+        analysis["summary"] = "No Google Maps presence detected."
+
     return {
         "platform": "Google Maps (GBP)",
         "correlation": "High (Local Entity)",

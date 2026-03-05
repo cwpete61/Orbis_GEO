@@ -1,25 +1,25 @@
 # ROADMAP
 
 ## Phase 1: Environment Readiness <!-- id: 0 -->
-- [ ] Verify Python 3.8+ installation <!-- id: 1 -->
-- [ ] Install Claude Code CLI (`npm install -g @anthropic-ai/claude-code`) <!-- id: 2 -->
-- [ ] Install Python dependencies from `requirements.txt` <!-- id: 3 -->
-- [ ] Install Playwright for screenshot capabilities <!-- id: 4 -->
+- [x] Verify Python 3.8+ installation <!-- id: 1 -->
+- [x] Install Claude Code CLI (`npm install -g @anthropic-ai/claude-code`) <!-- id: 2 -->
+- [x] Install Python dependencies from `requirements.txt` <!-- id: 3 -->
+- [x] Install Playwright for screenshot capabilities <!-- id: 4 -->
 
 ## Phase 2: Tool Deployment <!-- id: 5 -->
-- [ ] Manually map and copy `geo-seo-claude` skills to the Claude Code configuration directory (`%USERPROFILE%\.claude\skills`) <!-- id: 6 -->
-- [ ] Deploy specialized agents to `%USERPROFILE%\.claude\agents` <!-- id: 7 -->
-- [ ] Verify command registration in Claude Code (`/geo audit`) <!-- id: 8 -->
+- [x] Manually map and copy `geo-seo-claude` skills to the Claude Code configuration directory (`%USERPROFILE%\.claude\skills`) <!-- id: 6 -->
+- [x] Deploy specialized agents to `%USERPROFILE%\.claude\agents` <!-- id: 7 -->
+- [x] Verify command registration in Claude Code (`/geo audit`) <!-- id: 8 -->
 
 ## Phase 3: Initial Audits & Baseline <!-- id: 9 -->
-- [ ] Run benchmark audit on a test URL to verify scoring logic <!-- id: 10 -->
-- [ ] Test PDF report generation functionality <!-- id: 11 -->
-- [ ] Validate AI crawler analysis against standard `robots.txt` <!-- id: 12 -->
+- [x] Run benchmark audit on a test URL to verify scoring logic <!-- id: 10 -->
+- [x] Test PDF report generation functionality <!-- id: 11 -->
+- [x] Validate AI crawler analysis against standard `robots.txt` <!-- id: 12 -->
 
 ## Phase 4: Customization for Orbis <!-- id: 13 -->
-- [ ] Customize `schema/` templates with Orbis-specific metadata <!-- id: 14 -->
-- [ ] Update `geo-report/` markdown templates with Orbis branding <!-- id: 15 -->
-- [ ] Modify `scripts/generate_pdf_report.py` for custom visual styling <!-- id: 16 -->
+- [x] Customize `schema/` templates with Orbis-specific metadata <!-- id: 14 -->
+- [x] Update `geo-report/` markdown templates with Orbis branding <!-- id: 15 -->
+- [x] Modify `scripts/generate_pdf_report.py` for custom visual styling <!-- id: 16 -->
 
 ## Phase 5: Advanced Optimization & Scaling <!-- id: 17 -->
 **Status**: ✅ Complete
@@ -39,6 +39,30 @@
 - [x] Implement Node.js backend to bridge audits to a web UI <!-- id: 24 -->
 - [x] Build premium dark-mode interface for report management <!-- id: 25 -->
 - [x] Enable real-time script logging and PDF download via UI <!-- id: 26 -->
+
+## Phase 16: Automated Simulation Pipeline <!-- id: 27 -->
+**Status**: ✅ Complete
+- [x] Implement Simulation Engine base logic. <!-- id: 28 -->
+- [x] Allow running Baseline vs Optimized comparisons. <!-- id: 29 -->
+- [x] Store data locally for pipeline ingestion. <!-- id: 30 -->
+
+## Phase 17: Deep-Dive Data Strategy <!-- id: 31 -->
+**Status**: ✅ Complete
+### Wave 1: Data Architecture
+- [x] Create `schema/sim_schema.json` to define `sim_engine.py` output.
+- [x] Create baseline, optimized, and delta objects in the schema.
+- [x] Ensure `sim_engine.py` adheres to the schema format.
+- [x] Update `scripts/generate_live_pdf.py` to aggregate the simulated data payload.
+
+### Wave 2: Dashboard UI Connection
+- [x] Review `dashboard/index.html` structure.
+- [x] Update `dashboard/server.js` with a new endpoint to fetch `/api/simulation-data`.
+- [x] Update `dashboard/app.js` to render the simulation data into the visual map UI tiles (Pot. Reach, Pot. Fallout).
+
+### Wave 3: PDF Generation Upgrades
+- [x] Review `scripts/generate_pdf_report.py`.
+- [x] Replace static dummy potential scores with dynamic simulated data.
+- [x] Add a distinct 'Simulation Comparison Insights' block to the 'GEO Visibility & Search Fallout' section of the PDF, explicitly showing growth deltas.
 
 ---
 

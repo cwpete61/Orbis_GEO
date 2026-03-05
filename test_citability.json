@@ -1,109 +1,349 @@
 {
-  "url": "https://pierrepauldriving.com/",
-  "total_blocks_analyzed": 2,
-  "average_citability_score": 42.0,
+  "url": "https://lightboxseo.com",
+  "total_blocks_analyzed": 12,
+  "average_citability_score": 30.9,
   "optimal_length_passages": 0,
   "grade_distribution": {
     "A": 0,
     "B": 0,
-    "C": 1,
-    "D": 0,
-    "F": 1
+    "C": 0,
+    "D": 3,
+    "F": 9
   },
   "top_5_citable": [
     {
-      "heading": "Our driving school offers lessons for teenage first-time drivers, new adult learners, and existing drivers with lapsed licenses.Here's why you'll be glad you enrolled in our driving lessons:",
-      "word_count": 133,
-      "total_score": 59,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "As Internet Marketing Experts, We Are Results-Driven.",
+      "word_count": 98,
+      "total_score": 45,
+      "grade": "D",
+      "label": "Low Citability",
       "breakdown": {
         "answer_block_quality": 22,
-        "self_containment": 22,
-        "structural_readability": 12,
-        "statistical_density": 3,
+        "self_containment": 16,
+        "structural_readability": 5,
+        "statistical_density": 2,
         "uniqueness_signals": 0
       },
-      "preview": "Pick-up and drop-offbetween 7am and 11pm, so you can focus on driving lessons and not transport logistics.Watch yourdriving fears fadeandconfidence soaras you learn from ourexperienced, patient, and friendly DMV-certified instructors.Our..."
+      "preview": "Yes, we know how hard it is for HVAC pros to stand out online and get steady calls. That\u2019s whyour teamfocuses on real results \u2014 more local jobs, better reviews,..."
     },
     {
-      "heading": "PERSONALIZED LESSONS",
-      "word_count": 25,
-      "total_score": 25,
-      "grade": "F",
-      "label": "Poor Citability",
+      "heading": "Get the Best Internet Marketing Services Near You in Allentown, PA",
+      "word_count": 100,
+      "total_score": 42,
+      "grade": "D",
+      "label": "Low Citability",
       "breakdown": {
-        "answer_block_quality": 8,
-        "self_containment": 15,
-        "structural_readability": 2,
+        "answer_block_quality": 10,
+        "self_containment": 22,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Lightbox SEO helps businesses in Allentown, PA, grow and increase revenue through expert digital marketing solutions. We specialize in Local SEO, Google Business Profile optimization, and strategic link-building services designed..."
+    },
+    {
+      "heading": "Are Your Internet Marketing Services Targeting The Right Local Customers?",
+      "word_count": 39,
+      "total_score": 38,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 16,
+        "self_containment": 14,
+        "structural_readability": 8,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Afraid of the NY highways? Failed the road test thrice? Disappointed by other driving schools in Brooklyn? We'll make the best driver out of you."
+      "preview": "\u2013 Not RANKING at the top of the Map Pack\u2013 Not getting enough calls\u2013 Using the wrong marketing strategies\u2013 Leads come in, but they\u2019re not local.\u2013 Your business info isn\u2019t..."
+    },
+    {
+      "heading": "Google Business Profile",
+      "word_count": 41,
+      "total_score": 33,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 6,
+        "self_containment": 17,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Enhance your online presence with our Local SEO services to optimize your listing, improve local search visibility, and drive more calls, visits, and customer engagement.Lightbox SEOoptimizes Google Business Profiles by..."
+    },
+    {
+      "heading": "Use The Best Internet Marketing Services Near You Today!",
+      "word_count": 45,
+      "total_score": 33,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 6,
+        "self_containment": 17,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Yes, Lightbox SEO provides the best internet marketing services in Allentown\u2014discover and invest in our expert solutions to enhance your online presence. Use our Local SEO, Google Business Profile optimization,..."
     }
   ],
   "bottom_5_citable": [
     {
-      "heading": "PERSONALIZED LESSONS",
-      "word_count": 25,
+      "heading": "Local SEO Services",
+      "word_count": 26,
+      "total_score": 20,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 0,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "Enhance your online presence with our Local SEO services to rank higher in local searches, attract nearby customers, and increase your business\u2019s visibility in the community."
+    },
+    {
+      "heading": "Internet Marketing Services FAQs",
+      "word_count": 29,
+      "total_score": 22,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 0,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "LightBox SEO provides a range of internet marketing services, including Local SEO, Google Business Profile optimization, and strategic link-building, all aimed at enhancing local visibility and improving search rankings."
+    },
+    {
+      "heading": "Link Building",
+      "word_count": 23,
       "total_score": 25,
       "grade": "F",
       "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 8,
-        "self_containment": 15,
-        "structural_readability": 2,
+        "answer_block_quality": 5,
+        "self_containment": 12,
+        "structural_readability": 8,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Afraid of the NY highways? Failed the road test thrice? Disappointed by other driving schools in Brooklyn? We'll make the best driver out of you."
+      "preview": "Enhance your online presence with our link-building services to boost website authority, improve search rankings, and drive more organic traffic with high-quality backlinks."
     },
     {
-      "heading": "Our driving school offers lessons for teenage first-time drivers, new adult learners, and existing drivers with lapsed licenses.Here's why you'll be glad you enrolled in our driving lessons:",
-      "word_count": 133,
-      "total_score": 59,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "Local Branding",
+      "word_count": 20,
+      "total_score": 25,
+      "grade": "F",
+      "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 22,
-        "self_containment": 22,
-        "structural_readability": 12,
-        "statistical_density": 3,
+        "answer_block_quality": 5,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Pick-up and drop-offbetween 7am and 11pm, so you can focus on driving lessons and not transport logistics.Watch yourdriving fears fadeandconfidence soaras you learn from ourexperienced, patient, and friendly DMV-certified instructors.Our..."
+      "preview": "We can strengthen local branding by creating a consistent identity, engaging with the community, and optimizing for local search visibility."
+    },
+    {
+      "heading": "Advertising Agency",
+      "word_count": 20,
+      "total_score": 25,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 5,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "We provide targeted online advertising through search, social, and display channels, optimizing campaigns to drive qualified leads and maximize ROI."
     }
   ],
   "all_blocks": [
     {
-      "heading": "PERSONALIZED LESSONS",
-      "word_count": 25,
+      "heading": "Are Your Internet Marketing Services Targeting The Right Local Customers?",
+      "word_count": 39,
+      "total_score": 38,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 16,
+        "self_containment": 14,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "\u2013 Not RANKING at the top of the Map Pack\u2013 Not getting enough calls\u2013 Using the wrong marketing strategies\u2013 Leads come in, but they\u2019re not local.\u2013 Your business info isn\u2019t..."
+    },
+    {
+      "heading": "As Internet Marketing Experts, We Are Results-Driven.",
+      "word_count": 98,
+      "total_score": 45,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 22,
+        "self_containment": 16,
+        "structural_readability": 5,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Yes, we know how hard it is for HVAC pros to stand out online and get steady calls. That\u2019s whyour teamfocuses on real results \u2014 more local jobs, better reviews,..."
+    },
+    {
+      "heading": "Local SEO Services",
+      "word_count": 26,
+      "total_score": 20,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 0,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "Enhance your online presence with our Local SEO services to rank higher in local searches, attract nearby customers, and increase your business\u2019s visibility in the community."
+    },
+    {
+      "heading": "Google Business Profile",
+      "word_count": 41,
+      "total_score": 33,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 6,
+        "self_containment": 17,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Enhance your online presence with our Local SEO services to optimize your listing, improve local search visibility, and drive more calls, visits, and customer engagement.Lightbox SEOoptimizes Google Business Profiles by..."
+    },
+    {
+      "heading": "Link Building",
+      "word_count": 23,
       "total_score": 25,
       "grade": "F",
       "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 8,
-        "self_containment": 15,
-        "structural_readability": 2,
+        "answer_block_quality": 5,
+        "self_containment": 12,
+        "structural_readability": 8,
         "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Afraid of the NY highways? Failed the road test thrice? Disappointed by other driving schools in Brooklyn? We'll make the best driver out of you."
+      "preview": "Enhance your online presence with our link-building services to boost website authority, improve search rankings, and drive more organic traffic with high-quality backlinks."
     },
     {
-      "heading": "Our driving school offers lessons for teenage first-time drivers, new adult learners, and existing drivers with lapsed licenses.Here's why you'll be glad you enrolled in our driving lessons:",
-      "word_count": 133,
-      "total_score": 59,
-      "grade": "C",
-      "label": "Moderate Citability",
+      "heading": "Local Branding",
+      "word_count": 20,
+      "total_score": 25,
+      "grade": "F",
+      "label": "Poor Citability",
       "breakdown": {
-        "answer_block_quality": 22,
-        "self_containment": 22,
-        "structural_readability": 12,
-        "statistical_density": 3,
+        "answer_block_quality": 5,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 0,
         "uniqueness_signals": 0
       },
-      "preview": "Pick-up and drop-offbetween 7am and 11pm, so you can focus on driving lessons and not transport logistics.Watch yourdriving fears fadeandconfidence soaras you learn from ourexperienced, patient, and friendly DMV-certified instructors.Our..."
+      "preview": "We can strengthen local branding by creating a consistent identity, engaging with the community, and optimizing for local search visibility."
+    },
+    {
+      "heading": "Advertising Agency",
+      "word_count": 20,
+      "total_score": 25,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 5,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "We provide targeted online advertising through search, social, and display channels, optimizing campaigns to drive qualified leads and maximize ROI."
+    },
+    {
+      "heading": "Use The Best Internet Marketing Services Near You Today!",
+      "word_count": 45,
+      "total_score": 33,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 6,
+        "self_containment": 17,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Yes, Lightbox SEO provides the best internet marketing services in Allentown\u2014discover and invest in our expert solutions to enhance your online presence. Use our Local SEO, Google Business Profile optimization,..."
+    },
+    {
+      "heading": "Get the Best Internet Marketing Services Near You in Allentown, PA",
+      "word_count": 100,
+      "total_score": 42,
+      "grade": "D",
+      "label": "Low Citability",
+      "breakdown": {
+        "answer_block_quality": 10,
+        "self_containment": 22,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Lightbox SEO helps businesses in Allentown, PA, grow and increase revenue through expert digital marketing solutions. We specialize in Local SEO, Google Business Profile optimization, and strategic link-building services designed..."
+    },
+    {
+      "heading": "Internet Marketing Services FAQs",
+      "word_count": 29,
+      "total_score": 22,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 0,
+        "self_containment": 12,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "LightBox SEO provides a range of internet marketing services, including Local SEO, Google Business Profile optimization, and strategic link-building, all aimed at enhancing local visibility and improving search rankings."
+    },
+    {
+      "heading": "Get Your FREE SEO Audit and Unlock Growth Opportunities",
+      "word_count": 43,
+      "total_score": 31,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 6,
+        "self_containment": 17,
+        "structural_readability": 8,
+        "statistical_density": 0,
+        "uniqueness_signals": 0
+      },
+      "preview": "We provide expert SEO services to businesses inAllentown, PA, and nearby communities, helping local companies dominate search results. Whether you\u2019re in the heart of Allentown, Bethlehem, Easton, or the greater..."
+    },
+    {
+      "heading": "Internet Marketing Services: Building a Sustainable Online Presence",
+      "word_count": 72,
+      "total_score": 32,
+      "grade": "F",
+      "label": "Poor Citability",
+      "breakdown": {
+        "answer_block_quality": 8,
+        "self_containment": 14,
+        "structural_readability": 8,
+        "statistical_density": 2,
+        "uniqueness_signals": 0
+      },
+      "preview": "Yes, a well-executed internet marketing strategy leads to higher rankings, increased traffic, and more customers. At Lightbox SEO, we help businesses in Allentown, PA, achieve digital success. By combining SEO,..."
     }
   ]
 }
