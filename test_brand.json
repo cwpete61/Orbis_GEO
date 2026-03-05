@@ -1,21 +1,21 @@
 {
   "brand_name": "Position Driver SEO",
   "url": "https://positiondriver.com/",
-  "brand_authority_score": 39,
+  "brand_authority_score": 18,
   "platforms": {
     "YouTube": {
       "platform": "YouTube",
       "correlation": 0.737,
       "weight": "25%",
-      "score": 85,
-      "has_channel": true,
-      "sentiment": "positive",
+      "score": 0,
+      "has_channel": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "Multiple YouTube videos mention 'Position Driver' in the context of golf driver setup and swing techniques.",
-        "All videos are hosted on YouTube and include relevant content about driver positioning and swing mechanics.",
-        "No official brand channel URL (youtube.com/@BrandName or /channel/) is found in the search results."
+        "All search results failed to find any YouTube links related to Position Driver SEO.",
+        "No official channel URLs or videos mentioning the brand were identified.",
+        "Search results indicate no visible YouTube presence for the brand."
       ],
-      "summary": "The brand 'Position Driver SEO' is actively mentioned in relevant golf-related videos on YouTube, demonstrating a strong presence in that niche despite the absence of an official channel.",
+      "summary": "No YouTube presence detected.",
       "search_url": "https://www.youtube.com/results?search_query=Position+Driver+SEO",
       "recommendations": [
         "Create a YouTube channel if none exists",
@@ -28,15 +28,15 @@
       "platform": "Reddit",
       "correlation": "High",
       "weight": "25%",
-      "score": 65,
-      "has_presence": true,
-      "sentiment": "positive",
+      "score": 10,
+      "has_presence": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "Position Driver SEO is mentioned in multiple Reddit threads related to SEO services and local business reviews.",
-        "There are several references to Position Driver SEO's reviews and services, indicating some recognition within relevant communities.",
-        "Sentiment appears mostly positive, with reviews and service descriptions highlighting its offerings."
+        "No direct mentions of Position Driver SEO on Reddit search results.",
+        "Only a Reddit thread related to seat positioning, unrelated to the brand.",
+        "No evidence of official or frequent community discussion about Position Driver SEO."
       ],
-      "summary": "Position Driver SEO has a moderate presence on Reddit, primarily recognized through reviews and service mentions in relevant communities.",
+      "summary": "There is no apparent presence or discussion of Position Driver SEO on Reddit at this time.",
       "search_url": "https://www.reddit.com/search/?q=Position+Driver+SEO",
       "recommendations": [
         "Identify 3-5 subreddits where your target audience is active",
@@ -55,10 +55,10 @@
       "wikidata_id": "",
       "key_findings": [
         "No Wikipedia article exists for Position Driver SEO.",
-        "No Wikidata entry found for the brand.",
-        "The brand is not referenced in other Wikipedia articles."
+        "No Wikidata entry is associated with the brand.",
+        "The brand is not mentioned in other Wikipedia articles."
       ],
-      "summary": "Position Driver SEO lacks a presence on Wikipedia and Wikidata, indicating minimal online visibility within these platforms.",
+      "summary": "Position Driver SEO lacks a presence on Wikipedia and Wikidata, indicating minimal or no recognition on these platforms.",
       "recommendations": [
         "Build notability through press coverage first before seeking a Wikipedia article",
         "Ensure your Wikidata entry (Q-number) is complete even without a full article",
@@ -69,15 +69,15 @@
       "platform": "Facebook",
       "correlation": "Moderate",
       "weight": "8%",
-      "score": 55,
-      "has_presence": true,
-      "sentiment": "neutral",
+      "score": 0,
+      "has_presence": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "The brand has official Facebook pages with some followers and activity.",
-        "Follower counts are relatively low (e.g., 10 likes, 719 likes), indicating limited reach.",
-        "Content includes service promotion and job postings, but activity appears sporadic and not highly engaging."
+        "Search for the brand's Facebook presence failed due to a request error.",
+        "No accessible official or community Facebook pages identified.",
+        "Unable to determine activity or follower count on Facebook."
       ],
-      "summary": "Position Driver SEO maintains a basic Facebook presence with some activity, but lacks significant engagement or large following.",
+      "summary": "No Facebook presence detected.",
       "search_url": "https://www.facebook.com/search/pages/?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official Facebook page",
@@ -89,15 +89,15 @@
       "platform": "Instagram",
       "correlation": "Moderate",
       "weight": "8%",
-      "score": 0,
-      "has_presence": false,
-      "sentiment": "unknown",
+      "score": 15,
+      "has_presence": true,
+      "sentiment": "neutral",
       "key_findings": [
-        "No official or unofficial Instagram profile found for Position Driver SEO.",
-        "Search results indicate no mentions or presence on Instagram.",
-        "Lack of any activity or engagement related to the brand on the platform."
+        "The brand has an official Instagram profile with a small follower count (7 followers).",
+        "Posts are present but engagement appears minimal (e.g., 0 likes and comments on some posts).",
+        "Content is focused on promotional messaging with links to their website, but overall activity and interaction are limited."
       ],
-      "summary": "No Instagram presence detected.",
+      "summary": "Position Driver SEO has a minimal but official Instagram presence with limited engagement and activity.",
       "search_url": "https://www.instagram.com/explore/search/keyword/?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official Instagram profile",
@@ -113,11 +113,11 @@
       "has_presence": true,
       "sentiment": "unknown",
       "key_findings": [
-        "No official verified account for Position Driver SEO found in search results.",
-        "Mentions are limited to unrelated or generic user posts and references to other entities.",
-        "The brand is not actively posting or engaging on Twitter/X."
+        "The search results show multiple user accounts mentioning 'X' or 'X (formerly Twitter)', but none appear to be official brand accounts.",
+        "The accounts listed are personal or organizational users with limited activity and followers, not indicative of a verified or prominent brand presence.",
+        "There is no evidence of an official Position Driver SEO account or significant brand-related activity on Twitter/X."
       ],
-      "summary": "Position Driver SEO has minimal or no visible presence on Twitter/X based on current search results.",
+      "summary": "Position Driver SEO has minimal or no identifiable official presence on Twitter/X based on the current search results.",
       "search_url": "https://twitter.com/search?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official Twitter/X account",
@@ -133,11 +133,11 @@
       "has_presence": true,
       "sentiment": "neutral",
       "key_findings": [
-        "Multiple TikTok videos mention SEO tips and local business strategies, some related to driving and local SEO.",
-        "No evidence of an official verified account or large follower base for Position Driver SEO.",
-        "Content appears to be user-generated or related to broader industry topics rather than brand-specific content."
+        "Multiple TikTok videos related to SEO topics are available, but none directly from or about Position Driver SEO.",
+        "No official verified account or brand-specific content appears in the search results.",
+        "Mentions are mostly about general SEO tips and trends, with no clear focus on Position Driver SEO."
       ],
-      "summary": "Position Driver SEO has a limited TikTok presence with some relevant mentions but lacks an official or highly active account.",
+      "summary": "Position Driver SEO has a limited TikTok presence with some general SEO content but lacks active, brand-specific engagement.",
       "search_url": "https://www.tiktok.com/search?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official TikTok profile",
@@ -149,15 +149,15 @@
       "platform": "LinkedIn",
       "correlation": "Moderate",
       "weight": "15%",
-      "score": 45,
+      "score": 75,
       "has_presence": true,
       "sentiment": "neutral",
       "key_findings": [
-        "Multiple LinkedIn pages related to 'Position' brands, including Position Driver SEO and Position Digital.",
-        "Position Driver SEO has an active LinkedIn presence with a company page, but follower count and activity level are not specified, suggesting limited visibility.",
-        "Other related brands like Position Technologies and Position1SEO have some followers and activity, but overall engagement appears limited."
+        "Multiple LinkedIn pages with similar branding, indicating some level of presence.",
+        "Position Driver SEO has an active LinkedIn company page with a clear description and contact info.",
+        "Follower counts are not publicly specified, but the presence suggests some activity and recognition."
       ],
-      "summary": "The brand has a basic LinkedIn presence with some related pages, but lacks significant followers or consistent activity to be highly active.",
+      "summary": "Position Driver SEO maintains an active LinkedIn presence with a dedicated company page, though follower engagement details are limited.",
       "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Position+Driver+SEO",
       "recommendations": [
         "Optimize company page with complete information and regular posting",
@@ -170,14 +170,14 @@
       "correlation": "High (Local Entity)",
       "weight": "20%",
       "score": 15,
-      "has_listings": false,
-      "sentiment": "unknown",
+      "has_listings": true,
+      "sentiment": "neutral",
       "key_findings": [
-        "No verified listings found on major directories like YellowPages or Yelp.",
-        "Presence is primarily through review platforms such as Trustpilot, which are not traditional local directories.",
-        "Multiple references to SEO services and marketing agencies, but limited direct local directory presence."
+        "Brand is listed on YellowPages with a verified business profile and reviews.",
+        "Brand has multiple mentions on Trustpilot, indicating active review collection.",
+        "Search results show references to the brand across various directories, but no direct verified listings on Yelp or other major directories are evident."
       ],
-      "summary": "Position Driver SEO has minimal presence on key local directories, primarily appearing on review and marketing platforms.",
+      "summary": "Position Driver SEO has a moderate presence on local directories, primarily through YellowPages and Trustpilot, with limited visibility on other major platforms.",
       "recommendations": [
         "Claim your business profile on Yelp and YellowPages",
         "Encourage happy customers to leave reviews on Trustpilot",
@@ -191,11 +191,11 @@
       "weight": "15%",
       "score": 45,
       "key_findings": [
-        "No direct presence or mentions on Quora or news/press platforms related to Position Driver SEO.",
-        "Existing mentions are primarily on the company's own website and LinkedIn, with some podcast-related content from third-party sources.",
-        "Limited or no evidence of active engagement or coverage on external platforms like Quora, news outlets, or podcasts."
+        "No direct Quora presence or answers found for Position Driver SEO.",
+        "Some news and press coverage related to SEO trends and services, but limited brand-specific mentions.",
+        "Podcasts and media appearances are not evident from the search results."
       ],
-      "summary": "Position Driver SEO has minimal to no presence on other platforms such as Quora, news, or podcasts based on current search results.",
+      "summary": "Position Driver SEO has minimal presence on other platforms such as Quora, podcasts, and media, indicating limited engagement beyond its main website.",
       "recommendations": [
         "Create Quora answers for top industry questions related to your brand",
         "Issue press releases for major company milestones",
@@ -206,15 +206,15 @@
       "platform": "Google Maps (GBP)",
       "correlation": "High (Local Entity)",
       "weight": "20%",
-      "score": 65,
-      "has_presence": true,
-      "sentiment": "neutral",
+      "score": 0,
+      "has_presence": false,
+      "sentiment": "unknown",
       "key_findings": [
-        "Search results show the brand's website and digital marketing services, indicating an online presence.",
-        "No direct Google Maps or Google Business Profile (GBP) listing information is present in the search results.",
-        "The presence appears to be primarily digital marketing-focused with no evidence of verified GBP with reviews or ratings."
+        "No Google Maps results found for Position Driver SEO.",
+        "Search attempts returned errors, indicating no active profile or visibility.",
+        "Unable to verify any presence or profile details on Google Maps."
       ],
-      "summary": "Position Driver SEO has an online presence but lacks verified Google Maps or GBP listing with reviews.",
+      "summary": "No Google Maps presence detected.",
       "search_url": "https://www.google.com/maps/search/Position+Driver+SEO",
       "recommendations": [
         "Claim and verify your Google Business Profile",

@@ -1,0 +1,13 @@
+diff --git a/scripts/generate_pdf_report.py b/scripts/generate_pdf_report.py
+index c670e07..25e1190 100644
+--- a/scripts/generate_pdf_report.py
++++ b/scripts/generate_pdf_report.py
+@@ -682,6 +682,8 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
+ 
+     elements.append(PageBreak())
+ 
++
++
+     # ============================================================
+     # SCORE BREAKDOWN
+     # ============================================================

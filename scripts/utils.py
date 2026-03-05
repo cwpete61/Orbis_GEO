@@ -29,6 +29,29 @@ def geocode_business(brand_name, gbp_url):
     """
     import requests
     
+    # Stage 0: Check Outscraper Verification Data
+    import glob
+    import os
+    import json
+    try:
+        latest_file = max(glob.glob('outscraper_maps_*.json'), key=os.path.getctime, default="")
+        if latest_file and os.path.exists(latest_file):
+            with open(latest_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            if isinstance(data, list) and len(data) > 0:
+                item = data[0]
+                if isinstance(item, list) and len(item) > 0:
+                    item = item[0]
+                if isinstance(item, dict) and 'latitude' in item and 'longitude' in item:
+                    print(f"[geocode] Using verified Outscraper coordinate data for: {brand_name}", file=sys.stderr)
+                    return {
+                        "lat": float(item['latitude']),
+                        "lng": float(item['longitude']),
+                        "address": item.get('full_address', item.get('city', f"Location for {brand_name}"))
+                    }
+    except Exception as e:
+        print(f"[geocode] Outscraper fallback failed: {e}", file=sys.stderr)
+        
     # Stage 1: OSM Nominatim Direct Brand Search
     try:
         print(f"[geocode] Querying OSM for precise coordinates of brand: {brand_name}", file=sys.stderr)
@@ -114,7 +137,17 @@ const puppeteer = require('puppeteer');
     # Stage 4: AI Fallback
     print(f"[geocode] Falling back to AI geocoding for {brand_name}...", file=sys.stderr)
     from openai import OpenAI
-    import os
+    import os, json
+    
+    website_text = ""
+    if os.path.exists("test_fetch.json"):
+        try:
+            with open("test_fetch.json", "r", encoding="utf-8") as f:
+                fetch_data = json.load(f)
+                website_text = fetch_data.get("text_content", "")[:3000]
+        except:
+            pass
+
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
@@ -124,9 +157,14 @@ find the EXACT latitude and longitude coordinates for this specific business loc
 Brand: {brand_name}
 GBP URL: {gbp_url}
 
+Context from website scrape (may contain address):
+{website_text}
+
 IMPORTANT:
 1. If the URL is a shortened 'maps.app.goo.gl' link, use your knowledge of Google Maps patterns to find the destination.
-2. Return the coordinates for the SPECIFIC address associated with the brand and URL provided.
+2. If no GBP URL is provided, carefully read the website context to find the physical address (e.g. city, street), then geocode it.
+3. Return the coordinates for the SPECIFIC address associated with the brand and URL provided.
+4. If you absolutely cannot determine the city or address, use the best generic location (e.g. center of the US or country) but set address to "Location undetermined". Do NOT hallucinate a fake street address like "123 Main Street".
 
 Return ONLY a JSON object:
 {{

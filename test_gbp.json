@@ -1,39 +1,34 @@
 {
-  "business_name": "Healthy Smiles Dental Clinic",
+  "business_name": "Google",
   "osm_verification_confidence": 0,
-  "overall_local_score": 65,
-  "status": "Fair",
+  "overall_local_score": 20,
+  "status": "Poor",
   "insights": [
     {
-      "title": "Business Name and Category Clarity",
-      "score": 80,
-      "details": "The business name 'Healthy Smiles Dental Clinic' clearly indicates the dental industry. The category aligns with 'Dentist' or 'Dental Clinic,' making it understandable for both users and AI systems."
+      "title": "Unclear Business Category",
+      "score": 10,
+      "details": "The search context references Google as a search engine and technology company rather than a local service provider. Lack of specific, locally relevant keywords diminishes AI-readiness for local optimization."
     },
     {
-      "title": "AI-Compatible Descriptions",
-      "score": 70,
-      "details": "The business description includes specific dental services such as teeth cleaning, orthodontics, and cosmetic dentistry, providing clear entities for better AI indexing. However, some descriptions could be more detailed with service-specific keywords."
+      "title": "Lack of AI-Compatible Descriptions",
+      "score": 15,
+      "details": "Descriptions focus on general information about Google globally, not tailored or detailed regarding local services, products, or offerings relevant to a specific location."
     },
     {
-      "title": "Sentiment of Recent Reviews",
-      "score": 60,
-      "details": "Recent reviews show mostly positive feedback about friendly staff and clean facilities but include some complaints about wait times and appointment availability. Overall sentiment leans slightly positive but includes negative mentions."
-    },
-    {
-      "title": "Entity Verification (Cross-Reference with OSM)",
-      "score": 0,
-      "details": "No OSM data retrieved. Without cross-validation data, confidence in entity consistency is absent, increasing risk of mismatch or outdated information."
+      "title": "Review/Mention Sentiment",
+      "score": 30,
+      "details": "No recent reviews or local mentions are provided, indicating a lack of local engagement or customer feedback within the context."
     }
   ],
   "findings": [
     {
       "severity": "critical",
-      "title": "Lack of OSM Data & Entity Cross-Validation",
-      "description": "No OpenStreetMap data is available to verify the entity details against the GBP. This absence prevents confidence in data consistency and completeness.",
-      "impact": "Limits ability to verify address accuracy, may affect local search rankings, and reduces AI recognition capabilities.",
-      "fix_example": "Integrate or update the location data on OSM and ensure consistent information across geospatial platforms."
+      "title": "Entity Mismatch / Data Discrepancy",
+      "description": "The Google Business Profile appears to reference the global corporation rather than a specific local business or place. The OSM data is absent, and no verified Outscraper data exists, indicating a lack of local entity confirmation.",
+      "impact": "Poor entity verification weakens local SEO rankings and AI-readiness, limiting visibility for local searches.",
+      "fix_example": "Update the GBP with precise local address, category, and keywords; verify the entity through local references, and ensure the profile is optimized with locally relevant content."
     }
   ],
-  "audit_date": "2026-03-05 11:28",
+  "audit_date": "2026-03-05 17:13",
   "gbp_url": "https://maps.app.goo.gl/pSYgvuH8nKd2TW39A"
 }

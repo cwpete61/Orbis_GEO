@@ -38,14 +38,30 @@ def generate_grid_points(center_lat, center_lng, radius_km=5, grid_size=5, base_
             effective_dist_sq = dist_sq / (flat_zone_modifier * 3)
             
             # CURRENT RANK
+            # Calculate the best possible rank for this business based on its AI trust score
+            # A score of 100 means they can hit #1. A score of 20 means even at their doorstep they might only hit #14.
+            best_possible_rank = max(1, int(20 - (base_score_0_100 / 100.0 * 19)))
+            
+            # Decay intensity based on distance from center
             current_intensity = max(0.0, 1.0 - (effective_dist_sq / (max_dist_sq + 1)))
-            current_rank = 1 + int(19 * (1.0 - current_intensity)) 
-            current_score = max(1, min(20, current_rank + int(math.sin(i+j) * 1)))
+            
+            # Calculate rank penalty based on intensity dropoff
+            rank_penalty = int((20 - best_possible_rank) * (1.0 - current_intensity))
+            
+            # Add trigonometric jitter to simulate fluctuating local search results
+            jitter = int(math.sin(i+j) * 1)
+            
+            current_rank = best_possible_rank + rank_penalty + jitter
+            current_score = max(1, min(20, current_rank))
             
             # POTENTIAL RANK (Optimized SEO/GEO/Service Pages)
-            # Simulated by doubling the flat zone effect
+            # Simulated by doubling the flat zone effect (expanding the max reach significantly)
             potential_intensity = max(0.0, 1.0 - (effective_dist_sq / (max_dist_sq * 2 + 1)))
-            potential_rank = 1 + int(19 * (1.0 - potential_intensity))
+            
+            # Reduce the rank penalty for optimized SEO efforts
+            potential_rank_penalty = int((20 - best_possible_rank) * (1.0 - potential_intensity) * 0.5)
+            
+            potential_rank = max(1, best_possible_rank - 2) + potential_rank_penalty + jitter
             potential_score = max(1, min(current_score, potential_rank))
             
             points.append({

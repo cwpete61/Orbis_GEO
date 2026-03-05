@@ -441,6 +441,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     gbp = data.get("gbp", {})
     directories = data.get("directories", {})
     local_authority = scores.get("local_authority", 0)
+    gbp_grid = data.get("gbp_grid", {})
 
     crawlers = data.get("crawlers", [])
     findings = data.get("findings", [])
@@ -507,6 +508,48 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
                        alignment=TA_CENTER, fontSize=20)
     ))
 
+    elements.append(Spacer(1, 40))
+
+    # Add Map if coordinate data exists
+    if gbp_grid and "center" in gbp_grid:
+        center = gbp_grid["center"]
+        lat = center.get("lat")
+        lng = center.get("lng")
+        if lat and lng:
+            try:
+                import requests
+                import os
+                map_path = "temp_cover_map.png"
+                
+                # Fetch Static Map from Google Maps API
+                api_key = os.getenv("OUTSCRAPER_API_KEY", "") # Fallback or use a different key if needed
+                # If we don't have a Google Maps API Key directly, we might need to rely on OSM or generic static maps
+                # For now using a placeholder openstreetmap static map approach or similar if no Google Maps key
+                
+                # A generic open street map static alternative (requires an API like MapQuest or similar usually)
+                # Let's use a public rendering service like staticmaplite or similar if no API key
+                map_url = f"https://dev.virtualearth.net/REST/V1/Imagery/Map/Road/{lat}%2C{lng}/14?mapSize=500,250&format=png&pushpin={lat},{lng};66&key=AlA2L2Xw_1l-u3D8tF5aE9P-w4_G-G1p6q3V_p3Z1Y6q3V_p3Z1Y6q3V_p3Z1Y6" 
+                # Note: The bing maps key is a dummy placeholder, we should ideally use a real one.
+                # Let's try Google Maps Static API if GOOGLE_MAPS_API_KEY exists
+                gmaps_key = os.getenv("GOOGLE_MAPS_API_KEY")
+                if gmaps_key:
+                     map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={lat},{lng}&zoom=14&size=500x250&markers=color:red%7C{lat},{lng}&key={gmaps_key}"
+                
+                # Download the image
+                if not os.path.exists(map_path) and gmaps_key:
+                    req = requests.get(map_url, stream=True, timeout=10)
+                    if req.status_code == 200:
+                        with open(map_path, 'wb') as f:
+                            for chunk in req.iter_content(1024):
+                                f.write(chunk)
+                
+                if os.path.exists(map_path):
+                    elements.append(RLImage(map_path, width=500, height=250))
+                    elements.append(Spacer(1, 10))
+                    
+            except Exception as e:
+                print(f"[generate_pdf_report] Error generating cover map: {e}")
+
     elements.append(PageBreak())
 
     # ============================================================
@@ -544,17 +587,27 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     ))
     elements.append(Spacer(1, 12))
 
-    gbp_grid = data.get("gbp_grid", {})
     if gbp_grid and "grid" in gbp_grid:
         grid = gbp_grid["grid"]
         center = gbp_grid.get("center", {})
         
         # Calculate Current Metrics
         scores_vals = [p["score"] for p in grid]
-        avg_rank = sum(scores_vals) / len(scores_vals)
         fallout_count = len([s for s in scores_vals if s > 12])
         fallout_percent = (fallout_count / len(scores_vals)) * 100
         
+        # Calculate Rank at Business Address (Center Point)
+        center_rank = 0
+        min_dist = float('inf')
+        for p in grid:
+            d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
+            if d < min_dist:
+                min_dist = d
+                center_rank = p["score"]
+                
+        # Also need original avg_rank for the potential formula lower down
+        avg_rank = sum(scores_vals) / len(scores_vals)
+
         max_reach = 0
         for p in grid:
             if p["score"] <= 5:
@@ -568,6 +621,15 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         pot_fallout_count = len([s for s in pot_scores if s > 12])
         pot_fallout_percent = (pot_fallout_count / len(pot_scores)) * 100
         
+        # Calculate Potential Center Rank
+        pot_center_rank = 0
+        min_dist_pot = float('inf')
+        for p in grid:
+            d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
+            if d < min_dist_pot:
+                min_dist_pot = d
+                pot_center_rank = p.get("potential_score", p["score"])
+        
         pot_max_reach = 0
         for p in grid:
             ps = p.get("potential_score", p["score"])
@@ -580,7 +642,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
         elements.append(Paragraph("Current Visibility Status", styles['SubHeader']))
         stats_data = [
             [
-                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Avg. Visibility</b></font><br/><br/><font size=18><b>Rank #{avg_rank:.1f}</b></font>", styles['BodyText_Custom']),
+                Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Local Visibility</b></font><br/><br/><font size=18><b>Rank #{center_rank:.1f}</b></font>", styles['BodyText_Custom']),
                 Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Search Fallout</b></font><br/><br/><font size=18><b>{int(fallout_percent)}%</b></font>", styles['BodyText_Custom']),
                 Paragraph(f"<font color='{PRIMARY.hexval()}' size=10><b>Effective Reach</b></font><br/><br/><font size=18><b>{max_reach_mi:.1f} mi</b></font>", styles['BodyText_Custom'])
             ]
@@ -613,9 +675,26 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
                         d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
                         if d > pot_max_reach: pot_max_reach = d
 
+        # Advanced Aggressive Reach Projection Formula
+        # This formula calculates geographic reach expansion based on aggressive GEO strategies
+        # (e.g. distributed location pages, hyper-local social media syndication, cross-platform entity building).
+        # Base expansion is the actual distance to the furthest top-5 ranking
+        base_pot_reach_mi = pot_max_reach * 0.621371
+        
+        rank_improvement = avg_rank - pot_avg_rank
+        fallout_improvement = fallout_percent - pot_fallout_percent
+        
+        # Aggressive Expansion factor: +2.5 miles for every point of average rank improvement,
+        # and +0.3 miles for every percentage point of fallout reduction.
+        # This models the wider net cast by location-specific optimization and GEO signals.
+        expansion_factor = (max(0, rank_improvement) * 2.5) + (max(0, fallout_improvement) * 0.3)
+        
+        # The new potential reach is the base reach plus the calculated aggressive expansion projection
+        pot_max_reach_mi = max(max_reach_mi, base_pot_reach_mi + expansion_factor)
+
         pot_stats_data = [
             [
-                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Avg.</b></font><br/><br/><font size=18><b>Rank #{pot_avg_rank:.1f}</b></font>", styles['BodyText_Custom']),
+                Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Local Vis.</b></font><br/><br/><font size=18><b>Rank #{pot_center_rank:.1f}</b></font>", styles['BodyText_Custom']),
                 Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Fallout</b></font><br/><br/><font size=18><b>{int(pot_fallout_percent)}%</b></font>", styles['BodyText_Custom']),
                 Paragraph(f"<font color='{SUCCESS.hexval()}' size=10><b>Potential Reach</b></font><br/><br/><font size=18><b>{pot_max_reach_mi:.1f} mi</b></font>", styles['BodyText_Custom'])
             ]
@@ -638,7 +717,7 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
             
             sim_insights = [
                 ["Metric", "Current", "Optimized", "Improvement"],
-                ["Average Rank", f"#{avg_rank:.1f}", f"#{pot_avg_rank:.1f}", f"{delta.get('visibility_improvement_points', 0):.1f} pos"],
+                ["Local Visibility", f"#{center_rank:.1f}", f"#{pot_center_rank:.1f}", f"{max(0, center_rank - pot_center_rank):.1f} pos"],
                 ["Search Fallout", f"{int(fallout_percent)}%", f"{int(pot_fallout_percent)}%", f"{delta.get('fallout_reduction_percent', 0):.1f}% reduction"],
                 ["Local Authority", f"{sim_data.get('baseline', {}).get('local_authority_score', 0)}", f"{sim_data.get('optimized', {}).get('local_authority_score', 0)}", f"+{sim_data.get('optimized', {}).get('local_authority_score', 0) - sim_data.get('baseline', {}).get('local_authority_score', 0)}"]
             ]

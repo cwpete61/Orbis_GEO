@@ -1,0 +1,654 @@
+commit c548fd7ff34bfc564dfa678353ab914ded7148a1
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Thu Mar 5 11:46:05 2026 -0500
+
+    feat: add tooltips to dashboard
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index dd5c530..74eb30e 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -39,12 +39,16 @@
+             </section>
+             <section class="control-panel glass">
+                 <div class="input-group">
+-                    <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)"
+-                        title="Use your GBP name (exact match)">
+-                    <input type="text" id="targetUrl" placeholder="Target URL (https://...)"
+-                        title="Paste your business URL here.">
+-                    <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)"
+-                        title="Go to maps.google.com. Type your business name. Click the share icon, copy the share link and paste it here">
++                    <div class="tooltip-wrapper" data-tooltip="Use your GBP name (exact match)">
++                        <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)">
++                    </div>
++                    <div class="tooltip-wrapper" data-tooltip="Paste your business URL here.">
++                        <input type="text" id="targetUrl" placeholder="Target URL (https://...)">
++                    </div>
++                    <div class="tooltip-wrapper"
++                        data-tooltip="Go to maps.google.com. Type your business name. Click the share icon, copy the share link and paste it here">
++                        <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)">
++                    </div>
+                 </div>
+ 
+                 <div class="actions">
+
+commit 82f2e20adb8121b918ca926be3db6d8624ab922f
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Thu Mar 5 11:38:55 2026 -0500
+
+    docs(phase-17): complete Deep-Dive Data Strategy
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 8d3cdb7..dd5c530 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -39,9 +39,12 @@
+             </section>
+             <section class="control-panel glass">
+                 <div class="input-group">
+-                    <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)">
+-                    <input type="text" id="targetUrl" placeholder="Target URL (https://...)">
+-                    <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)">
++                    <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)"
++                        title="Use your GBP name (exact match)">
++                    <input type="text" id="targetUrl" placeholder="Target URL (https://...)"
++                        title="Paste your business URL here.">
++                    <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)"
++                        title="Go to maps.google.com. Type your business name. Click the share icon, copy the share link and paste it here">
+                 </div>
+ 
+                 <div class="actions">
+@@ -175,7 +178,7 @@
+                 <div class="report-frame-container">
+                     <iframe id="reportFrame" src="about:blank"></iframe>
+                 </div>
+-                <div class="map-section glass">
++                <div class="map-section glass" style="display: none;">
+                     <h3>GEO Visibility & Search Fallout Analysis</h3>
+                     <div class="analysis-tiles">
+                         <div class="analysis-tile">
+
+commit 1963737355d5d4573e1d184097cd34d2e5f87de4
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Thu Mar 5 04:08:41 2026 -0500
+
+    style: UI Layout updates and Map Pin fix
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index b486c7c..8d3cdb7 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -166,9 +166,11 @@
+             <div class="report-viewer glass">
+                 <div class="report-header">
+                     <h2>GEO Audit Complete</h2>
+-                    <button onclick="showView('dashboardView')" class="btn secondary">Back to Dashboard</button>
+-                    <a id="downloadReport" href="/api/view-report" target="_blank" class="btn success-btn">Download
+-                        PDF</a>
++                    <div class="report-actions">
++                        <button onclick="showView('dashboardView')" class="btn secondary">Back to Dashboard</button>
++                        <a id="downloadReport" href="/api/view-report" target="_blank" class="btn success-btn">Download
++                            PDF</a>
++                    </div>
+                 </div>
+                 <div class="report-frame-container">
+                     <iframe id="reportFrame" src="about:blank"></iframe>
+
+commit 694ef6b1df5a8e8fee565ddb2ff8ba1cc78ee72b
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 21:30:07 2026 -0500
+
+    Fix Brand Scanner Hallucinations and Finish Phase 17
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index bcc4a44..b486c7c 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -12,6 +12,10 @@
+     <link rel="stylesheet" href="style.css?v=2">
+     <script src="components/site-header.js?v=2" defer></script>
+     <script src="components/site-footer.js?v=2" defer></script>
++    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
++        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
++    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
++        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+ </head>
+ 
+ <body>
+@@ -169,6 +173,37 @@
+                 <div class="report-frame-container">
+                     <iframe id="reportFrame" src="about:blank"></iframe>
+                 </div>
++                <div class="map-section glass">
++                    <h3>GEO Visibility & Search Fallout Analysis</h3>
++                    <div class="analysis-tiles">
++                        <div class="analysis-tile">
++                            <div class="tile-label">Avg. Visibility</div>
++                            <div id="metric-avg-visibility" class="tile-value">--</div>
++                        </div>
++                        <div class="analysis-tile">
++                            <div class="tile-label">Search Fallout</div>
++                            <div id="metric-fallout" class="tile-value">--</div>
++                        </div>
++                        <div class="analysis-tile">
++                            <div class="tile-label">Effective Reach</div>
++                            <div id="metric-reach" class="tile-value">--</div>
++                        </div>
++                        <div class="analysis-tile highlight">
++                            <div class="tile-label">Potential Reach</div>
++                            <div id="metric-potential-reach" class="tile-value">--</div>
++                        </div>
++                        <div class="analysis-tile highlight">
++                            <div class="tile-label">Potential Fallout</div>
++                            <div id="metric-potential-fallout" class="tile-value">--</div>
++                        </div>
++                    </div>
++                    <div id="map" style="height: 400px; border-radius: 12px; margin-bottom: 1.5rem;"></div>
++                    <div id="mapLegend" class="map-legend">
++                        <div class="legend-item"><span class="dot green"></span> 1-5 (High Visibility)</div>
++                        <div class="legend-item"><span class="dot yellow"></span> 6-12 (Moderate Visibility)</div>
++                        <div class="legend-item"><span class="dot red"></span> 13-20 (Fallout Zone)</div>
++                    </div>
++                </div>
+             </div>
+         </main>
+     </div>
+
+commit 7ff8fa1afa1b6ac5eb68956a3dc92fca3f2eecfc
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 18:09:18 2026 -0500
+
+    fix(cache): force style.css update with versioning
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index d0472ea..bcc4a44 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -9,7 +9,7 @@
+         content="Audit your brand's presence in Generative Search Engines. Measure and improve your GEO score with Orbis Local.">
+     <meta name="robots" content="index, follow">
+     <link rel="canonical" href="https://audit.myorbislocal.com/">
+-    <link rel="stylesheet" href="style.css">
++    <link rel="stylesheet" href="style.css?v=2">
+     <script src="components/site-header.js?v=2" defer></script>
+     <script src="components/site-footer.js?v=2" defer></script>
+ </head>
+
+commit 7051d6dde79caa2eb5eeca4f3c59495884e95f5d
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 17:01:36 2026 -0500
+
+    feat(leads): make consent checkbox mandatory for report view
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 1c101b7..d0472ea 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -145,11 +145,12 @@
+                     </div>
+                     <div class="form-group"
+                         style="display: flex; align-items: flex-start; gap: 10px; text-align: left; padding: 5px 0;">
+-                        <input type="checkbox" id="leadConsent" style="margin-top: 4px; width: auto; cursor: pointer;">
++                        <input type="checkbox" id="leadConsent" style="margin-top: 4px; width: auto; cursor: pointer;"
++                            required>
+                         <label for="leadConsent"
+                             style="font-size: 0.9em; color: rgba(255,255,255,0.8); cursor: pointer; line-height: 1.4;">I
+                             would like to receive communications from OrbisLocal regarding my report and related
+-                            services.</label>
++                            services. <span style="color: #f0932b;">*</span></label>
+                     </div>
+                     <button type="submit" class="btn primary large-btn">View My Report Now</button>
+                 </form>
+
+commit 0f200a0bb4d416f6fb337e288521cad41c4d8673
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 12:27:42 2026 -0500
+
+    fix(seo): add cache-busters for navigation components
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 267fc8c..1c101b7 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -10,8 +10,8 @@
+     <meta name="robots" content="index, follow">
+     <link rel="canonical" href="https://audit.myorbislocal.com/">
+     <link rel="stylesheet" href="style.css">
+-    <script src="components/site-header.js" defer></script>
+-    <script src="components/site-footer.js" defer></script>
++    <script src="components/site-header.js?v=2" defer></script>
++    <script src="components/site-footer.js?v=2" defer></script>
+ </head>
+ 
+ <body>
+
+commit 05c94b34fe5a2e8c82b16fc1f4115836ee38d0dd
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 08:02:44 2026 -0500
+
+    feat: implement site-wide SEO meta tags for all pages
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 3b54b47..267fc8c 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -4,7 +4,11 @@
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Orbis Local Dashboard</title>
++    <title>Orbis Local - AI SEO & GEO Audit Dashboard</title>
++    <meta name="description"
++        content="Audit your brand's presence in Generative Search Engines. Measure and improve your GEO score with Orbis Local.">
++    <meta name="robots" content="index, follow">
++    <link rel="canonical" href="https://audit.myorbislocal.com/">
+     <link rel="stylesheet" href="style.css">
+     <script src="components/site-header.js" defer></script>
+     <script src="components/site-footer.js" defer></script>
+
+commit c01e4ae815e573149f5568bc37bfd7eec77c7ac9
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 05:02:42 2026 -0500
+
+    feat: integrate global footer across all dashboard pages
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 782dbd7..3b54b47 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -7,6 +7,7 @@
+     <title>Orbis Local Dashboard</title>
+     <link rel="stylesheet" href="style.css">
+     <script src="components/site-header.js" defer></script>
++    <script src="components/site-footer.js" defer></script>
+ </head>
+ 
+ <body>
+@@ -167,6 +168,7 @@
+         </main>
+     </div>
+ 
++    <site-footer></site-footer>
+     <div class="scanner-line"></div>
+     <script src="app.js"></script>
+ </body>
+
+commit 4647cc0df24b898d9975bbdf883cebde2f434f16
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 02:18:42 2026 -0500
+
+    fix: navbar width and centering issues
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 9e9d14a..782dbd7 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -10,9 +10,9 @@
+ </head>
+ 
+ <body>
+-    <div class="container">
+-        <site-header></site-header>
++    <site-header></site-header>
+ 
++    <div class="container">
+         <!-- DASHBOARD VIEW -->
+         <main id="dashboardView">
+ 
+
+commit d352b733aad9abb3f040b0247e520d4c8e63b882
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Wed Mar 4 02:09:42 2026 -0500
+
+    feat: implement site-wide header and comprehensive documentation
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 112d4a8..9e9d14a 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -6,14 +6,12 @@
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Orbis Local Dashboard</title>
+     <link rel="stylesheet" href="style.css">
++    <script src="components/site-header.js" defer></script>
+ </head>
+ 
+ <body>
+     <div class="container">
+-        <header>
+-            <div class="logo">ORBIS LOCAL</div>
+-            <div class="tagline">Enterprise AI Search Visibility Auditor</div>
+-        </header>
++        <site-header></site-header>
+ 
+         <!-- DASHBOARD VIEW -->
+         <main id="dashboardView">
+
+commit 89c465a5429251274e26af48360ec3489dc37fda
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Tue Mar 3 18:39:33 2026 -0500
+
+    add email and python endpoint test
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 076e0fe..112d4a8 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -17,6 +17,19 @@
+ 
+         <!-- DASHBOARD VIEW -->
+         <main id="dashboardView">
++
++            <!-- Explainer Video Placeholder -->
++            <section class="video-section">
++                <div class="video-placeholder glass">
++                    <img src="explainer-thumb.png" alt="Orbis Local Explainer Thumbnail" class="video-thumb">
++                    <div class="play-button">
++                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2"
++                            fill="none" stroke-linecap="round" stroke-linejoin="round" class="play-icon">
++                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
++                        </svg>
++                    </div>
++                </div>
++            </section>
+             <section class="control-panel glass">
+                 <div class="input-group">
+                     <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)">
+@@ -26,15 +39,15 @@
+ 
+                 <div class="actions">
+                     <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
+-                    <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
++                    <button id="runFullAudit" class="btn secondary" style="display: none;">Run Full Audit</button>
+                     <a id="openPdf" class="btn success-btn" href="/api/view-report" target="_blank"
+-                        style="text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center;">PDF
++                        style="display: none; text-decoration: none; text-align: center; align-items: center; justify-content: center;">PDF
+                         Report</a>
+-                    <button id="clearLogs" class="btn secondary">Clear Logs</button>
++                    <button id="clearLogs" class="btn secondary" style="display: none;">Clear Logs</button>
+                 </div>
+             </section>
+ 
+-            <section class="manual-steps">
++            <section class="manual-steps" style="display: none;">
+                 <h3>Manual Controls</h3>
+                 <div class="step-buttons">
+                     <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
+@@ -46,7 +59,7 @@
+                 </div>
+             </section>
+ 
+-            <section class="output-console glass">
++            <section class="output-console glass" style="display: none;">
+                 <div class="console-header">
+                     <span>Console Output</span>
+                     <div class="status-indicator" id="statusIndicator">Ready</div>
+@@ -125,7 +138,15 @@
+                         <input type="email" id="leadEmail" placeholder="Business Email" required>
+                     </div>
+                     <div class="form-group">
+-                        <input type="tel" id="leadPhone" placeholder="Phone Number (optional)">
++                        <input type="tel" id="leadPhone" placeholder="Phone Number" required>
++                    </div>
++                    <div class="form-group"
++                        style="display: flex; align-items: flex-start; gap: 10px; text-align: left; padding: 5px 0;">
++                        <input type="checkbox" id="leadConsent" style="margin-top: 4px; width: auto; cursor: pointer;">
++                        <label for="leadConsent"
++                            style="font-size: 0.9em; color: rgba(255,255,255,0.8); cursor: pointer; line-height: 1.4;">I
++                            would like to receive communications from OrbisLocal regarding my report and related
++                            services.</label>
+                     </div>
+                     <button type="submit" class="btn primary large-btn">View My Report Now</button>
+                 </form>
+
+commit 6f3bb59b9c231426e2a764097e2f38dc31596ea9
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Tue Mar 3 14:36:22 2026 -0500
+
+    Backup current state
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+index 4e815a1..076e0fe 100644
+--- a/dashboard/index.html
++++ b/dashboard/index.html
+@@ -15,42 +15,140 @@
+             <div class="tagline">Enterprise AI Search Visibility Auditor</div>
+         </header>
+ 
+-        <section class="control-panel glass">
+-            <div class="input-group">
+-                <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)" value="Orbis Local">
+-                <input type="text" id="targetUrl" placeholder="Target URL (https://...)" value="https://google.com">
+-            </div>
++        <!-- DASHBOARD VIEW -->
++        <main id="dashboardView">
++            <section class="control-panel glass">
++                <div class="input-group">
++                    <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)">
++                    <input type="text" id="targetUrl" placeholder="Target URL (https://...)">
++                    <input type="text" id="gbpUrl" placeholder="Google Business Profile URL (optional)">
++                </div>
+ 
+-            <div class="actions">
+-                <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
+-                <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
+-                <button id="openPdf" class="btn success-btn">PDF</button>
+-                <button id="clearLogs" class="btn secondary">Clear Logs</button>
+-            </div>
+-        </section>
+-
+-        <section class="manual-steps">
+-            <h3>Manual Controls</h3>
+-            <div class="step-buttons">
+-                <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
+-                <button onclick="runStep('score')" class="step-btn">2. Score Citability</button>
+-                <button onclick="runStep('brand')" class="step-btn">3. Brand Scan</button>
+-                <button onclick="runStep('crawlers')" class="step-btn">4. Crawler Check</button>
+-                <button onclick="runStep('report')" class="step-btn">5. Generate PDF</button>
++                <div class="actions">
++                    <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
++                    <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
++                    <a id="openPdf" class="btn success-btn" href="/api/view-report" target="_blank"
++                        style="text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center;">PDF
++                        Report</a>
++                    <button id="clearLogs" class="btn secondary">Clear Logs</button>
++                </div>
++            </section>
++
++            <section class="manual-steps">
++                <h3>Manual Controls</h3>
++                <div class="step-buttons">
++                    <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
++                    <button onclick="runStep('score')" class="step-btn">2. Score Citability</button>
++                    <button onclick="runStep('brand')" class="step-btn">3. Brand Scan</button>
++                    <button onclick="runStep('crawlers')" class="step-btn">4. Crawler Check</button>
++                    <button onclick="runStep('gbp')" class="step-btn">5. GBP Analysis</button>
++                    <button onclick="runStep('report')" class="step-btn">6. Generate PDF</button>
++                </div>
++            </section>
++
++            <section class="output-console glass">
++                <div class="console-header">
++                    <span>Console Output</span>
++                    <div class="status-indicator" id="statusIndicator">Ready</div>
++                </div>
++                <div id="logOutput" class="console-body">
++                    Waiting for command...
++                </div>
++            </section>
++        </main>
++
++        <!-- GENERATING VIEW -->
++        <main id="generatingView" style="display: none;">
++            <div class="generating-container glass">
++                <div id="statLabel" class="stat-box">85% of Users Prefer AI Summaries</div>
++                <h2>Orbis Local: Generating Your Report</h2>
++                <div class="brand-sub">Analyzing Citability for <strong id="generatingBrand">...</strong></div>
++
++                <div id="strategyBox" class="strategy-card">AI isn't just a trend; it's the 2026 search baseline.</div>
++
++                <div class="percent-text" id="percentCounter">0%</div>
++                <div class="progress-wrapper">
++                    <div id="subProgressBar" class="progress-fill"></div>
++                </div>
++
++                <div class="stages">
++                    <div id="stage-fetch" class="stage">
++                        <div class="dot"></div>FETCH
++                    </div>
++                    <div id="stage-score" class="stage">
++                        <div class="dot"></div>SCORE
++                    </div>
++                    <div id="stage-brand" class="stage">
++                        <div class="dot"></div>BRAND
++                    </div>
++                    <div id="stage-crawlers" class="stage">
++                        <div class="dot"></div>CRAWLERS
++                    </div>
++                    <div id="stage-gbp" class="stage">
++                        <div class="dot"></div>GBP
++                    </div>
++                    <div id="stage-report" class="stage">
++                        <div class="dot"></div>REPORT
++                    </div>
++                </div>
++
++                <div class="chart-container">
++                    <div class="bar-group">
++                        <span class="bar-val">85%</span>
++                        <div class="bar" id="bar1" style="height: 0;" data-h="85"></div>
++                        <span class="bar-label">AI PREF</span>
++                    </div>
++                    <div class="bar-group">
++                        <span class="bar-val">92%</span>
++                        <div class="bar" id="bar2" style="height: 0;" data-h="92"></div>
++                        <span class="bar-label">SGE 2026</span>
++                    </div>
++                    <div class="bar-group">
++                        <span class="bar-val">78%</span>
++                        <div class="bar" id="bar3" style="height: 0;" data-h="78"></div>
++                        <span class="bar-label">TRUST</span>
++                    </div>
++                </div>
+             </div>
+-        </section>
++        </main>
+ 
+-        <section class="output-console glass">
+-            <div class="console-header">
+-                <span>Console Output</span>
+-                <div class="status-indicator" id="statusIndicator">Ready</div>
++        <!-- LEAD GEN VIEW -->
++        <main id="leadGenView" style="display: none;">
++            <div class="lead-gen-container glass">
++                <h2>Your Report is Almost Ready!</h2>
++                <p>Enter your details to finalize the generation and reveal your full GEO-SEO Roadmap.</p>
++                <form id="leadGenForm" class="lead-form">
++                    <div class="form-group">
++                        <input type="text" id="leadName" placeholder="Your Full Name" required>
++                    </div>
++                    <div class="form-group">
++                        <input type="email" id="leadEmail" placeholder="Business Email" required>
++                    </div>
++                    <div class="form-group">
++                        <input type="tel" id="leadPhone" placeholder="Phone Number (optional)">
++                    </div>
++                    <button type="submit" class="btn primary large-btn">View My Report Now</button>
++                </form>
+             </div>
+-            <div id="logOutput" class="console-body">
+-                Waiting for command...
++        </main>
++
++        <!-- REPORT VIEW -->
++        <main id="reportView" style="display: none;">
++            <div class="report-viewer glass">
++                <div class="report-header">
++                    <h2>GEO Audit Complete</h2>
++                    <button onclick="showView('dashboardView')" class="btn secondary">Back to Dashboard</button>
++                    <a id="downloadReport" href="/api/view-report" target="_blank" class="btn success-btn">Download
++                        PDF</a>
++                </div>
++                <div class="report-frame-container">
++                    <iframe id="reportFrame" src="about:blank"></iframe>
++                </div>
+             </div>
+-        </section>
++        </main>
+     </div>
+ 
++    <div class="scanner-line"></div>
+     <script src="app.js"></script>
+ </body>
+ 
+
+commit 30cb4ff7f06118099d4f4bea8f230284193ca998
+Author: Crawford Peterson <crawford.peterson.sr@gmail.com>
+Date:   Mon Mar 2 15:42:40 2026 -0500
+
+    feat: add auto-audit and pdf view buttons to dashboard
+
+diff --git a/dashboard/index.html b/dashboard/index.html
+new file mode 100644
+index 0000000..4e815a1
+--- /dev/null
++++ b/dashboard/index.html
+@@ -0,0 +1,57 @@
++<!DOCTYPE html>
++<html lang="en">
++
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Orbis Local Dashboard</title>
++    <link rel="stylesheet" href="style.css">
++</head>
++
++<body>
++    <div class="container">
++        <header>
++            <div class="logo">ORBIS LOCAL</div>
++            <div class="tagline">Enterprise AI Search Visibility Auditor</div>
++        </header>
++
++        <section class="control-panel glass">
++            <div class="input-group">
++                <input type="text" id="brandName" placeholder="Brand Name (e.g., Orbis Local)" value="Orbis Local">
++                <input type="text" id="targetUrl" placeholder="Target URL (https://...)" value="https://google.com">
++            </div>
++
++            <div class="actions">
++                <button id="runAutoAudit" class="btn primary">Auto-Audit & View</button>
++                <button id="runFullAudit" class="btn secondary">Run Full Audit</button>
++                <button id="openPdf" class="btn success-btn">PDF</button>
++                <button id="clearLogs" class="btn secondary">Clear Logs</button>
++            </div>
++        </section>
++
++        <section class="manual-steps">
++            <h3>Manual Controls</h3>
++            <div class="step-buttons">
++                <button onclick="runStep('fetch')" class="step-btn">1. Fetch Page</button>
++                <button onclick="runStep('score')" class="step-btn">2. Score Citability</button>
++                <button onclick="runStep('brand')" class="step-btn">3. Brand Scan</button>
++                <button onclick="runStep('crawlers')" class="step-btn">4. Crawler Check</button>
++                <button onclick="runStep('report')" class="step-btn">5. Generate PDF</button>
++            </div>
++        </section>
++
++        <section class="output-console glass">
++            <div class="console-header">
++                <span>Console Output</span>
++                <div class="status-indicator" id="statusIndicator">Ready</div>
++            </div>
++            <div id="logOutput" class="console-body">
++                Waiting for command...
++            </div>
++        </section>
++    </div>
++
++    <script src="app.js"></script>
++</body>
++
++</html>
+\ No newline at end of file

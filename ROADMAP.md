@@ -64,7 +64,24 @@
 - [x] Replace static dummy potential scores with dynamic simulated data.
 - [x] Add a distinct 'Simulation Comparison Insights' block to the 'GEO Visibility & Search Fallout' section of the PDF, explicitly showing growth deltas.
 
+## Phase 18: Outscraper & Social Media Verified Integration <!-- id: 32 -->
+**Status**: 🏗 In Progress
+### Wave 1: Verification Infrastructure
+- [ ] Implement Outscraper Webhook listener in `server.js`.
+- [ ] Connect Google Maps Data & Review APIs.
+- [ ] Connect Emails & Contacts Scraper for legal social link verification.
+
+### Wave 2: Intelligent Enrichment
+- [ ] Update `gbp_analyzer.py` to ingest and analyze hard Maps data.
+- [ ] Update `brand_scanner.py` to prioritize verified social links.
+- [ ] Refactor `generate_live_pdf.py` to aggregate hybrid data (Verified + Community).
+
+### Wave 3: UI & Reporting
+- [ ] Update PDF templates to display "Verified" badges for Outscraper data.
+- [ ] Add Keyword Gap analysis block (based on real reviews) to the PDF.
+- [ ] Verify full end-to-end integration.
+
 ---
 
-# Project Complete
-The **GEO-SEO Claude Code Tool** is fully deployed, branded for Orbis, and optimized for advanced AI search visibility auditing.
+# Project Roadmap Continued...
+The **GEO-SEO Claude Code Tool** is being enhanced with enterprise-grade data providers.

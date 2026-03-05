@@ -50,6 +50,18 @@ async function runStep(step, isSequence = false) {
             body: JSON.stringify({ step, brand, url, gbpUrl })
         });
 
+        if (!response.ok) {
+            let errorMsg = `HTTP ${response.status}`;
+            try {
+                const errData = await response.json();
+                errorMsg = errData.error || errorMsg;
+            } catch (e) {
+                // If response is not JSON
+            }
+            log(`API Error in ${step}: ${errorMsg}`, 'error');
+            return { success: false };
+        }
+
         const data = await response.json();
 
         if (data.status === 'success') {
@@ -364,9 +376,19 @@ async function initVisibilityMap() {
 
         // Calculate Current Metrics
         const currentScores = data.grid.map(p => p.score);
-        const avgRank = (currentScores.reduce((a, b) => a + b, 0) / currentScores.length).toFixed(1);
+        const avgRank = currentScores.reduce((a, b) => a + b, 0) / currentScores.length;
         const falloutCount = currentScores.filter(s => s > 12).length;
         const falloutPercent = Math.round((falloutCount / currentScores.length) * 100);
+
+        let centerRank = 0;
+        let minDist = Infinity;
+        data.grid.forEach(point => {
+            const dist = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
+            if (dist < minDist) {
+                minDist = dist;
+                centerRank = point.score;
+            }
+        });
 
         let maxReachKm = 0;
         data.grid.forEach(point => {
@@ -379,10 +401,12 @@ async function initVisibilityMap() {
         // 2. Calculate Potential Metrics from grid potential_score or Simulation
         let potMaxReachKm = 0;
         let potFalloutPercent = 0;
+        let potAvgRank = 0;
 
         if (simData && simData.optimized && simData.optimized.grid) {
             // Use full simulation data when available
             const potentialScores = simData.optimized.grid.map(p => p.score);
+            potAvgRank = potentialScores.reduce((a, b) => a + b, 0) / potentialScores.length;
             const potFalloutCount = potentialScores.filter(s => s > 12).length;
             potFalloutPercent = Math.round((potFalloutCount / potentialScores.length) * 100);
 
@@ -396,6 +420,7 @@ async function initVisibilityMap() {
         } else {
             // Fallback: use the grid's own potential_score data
             const potScores = data.grid.map(p => p.potential_score !== undefined ? p.potential_score : p.score);
+            potAvgRank = potScores.reduce((a, b) => a + b, 0) / potScores.length;
             const potFalloutCount = potScores.filter(s => s > 12).length;
             potFalloutPercent = Math.round((potFalloutCount / potScores.length) * 100);
 
@@ -408,10 +433,22 @@ async function initVisibilityMap() {
             });
         }
 
+        // Advanced Aggressive Reach Projection Formula
+        // Models aggressive GEO strategies (location pages, local social syndication) 
+        // leading to 20-40+ mile expansion rather than conservative organic edge growth.
+        const basePotReachMi = potMaxReachKm * KM_TO_MI;
+        const rankImprovement = avgRank - potAvgRank;
+        const falloutImprovement = falloutPercent - potFalloutPercent;
+        const expansionFactor = (Math.max(0, rankImprovement) * 2.5) + (Math.max(0, falloutImprovement) * 0.3);
+
         // Convert km to miles and update UI tiles
         const maxReachMi = maxReachKm * KM_TO_MI;
-        const potMaxReachMi = potMaxReachKm * KM_TO_MI;
-        document.getElementById('metric-avg-visibility').textContent = `Rank #${avgRank}`;
+
+        const potMaxReachMi = Math.max(maxReachMi, basePotReachMi + expansionFactor);
+
+        const metricLocalVisibilityId = document.getElementById('metric-local-visibility') || document.getElementById('metric-avg-visibility');
+        if (metricLocalVisibilityId) metricLocalVisibilityId.textContent = `Rank #${centerRank.toFixed(1)}`;
+
         document.getElementById('metric-fallout').textContent = `${falloutPercent}%`;
         document.getElementById('metric-reach').textContent = `${maxReachMi.toFixed(1)} mi`;
         document.getElementById('metric-potential-reach').textContent = `${potMaxReachMi.toFixed(1)} mi`;
