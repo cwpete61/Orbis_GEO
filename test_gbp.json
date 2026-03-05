@@ -1,49 +1,39 @@
 {
-  "business_name": "string",
+  "business_name": "Healthy Smiles Dental Clinic",
   "osm_verification_confidence": 0,
-  "overall_local_score": 0,
-  "status": "Poor",
+  "overall_local_score": 65,
+  "status": "Fair",
   "insights": [
     {
-      "title": "Business Name & Category Clarity",
-      "score": 40,
-      "details": "The business name and category lack specificity, which can hinder discoverability and AI understanding. Clear, descriptive names and categories enhance recognition."
+      "title": "Business Name and Category Clarity",
+      "score": 80,
+      "details": "The business name 'Healthy Smiles Dental Clinic' clearly indicates the dental industry. The category aligns with 'Dentist' or 'Dental Clinic,' making it understandable for both users and AI systems."
     },
     {
       "title": "AI-Compatible Descriptions",
-      "score": 30,
-      "details": "Descriptions are generic and do not incorporate relevant entities or keywords related to services offered. Rich, entity-driven descriptions improve AI processing."
+      "score": 70,
+      "details": "The business description includes specific dental services such as teeth cleaning, orthodontics, and cosmetic dentistry, providing clear entities for better AI indexing. However, some descriptions could be more detailed with service-specific keywords."
     },
     {
-      "title": "Review Sentiment & Mentions",
-      "score": 25,
-      "details": "Recent reviews/mentions show mixed or negative sentiment with minimal mentions of specific services or features, reducing AI interpretability."
+      "title": "Sentiment of Recent Reviews",
+      "score": 60,
+      "details": "Recent reviews show mostly positive feedback about friendly staff and clean facilities but include some complaints about wait times and appointment availability. Overall sentiment leans slightly positive but includes negative mentions."
     },
-    "Entity Verification Confidence is very low (0%), indicating no OSM data match and possibly significant entity discrepancy or incomplete data."
+    {
+      "title": "Entity Verification (Cross-Reference with OSM)",
+      "score": 0,
+      "details": "No OSM data retrieved. Without cross-validation data, confidence in entity consistency is absent, increasing risk of mismatch or outdated information."
+    }
   ],
   "findings": [
     {
       "severity": "critical",
-      "title": "Entity Mismatch / Data Absence",
-      "description": "No matching OSM data suggests that the business presence isn't verified or may be incorrectly listed.",
-      "impact": "Limits local SEO efficacy, confuses AI systems, and reduces trustworthiness.",
-      "fix_example": "Update and verify the GBP with accurate address, website, and service info; add complete OSM data if possible."
-    },
-    {
-      "severity": "high",
-      "title": "Lack of Rich Descriptive Content",
-      "description": "The current description does not include relevant entities or keywords, limiting AI compatibility.",
-      "impact": "Reduces discoverability and AI understanding, impacting ranking and local visibility.",
-      "fix_example": "Revise the business description to include relevant services, keywords, and entities such as 'consulting', 'software solutions', 'customer support'."
-    },
-    {
-      "severity": "medium",
-      "title": "Negative or Insufficient Review Sentiment",
-      "description": "Limited positive feedback and sparse mention of specific services.",
-      "impact": "Weakens AI's contextual understanding and hampers reputation signals.",
-      "fix_example": "Encourage satisfied customers to leave detailed reviews mentioning specific services and positive experiences."
+      "title": "Lack of OSM Data & Entity Cross-Validation",
+      "description": "No OpenStreetMap data is available to verify the entity details against the GBP. This absence prevents confidence in data consistency and completeness.",
+      "impact": "Limits ability to verify address accuracy, may affect local search rankings, and reduces AI recognition capabilities.",
+      "fix_example": "Integrate or update the location data on OSM and ensure consistent information across geospatial platforms."
     }
   ],
-  "audit_date": "2026-03-05 10:32",
-  "gbp_url": "https://maps.app.goo.gl/o1H5n9vT"
+  "audit_date": "2026-03-05 11:28",
+  "gbp_url": "https://maps.app.goo.gl/pSYgvuH8nKd2TW39A"
 }

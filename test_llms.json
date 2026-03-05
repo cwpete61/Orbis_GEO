@@ -1,5 +1,5 @@
 {
-  "url": "https://lightboxseo.com/llms.txt",
+  "url": "https://positiondriver.com/llms.txt",
   "exists": false,
   "format_valid": false,
   "has_title": false,
@@ -15,10 +15,10 @@
   ],
   "suggestions": [],
   "full_version": {
-    "url": "https://lightboxseo.com/llms-full.txt",
+    "url": "https://positiondriver.com/llms-full.txt",
     "exists": false
   },
-  "robots_url": "https://lightboxseo.com/robots.txt",
+  "robots_url": "https://positiondriver.com/robots.txt",
   "robots_found": true,
   "crawlers": {
     "GPTBot": {

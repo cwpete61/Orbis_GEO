@@ -1,7 +1,7 @@
 {
-  "brand_name": "Lightbox SEO",
-  "url": "",
-  "brand_authority_score": 36,
+  "brand_name": "Position Driver SEO",
+  "url": "https://positiondriver.com/",
+  "brand_authority_score": 39,
   "platforms": {
     "YouTube": {
       "platform": "YouTube",
@@ -9,14 +9,14 @@
       "weight": "25%",
       "score": 85,
       "has_channel": true,
-      "sentiment": "neutral",
+      "sentiment": "positive",
       "key_findings": [
-        "Multiple YouTube videos mention Lightbox SEO, including the 'SEO Spotlight Podcast' episodes.",
-        "Videos are about SEO and website security, with Lightbox SEO contact info included.",
-        "No official Lightbox SEO YouTube channel or verified handle found in search results."
+        "Multiple YouTube videos mention 'Position Driver' in the context of golf driver setup and swing techniques.",
+        "All videos are hosted on YouTube and include relevant content about driver positioning and swing mechanics.",
+        "No official brand channel URL (youtube.com/@BrandName or /channel/) is found in the search results."
       ],
-      "summary": "Lightbox SEO has a notable presence on YouTube through multiple video mentions, but lacks an official channel.",
-      "search_url": "https://www.youtube.com/results?search_query=Lightbox+SEO",
+      "summary": "The brand 'Position Driver SEO' is actively mentioned in relevant golf-related videos on YouTube, demonstrating a strong presence in that niche despite the absence of an official channel.",
+      "search_url": "https://www.youtube.com/results?search_query=Position+Driver+SEO",
       "recommendations": [
         "Create a YouTube channel if none exists",
         "Publish educational/tutorial content related to your niche",
@@ -28,16 +28,16 @@
       "platform": "Reddit",
       "correlation": "High",
       "weight": "25%",
-      "score": 55,
+      "score": 65,
       "has_presence": true,
-      "sentiment": "mixed",
+      "sentiment": "positive",
       "key_findings": [
-        "Multiple Reddit threads mention Lightbox in various contexts related to web development and SEO.",
-        "There are discussions about Lightbox's impact on SEO and AdSense, indicating some community awareness.",
-        "Official or dedicated Lightbox SEO presence on Reddit appears limited, with no direct brand accounts or highly active official profiles."
+        "Position Driver SEO is mentioned in multiple Reddit threads related to SEO services and local business reviews.",
+        "There are several references to Position Driver SEO's reviews and services, indicating some recognition within relevant communities.",
+        "Sentiment appears mostly positive, with reviews and service descriptions highlighting its offerings."
       ],
-      "summary": "Lightbox SEO has a moderate presence on Reddit with occasional mentions and mixed community sentiment.",
-      "search_url": "https://www.reddit.com/search/?q=Lightbox+SEO",
+      "summary": "Position Driver SEO has a moderate presence on Reddit, primarily recognized through reviews and service mentions in relevant communities.",
+      "search_url": "https://www.reddit.com/search/?q=Position+Driver+SEO",
       "recommendations": [
         "Identify 3-5 subreddits where your target audience is active",
         "Participate authentically\u2014do not shill",
@@ -54,11 +54,11 @@
       "wikipedia_url": "",
       "wikidata_id": "",
       "key_findings": [
-        "No Wikipedia article exists specifically for 'Lightbox SEO'.",
-        "No Wikidata entry related to 'Lightbox SEO' has been found.",
-        "Search results show articles about 'Lightbox' in various contexts unrelated to 'Lightbox SEO'."
+        "No Wikipedia article exists for Position Driver SEO.",
+        "No Wikidata entry found for the brand.",
+        "The brand is not referenced in other Wikipedia articles."
       ],
-      "summary": "Lightbox SEO currently lacks a presence on Wikipedia and Wikidata, indicating minimal or no recognition on these platforms.",
+      "summary": "Position Driver SEO lacks a presence on Wikipedia and Wikidata, indicating minimal online visibility within these platforms.",
       "recommendations": [
         "Build notability through press coverage first before seeking a Wikipedia article",
         "Ensure your Wikidata entry (Q-number) is complete even without a full article",
@@ -69,16 +69,16 @@
       "platform": "Facebook",
       "correlation": "Moderate",
       "weight": "8%",
-      "score": 75,
+      "score": 55,
       "has_presence": true,
-      "sentiment": "positive",
+      "sentiment": "neutral",
       "key_findings": [
-        "Official Facebook page exists for Lightbox SEO in Allentown, PA.",
-        "Page was last updated on June 2, 2024, indicating recent activity.",
-        "The page appears to have a moderate level of activity and followers."
+        "The brand has official Facebook pages with some followers and activity.",
+        "Follower counts are relatively low (e.g., 10 likes, 719 likes), indicating limited reach.",
+        "Content includes service promotion and job postings, but activity appears sporadic and not highly engaging."
       ],
-      "summary": "Lightbox SEO maintains an active and verified Facebook presence with a decent following and recent updates.",
-      "search_url": "https://www.facebook.com/search/pages/?q=Lightbox+SEO",
+      "summary": "Position Driver SEO maintains a basic Facebook presence with some activity, but lacks significant engagement or large following.",
+      "search_url": "https://www.facebook.com/search/pages/?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official Facebook page",
         "Post regular updates, events, and community engaging content",
@@ -93,12 +93,12 @@
       "has_presence": false,
       "sentiment": "unknown",
       "key_findings": [
-        "No official or unofficial Instagram profile found for Lightbox SEO.",
-        "Search results indicate no presence or mentions on Instagram.",
-        "Lack of activity or engagement data related to the brand on the platform."
+        "No official or unofficial Instagram profile found for Position Driver SEO.",
+        "Search results indicate no mentions or presence on Instagram.",
+        "Lack of any activity or engagement related to the brand on the platform."
       ],
       "summary": "No Instagram presence detected.",
-      "search_url": "https://www.instagram.com/explore/search/keyword/?q=Lightbox+SEO",
+      "search_url": "https://www.instagram.com/explore/search/keyword/?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official Instagram profile",
         "Post high-quality visual content regularly",
@@ -113,12 +113,12 @@
       "has_presence": true,
       "sentiment": "unknown",
       "key_findings": [
-        "Only one recent post with the hashtag #lightboxwebsite, indicating minimal activity.",
-        "No evidence of an official verified account or substantial follower base.",
-        "Mentions are limited to a single discussion and some general help links, suggesting low brand engagement."
+        "No official verified account for Position Driver SEO found in search results.",
+        "Mentions are limited to unrelated or generic user posts and references to other entities.",
+        "The brand is not actively posting or engaging on Twitter/X."
       ],
-      "summary": "Lightbox SEO has a minimal and inactive presence on Twitter/X with limited user engagement.",
-      "search_url": "https://twitter.com/search?q=Lightbox+SEO",
+      "summary": "Position Driver SEO has minimal or no visible presence on Twitter/X based on current search results.",
+      "search_url": "https://twitter.com/search?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official Twitter/X account",
         "Engage proactively with industry news and customer support",
@@ -129,16 +129,16 @@
       "platform": "TikTok",
       "correlation": "Moderate",
       "weight": "8%",
-      "score": 0,
-      "has_presence": false,
-      "sentiment": "unknown",
+      "score": 45,
+      "has_presence": true,
+      "sentiment": "neutral",
       "key_findings": [
-        "No official TikTok account found for Lightbox SEO.",
-        "Search results indicate no user-generated content or mentions.",
-        "Lack of activity suggests minimal or no presence on TikTok."
+        "Multiple TikTok videos mention SEO tips and local business strategies, some related to driving and local SEO.",
+        "No evidence of an official verified account or large follower base for Position Driver SEO.",
+        "Content appears to be user-generated or related to broader industry topics rather than brand-specific content."
       ],
-      "summary": "No TikTok presence detected.",
-      "search_url": "https://www.tiktok.com/search?q=Lightbox+SEO",
+      "summary": "Position Driver SEO has a limited TikTok presence with some relevant mentions but lacks an official or highly active account.",
+      "search_url": "https://www.tiktok.com/search?q=Position+Driver+SEO",
       "recommendations": [
         "Create or claim your official TikTok profile",
         "Share engaging, short-form video content",
@@ -151,14 +151,14 @@
       "weight": "15%",
       "score": 45,
       "has_presence": true,
-      "sentiment": "negative",
+      "sentiment": "neutral",
       "key_findings": [
-        "The LinkedIn company page for LightboxDigital has only 37 followers, indicating low engagement.",
-        "There is limited information about active posting or thought leadership on the company profile.",
-        "Most search results point to LightboxSEO in Allentown, PA, with no clear indication of a strong or active LinkedIn presence for Lightbox SEO."
+        "Multiple LinkedIn pages related to 'Position' brands, including Position Driver SEO and Position Digital.",
+        "Position Driver SEO has an active LinkedIn presence with a company page, but follower count and activity level are not specified, suggesting limited visibility.",
+        "Other related brands like Position Technologies and Position1SEO have some followers and activity, but overall engagement appears limited."
       ],
-      "summary": "Lightbox SEO's LinkedIn presence appears minimal and inactive, suggesting limited brand visibility on the platform.",
-      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Lightbox+SEO",
+      "summary": "The brand has a basic LinkedIn presence with some related pages, but lacks significant followers or consistent activity to be highly active.",
+      "search_url": "https://www.linkedin.com/search/results/companies/?keywords=Position+Driver+SEO",
       "recommendations": [
         "Optimize company page with complete information and regular posting",
         "Encourage leadership to post thought leadership content weekly",
@@ -173,11 +173,11 @@
       "has_listings": false,
       "sentiment": "unknown",
       "key_findings": [
-        "No results found on major local directories like Yelp or YellowPages.",
-        "Presence is limited to review platforms such as Trustpilot with some customer feedback.",
-        "Reviews indicate positive customer experiences but lack verified directory listings."
+        "No verified listings found on major directories like YellowPages or Yelp.",
+        "Presence is primarily through review platforms such as Trustpilot, which are not traditional local directories.",
+        "Multiple references to SEO services and marketing agencies, but limited direct local directory presence."
       ],
-      "summary": "Lightbox SEO shows minimal local directory presence with reviews but lacks verified listings on major platforms.",
+      "summary": "Position Driver SEO has minimal presence on key local directories, primarily appearing on review and marketing platforms.",
       "recommendations": [
         "Claim your business profile on Yelp and YellowPages",
         "Encourage happy customers to leave reviews on Trustpilot",
@@ -191,11 +191,11 @@
       "weight": "15%",
       "score": 45,
       "key_findings": [
-        "No Quora answers or discussions related to Lightbox SEO were found.",
-        "Limited to no press coverage or mentions on news and press platforms specifically about Lightbox SEO.",
-        "Mentions of Lightbox SEO are primarily on its own website and in case studies, with some related content about SEO and security podcasts."
+        "No direct presence or mentions on Quora or news/press platforms related to Position Driver SEO.",
+        "Existing mentions are primarily on the company's own website and LinkedIn, with some podcast-related content from third-party sources.",
+        "Limited or no evidence of active engagement or coverage on external platforms like Quora, news outlets, or podcasts."
       ],
-      "summary": "Lightbox SEO has minimal to no presence on external platforms such as Quora, news, or podcasts, indicating limited brand visibility beyond its own website.",
+      "summary": "Position Driver SEO has minimal to no presence on other platforms such as Quora, news, or podcasts based on current search results.",
       "recommendations": [
         "Create Quora answers for top industry questions related to your brand",
         "Issue press releases for major company milestones",
@@ -206,16 +206,16 @@
       "platform": "Google Maps (GBP)",
       "correlation": "High (Local Entity)",
       "weight": "20%",
-      "score": 0,
-      "has_presence": false,
-      "sentiment": "unknown",
+      "score": 65,
+      "has_presence": true,
+      "sentiment": "neutral",
       "key_findings": [
-        "No Google Maps (GBP) profile found for Lightbox SEO.",
-        "Search results indicate no existing presence on Google Maps.",
-        "Brand likely lacks a claimed or verified Google Business Profile."
+        "Search results show the brand's website and digital marketing services, indicating an online presence.",
+        "No direct Google Maps or Google Business Profile (GBP) listing information is present in the search results.",
+        "The presence appears to be primarily digital marketing-focused with no evidence of verified GBP with reviews or ratings."
       ],
-      "summary": "No Google Maps presence detected.",
-      "search_url": "https://www.google.com/maps/search/Lightbox+SEO",
+      "summary": "Position Driver SEO has an online presence but lacks verified Google Maps or GBP listing with reviews.",
+      "search_url": "https://www.google.com/maps/search/Position+Driver+SEO",
       "recommendations": [
         "Claim and verify your Google Business Profile",
         "Ensure NAP (Name, Address, Phone) consistency",

@@ -682,6 +682,8 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
 
     elements.append(PageBreak())
 
+
+
     # ============================================================
     # SCORE BREAKDOWN
     # ============================================================

@@ -331,12 +331,16 @@ async function initVisibilityMap() {
         const response = await fetch('/api/gbp-grid-data');
         if (!response.ok) return;
         const data = await response.json();
+        if (!data) return;
 
         // 1. Fetch simulation data if available
         let simData = null;
         try {
             const simRes = await fetch('/api/simulation-data');
-            if (simRes.ok) simData = await simRes.json();
+            if (simRes.ok) {
+                const fetchedSimData = await simRes.json();
+                if (fetchedSimData) simData = fetchedSimData;
+            }
         } catch (simErr) {
             console.warn("Simulation data not available yet.");
         }

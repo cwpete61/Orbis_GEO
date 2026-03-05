@@ -166,7 +166,7 @@ app.get('/api/gbp-grid-data', (req, res) => {
     if (fs.existsSync(gridPath)) {
         res.json(JSON.parse(fs.readFileSync(gridPath)));
     } else {
-        res.status(404).json({ error: 'Grid data not found' });
+        res.json(null);
     }
 });
 
@@ -178,7 +178,7 @@ app.get('/api/simulation-data', (req, res) => {
     if (fs.existsSync(simPath)) {
         res.json(JSON.parse(fs.readFileSync(simPath)));
     } else {
-        res.status(404).json({ error: 'Simulation data not found' });
+        res.json(null);
     }
 });
 
