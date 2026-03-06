@@ -52,7 +52,28 @@ def geocode_business(brand_name, gbp_url):
     except Exception as e:
         print(f"[geocode] Outscraper fallback failed: {e}", file=sys.stderr)
         
-    # Stage 1: OSM Nominatim Direct Brand Search
+    # Stage 1: Google Places API (Primary Source)
+    print(f"[geocode] Querying Google Places API for precise coordinates of brand: {brand_name}", file=sys.stderr)
+    google_api_key = os.getenv("GOOGLE_PLACES_API_KEY", "AIzaSyCmYlTm0OQbUARSpXbTm-Nhq-GdBxa3Au4")
+    if google_api_key:
+        try:
+            query = f"{brand_name}".strip()
+            g_url = f"https://maps.googleapis.com/maps/api/place/textsearch/json"
+            g_res = requests.get(g_url, params={'query': query, 'key': google_api_key}, timeout=10)
+            g_data = g_res.json()
+            if g_data.get('status') == 'OK' and len(g_data.get('results', [])) > 0:
+                result = g_data['results'][0]
+                loc = result['geometry']['location']
+                print(f"[geocode] Google Places API successfully found location.", file=sys.stderr)
+                return {
+                    "lat": float(loc['lat']),
+                    "lng": float(loc['lng']),
+                    "address": result.get('formatted_address', f"Location for {brand_name}")
+                }
+        except Exception as e:
+            print(f"[geocode] Google Places API Failed: {e}", file=sys.stderr)
+
+    # Stage 2: OSM Nominatim Direct Brand Search
     try:
         print(f"[geocode] Querying OSM for precise coordinates of brand: {brand_name}", file=sys.stderr)
         osm_url = "https://nominatim.openstreetmap.org/search"
@@ -69,7 +90,7 @@ def geocode_business(brand_name, gbp_url):
     except Exception as e:
         print(f"[geocode] Direct OSM Search Failed: {e}", file=sys.stderr)
 
-    # Stage 2: Puppeteer Google Maps Scrape
+    # Stage 3: Puppeteer Google Maps Scrape
     address_str = ""
     if "maps.app.goo.gl" in gbp_url or "google.com/maps" in gbp_url:
         print(f"[geocode] Attempting headless extraction of exact address from: {gbp_url}", file=sys.stderr)
@@ -115,7 +136,7 @@ const puppeteer = require('puppeteer');
         except Exception as e:
             print(f"[geocode] Puppeteer scrape failed: {e}", file=sys.stderr)
 
-    # Stage 3: OSM Nominatim Geocoding of scraped address
+    # Stage 4: OSM Nominatim Geocoding of scraped address
     if address_str:
         try:
             print(f"[geocode] Querying OSM for precise coordinates of: {address_str}", file=sys.stderr)
@@ -134,10 +155,9 @@ const puppeteer = require('puppeteer');
         except Exception as e:
             print(f"[geocode] OSM Failed: {e}", file=sys.stderr)
 
-    # Stage 3.5: Google Places API Fallback
-    print(f"[geocode] Falling back to Google Places API for {brand_name}...", file=sys.stderr)
-    google_api_key = os.getenv("GOOGLE_PLACES_API_KEY", "AIzaSyCmYlTm0OQbUARSpXbTm-Nhq-GdBxa3Au4")
-    if google_api_key:
+    # Stage 4.5: Google Places API Geocoding of scraped address
+    if address_str and google_api_key:
+        print(f"[geocode] Falling back to Google Places API for address: {address_str}...", file=sys.stderr)
         try:
             query = f"{brand_name} {address_str}".strip()
             g_url = f"https://maps.googleapis.com/maps/api/place/textsearch/json"
@@ -150,12 +170,12 @@ const puppeteer = require('puppeteer');
                 return {
                     "lat": float(loc['lat']),
                     "lng": float(loc['lng']),
-                    "address": result.get('formatted_address', address_str or f"Location for {brand_name}")
+                    "address": result.get('formatted_address', address_str)
                 }
         except Exception as e:
             print(f"[geocode] Google Places API Failed: {e}", file=sys.stderr)
 
-    # Stage 4: AI Fallback
+    # Stage 5: AI Fallback
     print(f"[geocode] Falling back to AI geocoding for {brand_name}...", file=sys.stderr)
     from openai import OpenAI
     import os, json
