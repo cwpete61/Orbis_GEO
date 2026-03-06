@@ -454,18 +454,14 @@ async function initVisibilityMap() {
             });
         }
 
-        // Advanced Aggressive Reach Projection Formula
-        // Models aggressive GEO strategies (location pages, local social syndication) 
-        // leading to 20-40+ mile expansion rather than conservative organic edge growth.
-        const basePotReachMi = potMaxReachKm * KM_TO_MI;
-        const rankImprovement = avgRank - potAvgRank;
-        const falloutImprovement = falloutPercent - potFalloutPercent;
-        const expansionFactor = (Math.max(0, rankImprovement) * 2.5) + (Math.max(0, falloutImprovement) * 0.3);
+        // Potential Reach Formula
+        // User requested: With location pages, I can reach between 10 to 20 miles from the business.
+        // Scale between 10 and 20 based on how good the potential average rank is.
+        let calculatedReach = 10.0 + ((20.0 - potAvgRank) / 20.0) * 10.0;
+        const potMaxReachMi = Math.max(10, Math.min(20, calculatedReach));
 
         // Convert km to miles and update UI tiles
         const maxReachMi = maxReachKm * KM_TO_MI;
-
-        const potMaxReachMi = Math.max(maxReachMi, basePotReachMi + expansionFactor);
 
         const metricLocalVisibilityId = document.getElementById('metric-local-visibility') || document.getElementById('metric-avg-visibility');
         if (metricLocalVisibilityId) metricLocalVisibilityId.textContent = `Rank #${centerRank.toFixed(1)}`;
@@ -477,6 +473,12 @@ async function initVisibilityMap() {
 
         // Add 25 grid points
         data.grid.forEach(point => {
+            const distToCenter = getDistance(data.center.lat, data.center.lng, point.lat, point.lng);
+            if (distToCenter < 0.1) {
+                // Skip the exact center grid node so it doesn't overlap the blue business pin
+                return;
+            }
+
             let color = '#e74c3c'; // Red (Fallout)
             if (point.score <= 5) color = '#2ecc71'; // Green (High Visibility)
             else if (point.score <= 12) color = '#f1c40f'; // Yellow (Moderate)

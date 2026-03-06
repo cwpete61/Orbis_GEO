@@ -727,22 +727,11 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
                         d = get_distance_py(center["lat"], center["lng"], p["lat"], p["lng"])
                         if d > pot_max_reach: pot_max_reach = d
 
-        # Advanced Aggressive Reach Projection Formula
-        # This formula calculates geographic reach expansion based on aggressive GEO strategies
-        # (e.g. distributed location pages, hyper-local social media syndication, cross-platform entity building).
-        # Base expansion is the actual distance to the furthest top-5 ranking
-        base_pot_reach_mi = pot_max_reach * 0.621371
-        
-        rank_improvement = avg_rank - pot_avg_rank
-        fallout_improvement = fallout_percent - pot_fallout_percent
-        
-        # Aggressive Expansion factor: +2.5 miles for every point of average rank improvement,
-        # and +0.3 miles for every percentage point of fallout reduction.
-        # This models the wider net cast by location-specific optimization and GEO signals.
-        expansion_factor = (max(0, rank_improvement) * 2.5) + (max(0, fallout_improvement) * 0.3)
-        
-        # The new potential reach is the base reach plus the calculated aggressive expansion projection
-        pot_max_reach_mi = max(max_reach_mi, base_pot_reach_mi + expansion_factor)
+        # Potential Reach Formula
+        # User requested: With location pages, I can reach between 10 to 20 miles from the business.
+        # Scale between 10 and 20 based on how good the potential average rank is.
+        calculated_reach = 10.0 + ((20.0 - pot_avg_rank) / 20.0) * 10.0
+        pot_max_reach_mi = max(10.0, min(20.0, calculated_reach))
 
         pot_stats_data = [
             [
