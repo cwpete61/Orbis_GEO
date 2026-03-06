@@ -1,0 +1,46 @@
+{
+  "business_name": "string",
+  "osm_verification_confidence": 0,
+  "overall_local_score": 0,
+  "status": "Poor",
+  "insights": [
+    {
+      "title": "Unclear Business Name and Category",
+      "score": 20,
+      "details": "The business name and category are either missing or not well-defined, making it difficult for AI algorithms to associate relevant entities or services. Clear, descriptive business naming enhances AI readiness."
+    },
+    {
+      "title": "Lack of AI-Compatible Descriptions",
+      "score": 10,
+      "details": "The current description lacks specific service details, keywords, and entities that would make it AI-friendly. Including full descriptions of services, products, and relevant keywords would improve AI integration."
+    },
+    {
+      "title": "Negative Recent Reviews / Mentions",
+      "score": 30,
+      "details": "The recent reviews and mentions indicate dissatisfaction or contain unstructured feedback, which may hinder AI understanding of customer sentiment and business reputation."
+    },
+    {
+      "title": "Entity Verification Mismatch",
+      "score": 0,
+      "details": "No OSM data retrieved and verified Outscraper data unavailable; the GBP data does not match any verified external entity, indicating a potential mismatch or missing data which reduces AI confidence in entity recognition."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "critical",
+      "title": "Missing or Mismatched Entity Data",
+      "description": "The absence of cross-validated entity data, including address, website, and Wikidata links, hampers AI algorithms from associating the business with authoritative external sources.",
+      "impact": "Decreases AI's ability to accurately categorize and optimize the business profile, affecting search relevance and visibility.",
+      "fix_example": "Update the GBP with verified address, website, and external links from authoritative sources like Wikidata or OSM once available."
+    },
+    {
+      "severity": "high",
+      "title": "Insufficient Descriptive Content",
+      "description": "The current business description does not contain detailed, entity-rich content relevant to the services offered.",
+      "impact": "Limits the AI's capacity to generate rich, optimized content that can improve local SEO and user engagement.",
+      "fix_example": "Add comprehensive descriptions including specific services, keywords, and relevant entities to the business profile."
+    }
+  ],
+  "audit_date": "2026-03-05 18:02",
+  "gbp_url": "https://maps.app.goo.gl/pSYgvuH8nKd2TW39A"
+}

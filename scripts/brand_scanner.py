@@ -18,6 +18,7 @@ import json
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import concurrent.futures
 
 # Load environment variables
 load_dotenv(Path(__file__).parent.parent / ".env")
@@ -63,17 +64,35 @@ def extract_domain(url: str) -> str:
 
 
 def ddg_search(query: str, max_results: int = 6) -> list[str]:
-    """Perform a DuckDuckGo search and return a list of snippet strings."""
+    """Perform a DuckDuckGo search and return a list of snippet strings. Includes basic retry logic and delay."""
+    import time
+    import random
+    
     snippets = []
-    try:
-        with DDGS() as ddgs:
-            for r in ddgs.text(query, max_results=max_results):
-                title = r.get("title", "")
-                body = r.get("body", "")
-                href = r.get("href", "")
-                snippets.append(f"[{title}] ({href}): {body}")
-    except Exception as e:
-        snippets.append(f"Search failed: {e}")
+    max_retries = 3
+    
+    for attempt in range(max_retries):
+        try:
+            # Add a small random delay before searching to prevent immediate rate limits in threads
+            time.sleep(random.uniform(0.5, 2.0))
+            
+            with DDGS() as ddgs:
+                for r in ddgs.text(query, max_results=max_results):
+                    title = r.get("title", "")
+                    body = r.get("body", "")
+                    href = r.get("href", "")
+                    snippets.append(f"[{title}] ({href}): {body}")
+            
+            # If we successfully get snippets or the search simply found nothing without throwing, break.
+            if snippets:
+                break
+                
+        except Exception as e:
+            if attempt == max_retries - 1:
+                snippets.append(f"Search failed after {max_retries} attempts: {e}")
+            else:
+                time.sleep(random.uniform(2.0, 5.0)) # Backoff
+                
     return snippets
 
 
@@ -669,73 +688,101 @@ def calculate_brand_authority(platforms: dict) -> int:
     )
     return min(int(total), 100)
 
-def load_outscraper_socials():
+def load_outscraper_socials(brand_name="", url=""):
     """Load verified social links from Outscraper contacts scrape if available."""
     import glob
     import os
     latest_file = max(glob.glob('outscraper_contacts_*.json'), key=os.path.getctime, default="test_outscraper_contacts.json")
-    if not os.path.exists(latest_file):
-        return {}
-    
-    try:
-        with open(latest_file, 'r') as f:
-            data = json.load(f)
-        
-        socials = {}
-        if isinstance(data, list) and len(data) > 0:
-            item = data[0]
-            if isinstance(item, list) and len(item) > 0:
-                item = item[0]
+    if os.path.exists(latest_file):
+        try:
+            with open(latest_file, 'r') as f:
+                data = json.load(f)
             
-            # outscraper usually provides these fields if found
-            if 'facebook' in item and item['facebook']: socials['Facebook'] = item['facebook']
-            if 'instagram' in item and item['instagram']: socials['Instagram'] = item['instagram']
-            if 'twitter' in item and item['twitter']: socials['Twitter/X'] = item['twitter']
-            if 'linkedin' in item and item['linkedin']: socials['LinkedIn'] = item['linkedin']
-            if 'youtube' in item and item['youtube']: socials['YouTube'] = item['youtube']
-            if 'tiktok' in item and item['tiktok']: socials['TikTok'] = item['tiktok']
-        return socials
-    except:
-        return {}
+            socials = {}
+            if isinstance(data, list) and len(data) > 0:
+                item = data[0]
+                if isinstance(item, list) and len(item) > 0:
+                    item = item[0]
+                
+                # outscraper usually provides these fields if found
+                if 'facebook' in item and item['facebook']: socials['Facebook'] = item['facebook']
+                if 'instagram' in item and item['instagram']: socials['Instagram'] = item['instagram']
+                if 'twitter' in item and item['twitter']: socials['Twitter/X'] = item['twitter']
+                if 'linkedin' in item and item['linkedin']: socials['LinkedIn'] = item['linkedin']
+                if 'youtube' in item and item['youtube']: socials['YouTube'] = item['youtube']
+                if 'tiktok' in item and item['tiktok']: socials['TikTok'] = item['tiktok']
+            return socials
+        except:
+            pass
+
+    import sys
+    api_key = os.getenv("OUTSCRAPER_API_KEY")
+    query = url if url else brand_name
+    if api_key and query:
+        try:
+            from outscraper import ApiClient
+            client = ApiClient(api_key=api_key)
+            print(f"[brand_scanner] Fetching Outscraper contacts data synchronously for {query}...", file=sys.stderr)
+            results = client.emails_and_contacts([query])
+            socials = {}
+            if results and len(results) > 0:
+                item = results[0]
+                if isinstance(item, list) and len(item) > 0:
+                    item = item[0]
+                if 'facebook' in item and item['facebook']: socials['Facebook'] = item['facebook']
+                if 'instagram' in item and item['instagram']: socials['Instagram'] = item['instagram']
+                if 'twitter' in item and item['twitter']: socials['Twitter/X'] = item['twitter']
+                if 'linkedin' in item and item['linkedin']: socials['LinkedIn'] = item['linkedin']
+                if 'youtube' in item and item['youtube']: socials['YouTube'] = item['youtube']
+                if 'tiktok' in item and item['tiktok']: socials['TikTok'] = item['tiktok']
+            return socials
+        except Exception as e:
+            print(f"[brand_scanner] Outscraper SDK error: {e}", file=sys.stderr)
+
+    return {}
 
 
 def scan_brand(brand_name: str, url: str = "") -> dict:
-    """Main entrypoint: Perform full brand scan using AI-powered analysis."""
+    """Main entrypoint: Perform full brand scan using AI-powered analysis in parallel."""
     print(f"[brand_scanner] Starting brand analysis for: {brand_name}", file=sys.stderr)
     if url:
         print(f"[brand_scanner] Using URL for disambiguation: {url}", file=sys.stderr)
 
-    youtube = check_youtube(brand_name, url)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        f_youtube = executor.submit(check_youtube, brand_name, url)
+        f_reddit = executor.submit(check_reddit, brand_name, url)
+        f_wikipedia = executor.submit(check_wikipedia, brand_name, url)
+        f_linkedin = executor.submit(check_linkedin, brand_name, url)
+        f_directories = executor.submit(check_directories, brand_name, url)
+        f_facebook = executor.submit(check_facebook, brand_name, url)
+        f_instagram = executor.submit(check_instagram, brand_name, url)
+        f_twitter = executor.submit(check_twitter, brand_name, url)
+        f_tiktok = executor.submit(check_tiktok, brand_name, url)
+        f_other = executor.submit(check_other_platforms, brand_name, url)
+        f_gmaps = executor.submit(check_google_maps_presence, brand_name, url)
+
+        youtube = f_youtube.result()
+        reddit = f_reddit.result()
+        wikipedia = f_wikipedia.result()
+        linkedin = f_linkedin.result()
+        directories = f_directories.result()
+        facebook = f_facebook.result()
+        instagram = f_instagram.result()
+        twitter = f_twitter.result()
+        tiktok = f_tiktok.result()
+        other = f_other.result()
+        google_maps = f_gmaps.result()
+
     print(f"[brand_scanner] YouTube: {youtube['score']}/100", file=sys.stderr)
-
-    reddit = check_reddit(brand_name, url)
     print(f"[brand_scanner] Reddit: {reddit['score']}/100", file=sys.stderr)
-
-    wikipedia = check_wikipedia(brand_name, url)
     print(f"[brand_scanner] Wikipedia: {wikipedia['score']}/100", file=sys.stderr)
-
-    linkedin = check_linkedin(brand_name, url)
     print(f"[brand_scanner] LinkedIn: {linkedin['score']}/100", file=sys.stderr)
-
-    directories = check_directories(brand_name, url)
     print(f"[brand_scanner] Directories: {directories['score']}/100", file=sys.stderr)
-
-    facebook = check_facebook(brand_name, url)
     print(f"[brand_scanner] Facebook: {facebook['score']}/100", file=sys.stderr)
-
-    instagram = check_instagram(brand_name, url)
     print(f"[brand_scanner] Instagram: {instagram['score']}/100", file=sys.stderr)
-
-    twitter = check_twitter(brand_name, url)
     print(f"[brand_scanner] Twitter/X: {twitter['score']}/100", file=sys.stderr)
-
-    tiktok = check_tiktok(brand_name, url)
     print(f"[brand_scanner] TikTok: {tiktok['score']}/100", file=sys.stderr)
-
-    other = check_other_platforms(brand_name, url)
     print(f"[brand_scanner] Other: {other['score']}/100", file=sys.stderr)
-
-    google_maps = check_google_maps_presence(brand_name, url)
     print(f"[brand_scanner] Google Maps: {google_maps['score']}/100", file=sys.stderr)
 
     platforms = {
@@ -752,7 +799,7 @@ def scan_brand(brand_name: str, url: str = "") -> dict:
         "Google Maps (GBP)": google_maps,
     }
 
-    verified_socials = load_outscraper_socials()
+    verified_socials = load_outscraper_socials(brand_name, url)
     # Boost platforms if we have verified links
     for plat_name, link in verified_socials.items():
         if plat_name in platforms:

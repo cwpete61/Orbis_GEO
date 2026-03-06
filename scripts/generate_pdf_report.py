@@ -575,6 +575,58 @@ def generate_report(data, output_path="GEO-REPORT.pdf"):
     elements.append(PageBreak())
 
     # ============================================================
+    # THE URGENCY OF AI SEARCH
+    # ============================================================
+    elements.append(Paragraph("The Shift to AI-Driven Search", styles['SectionHeader']))
+    elements.append(HRFlowable(width="100%", thickness=1, color=DANGER, spaceAfter=12))
+
+    elements.append(Paragraph(
+        "<b>The Search Landscape is Shifting Faster Than Anticipated.</b>",
+        styles['SubHeader']
+    ))
+    elements.append(Paragraph(
+        "By the close of 2026, traditional '10 blue links' SEO will represent a minority of high-intent search traffic. "
+        "Users have overwhelmingly adopted Generative Engines (Google AI Overviews, ChatGPT Search, Perplexity, Claude, and Gemini) "
+        "for immediate, synthesized answers rather than scrolling through web pages to piece information together.",
+        styles['BodyText_Custom']
+    ))
+    elements.append(Spacer(1, 10))
+
+    elements.append(Paragraph(
+        "<b>The Risk to Your Revenue</b>",
+        styles['SubHeader']
+    ))
+    elements.append(Paragraph(
+        "In this new paradigm, AI engines do not “rank” your website; they cite your brand as a trusted entity. "
+        f"Right now, {brand_name}'s GEO Readiness Score limits its ability to be cited confidently by these models. "
+        "Every day you wait, competitors who are actively optimizing for AI are cementing their position as the 'ground truth' "
+        "in your industry. Once an AI model firmly establishes a competitor as the authoritative entity in your space, "
+        "displacing them becomes exponentially more difficult and expensive.",
+        styles['BodyText_Custom']
+    ))
+    elements.append(Spacer(1, 10))
+
+    elements.append(Paragraph(
+        "<b>Why Now?</b>",
+        styles['SubHeader']
+    ))
+    elements.append(Paragraph(
+        "The window for 'early adopter' advantage is closing. Taking action now secures your brand’s foundational presence "
+        "across the digital ecosystem that feeds these LLMs—before the market becomes fully saturated. This audit provides "
+        "the exact roadmap to establish your dominance in Generative Engine Optimization.",
+        styles['BodyText_Custom']
+    ))
+    
+    # Adding a highlight box for urgency
+    elements.append(Paragraph(
+        "<i>\"Think of it this way—someone is likely talking to your competitors right now about how to capture this exact market share. It is crucial to act before they do.\"</i><br/><br/>"
+        "<b>— The Orbis Local Team</b>",
+        styles['HighlightBox']
+    ))
+
+    elements.append(PageBreak())
+
+    # ============================================================
     # GRID VISIBILITY
     # ============================================================
     elements.append(Paragraph("Grid Visibility", styles['SectionHeader']))

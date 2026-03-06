@@ -1,34 +1,46 @@
 {
-  "business_name": "Google",
+  "business_name": "Position Driver SEO",
   "osm_verification_confidence": 0,
-  "overall_local_score": 20,
-  "status": "Poor",
+  "overall_local_score": 55,
+  "status": "Good",
   "insights": [
     {
-      "title": "Unclear Business Category",
-      "score": 10,
-      "details": "The search context references Google as a search engine and technology company rather than a local service provider. Lack of specific, locally relevant keywords diminishes AI-readiness for local optimization."
+      "title": "Clear Business Category and Description",
+      "score": 80,
+      "details": "The business is categorized under Advertising / Media / Agency, and the GBP content emphasizes SEO optimization, client reviews, and Google Business Profile enhancements, indicating clear service offerings relevant to local SEO and digital marketing."
     },
     {
-      "title": "Lack of AI-Compatible Descriptions",
-      "score": 15,
-      "details": "Descriptions focus on general information about Google globally, not tailored or detailed regarding local services, products, or offerings relevant to a specific location."
+      "title": "Entity Verification",
+      "score": 0,
+      "details": "No cross-verification data from OpenStreetMap (OSM) or other authoritative sources exists. The only location info matches the business address, but OSM data is missing, reducing the confidence in full entity verification."
     },
     {
-      "title": "Review/Mention Sentiment",
-      "score": 30,
-      "details": "No recent reviews or local mentions are provided, indicating a lack of local engagement or customer feedback within the context."
+      "title": "Review Sentiment and Recent Mentions",
+      "score": 70,
+      "details": "The business has 89 reviews, which suggests a decent recent engagement level. Indicated sentiment appears generally positive (though specific reviews are not detailed here), supporting an optimistic perception for potential clients."
+    },
+    {
+      "title": "Description Clarity and AI Compatibility",
+      "score": 75,
+      "details": "The description mentions specific services such as Google Business Profile optimization, review management, and ranking strategies. It uses clear entities and keywords which are AI-friendly and indicate a service-oriented profile."
     }
   ],
   "findings": [
     {
-      "severity": "critical",
-      "title": "Entity Mismatch / Data Discrepancy",
-      "description": "The Google Business Profile appears to reference the global corporation rather than a specific local business or place. The OSM data is absent, and no verified Outscraper data exists, indicating a lack of local entity confirmation.",
-      "impact": "Poor entity verification weakens local SEO rankings and AI-readiness, limiting visibility for local searches.",
-      "fix_example": "Update the GBP with precise local address, category, and keywords; verify the entity through local references, and ensure the profile is optimized with locally relevant content."
+      "severity": "medium",
+      "title": "Lack of OSM Entity Data",
+      "description": "No OpenStreetMap data verifies the physical location or other entity info. This gap can affect local SEO signals and entity confidence.",
+      "impact": "Reduces overall trust and potential local search visibility signals, especially for map-based searches.",
+      "fix_example": "Encourage the business to claim or verify their OSM profile, ensuring address consistency, and optimize local entity data."
+    },
+    {
+      "severity": "low",
+      "title": "No Verified Outscraper Data",
+      "description": "Absence of Outscraper verification limits external trust signals and data validation.",
+      "impact": "Minimal impact since the primary search presence relies on Google Business profile and reviews.",
+      "fix_example": "Use verified data validation tools or external directories to strengthen the business's online entity profile."
     }
   ],
-  "audit_date": "2026-03-05 17:13",
+  "audit_date": "2026-03-05 19:35",
   "gbp_url": "https://maps.app.goo.gl/pSYgvuH8nKd2TW39A"
 }

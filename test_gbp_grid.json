@@ -1,162 +1,163 @@
 {
-  "brand_name": "Test Brand",
+  "brand_name": "Position Driver SEO",
+  "keyword_searched": "Local SEO",
   "center": {
-    "lat": 40.339737,
-    "lng": -75.924115,
-    "address": "Berks County, PA, USA"
+    "lat": 40.321271,
+    "lng": -75.874457,
+    "address": "Position Driver SEO, 519 Walnut St, Reading, PA 19601, USA"
   },
   "grid": [
     {
-      "lat": 40.294692,
-      "lng": -75.983212,
-      "score": 20,
-      "potential_score": 15
+      "lat": 40.276226,
+      "lng": -75.933538,
+      "score": 6,
+      "potential_score": 4
     },
     {
-      "lat": 40.294692,
-      "lng": -75.953664,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.276226,
+      "lng": -75.903998,
+      "score": 4,
+      "potential_score": 3
     },
     {
-      "lat": 40.294692,
-      "lng": -75.924115,
-      "score": 18,
-      "potential_score": 14
+      "lat": 40.276226,
+      "lng": -75.874457,
+      "score": 3,
+      "potential_score": 2
     },
     {
-      "lat": 40.294692,
-      "lng": -75.894566,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.276226,
+      "lng": -75.844916,
+      "score": 2,
+      "potential_score": 2
     },
     {
-      "lat": 40.294692,
-      "lng": -75.865018,
-      "score": 20,
-      "potential_score": 15
+      "lat": 40.276226,
+      "lng": -75.815376,
+      "score": 5,
+      "potential_score": 3
     },
     {
-      "lat": 40.317214,
-      "lng": -75.983212,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.298748,
+      "lng": -75.933538,
+      "score": 2,
+      "potential_score": 2
     },
     {
-      "lat": 40.317214,
-      "lng": -75.953664,
-      "score": 17,
-      "potential_score": 14
+      "lat": 40.298748,
+      "lng": -75.903998,
+      "score": 3,
+      "potential_score": 2
     },
     {
-      "lat": 40.317214,
-      "lng": -75.924115,
-      "score": 16,
-      "potential_score": 14
+      "lat": 40.298748,
+      "lng": -75.874457,
+      "score": 3,
+      "potential_score": 2
     },
     {
-      "lat": 40.317214,
-      "lng": -75.894566,
-      "score": 17,
-      "potential_score": 14
+      "lat": 40.298748,
+      "lng": -75.844916,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.317214,
-      "lng": -75.865018,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.298748,
+      "lng": -75.815376,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.339737,
-      "lng": -75.983212,
-      "score": 18,
-      "potential_score": 14
+      "lat": 40.321271,
+      "lng": -75.933538,
+      "score": 2,
+      "potential_score": 2
     },
     {
-      "lat": 40.339737,
-      "lng": -75.953664,
-      "score": 16,
-      "potential_score": 14
+      "lat": 40.321271,
+      "lng": -75.903998,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.339737,
-      "lng": -75.924115,
-      "score": 16,
-      "potential_score": 14
+      "lat": 40.321271,
+      "lng": -75.874457,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.339737,
-      "lng": -75.894566,
-      "score": 16,
-      "potential_score": 14
+      "lat": 40.321271,
+      "lng": -75.844916,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.339737,
-      "lng": -75.865018,
-      "score": 18,
-      "potential_score": 14
+      "lat": 40.321271,
+      "lng": -75.815376,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.36226,
-      "lng": -75.983212,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.343794,
+      "lng": -75.933538,
+      "score": 2,
+      "potential_score": 2
     },
     {
-      "lat": 40.36226,
-      "lng": -75.953664,
-      "score": 17,
-      "potential_score": 14
+      "lat": 40.343794,
+      "lng": -75.903998,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.36226,
-      "lng": -75.924115,
-      "score": 16,
-      "potential_score": 14
+      "lat": 40.343794,
+      "lng": -75.874457,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.36226,
-      "lng": -75.894566,
-      "score": 17,
-      "potential_score": 14
+      "lat": 40.343794,
+      "lng": -75.844916,
+      "score": 2,
+      "potential_score": 2
     },
     {
-      "lat": 40.36226,
-      "lng": -75.865018,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.343794,
+      "lng": -75.815376,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.384782,
-      "lng": -75.983212,
-      "score": 20,
-      "potential_score": 15
+      "lat": 40.366316,
+      "lng": -75.933538,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.384782,
-      "lng": -75.953664,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.366316,
+      "lng": -75.903998,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.384782,
-      "lng": -75.924115,
-      "score": 18,
-      "potential_score": 14
+      "lat": 40.366316,
+      "lng": -75.874457,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.384782,
-      "lng": -75.894566,
-      "score": 19,
-      "potential_score": 14
+      "lat": 40.366316,
+      "lng": -75.844916,
+      "score": 1,
+      "potential_score": 1
     },
     {
-      "lat": 40.384782,
-      "lng": -75.865018,
-      "score": 20,
-      "potential_score": 15
+      "lat": 40.366316,
+      "lng": -75.815376,
+      "score": 1,
+      "potential_score": 1
     }
   ],
-  "audit_date": "2026-03-05 17:26",
+  "audit_date": "2026-03-05 19:36",
   "radius_km": 5
 }

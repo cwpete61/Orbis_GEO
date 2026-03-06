@@ -39,6 +39,7 @@ async function runStep(step, isSequence = false) {
     const brand = document.getElementById('brandName').value;
     const url = document.getElementById('targetUrl').value;
     const gbpUrl = document.getElementById('gbpUrl').value;
+    const targetKeyword = document.getElementById('targetKeyword').value;
 
     log(`Triggering step: ${step.toUpperCase()}...`);
     setStatus(`Running ${step}`, true);
@@ -47,7 +48,7 @@ async function runStep(step, isSequence = false) {
         const response = await fetch('/api/step', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ step, brand, url, gbpUrl })
+            body: JSON.stringify({ step, brand, url, gbpUrl, targetKeyword })
         });
 
         if (!response.ok) {
@@ -92,6 +93,7 @@ async function runFullAuditSequence(isAutoFlow = false) {
     const brand = document.getElementById('brandName').value || "Orbis Local";
     const url = document.getElementById('targetUrl').value || "https://google.com";
     const gbpUrl = document.getElementById('gbpUrl').value;
+    const targetKeyword = document.getElementById('targetKeyword').value;
 
     log(`=== Starting Full Audit Sequence for ${brand} ===`);
 
@@ -103,6 +105,17 @@ async function runFullAuditSequence(isAutoFlow = false) {
         startGeneratingAnimations();
     } else {
         setStatus(`Full Audit In Progress`, true);
+    }
+
+    try {
+        await fetch('/api/trigger-outscraper', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ brand, url, gbpUrl, targetKeyword })
+        });
+        log('Attempted Outscraper Trigger (Will skip if API key is not set).');
+    } catch (e) {
+        console.error('Failed to trigger Outscraper:', e);
     }
 
     const steps = ['fetch', 'score', 'brand', 'crawlers', 'gbp', 'grid', 'report'];
@@ -286,10 +299,18 @@ document.getElementById('leadGenForm').addEventListener('submit', async (e) => {
     // In a real app, we'd send this to a CRM
     const name = document.getElementById('leadName').value;
     const email = document.getElementById('leadEmail').value;
-    const phone = document.getElementById('leadPhone').value;
+    let phone = document.getElementById('leadPhone').value;
     const brand = document.getElementById('brandName').value;
     const url = document.getElementById('targetUrl').value;
     const consent = document.getElementById('leadConsent').checked;
+
+    // Convert phone number to +1 E.164 format
+    let cleanedPhone = phone.replace(/\D/g, '');
+    if (cleanedPhone.length === 10) {
+        phone = '+1' + cleanedPhone;
+    } else if (cleanedPhone.length === 11 && cleanedPhone.startsWith('1')) {
+        phone = '+' + cleanedPhone;
+    }
 
     const submitBtn = document.querySelector('#leadGenForm button[type="submit"]');
     const originalText = submitBtn.textContent;
@@ -460,21 +481,40 @@ async function initVisibilityMap() {
             if (point.score <= 5) color = '#2ecc71'; // Green (High Visibility)
             else if (point.score <= 12) color = '#f1c40f'; // Yellow (Moderate)
 
-            L.circleMarker([point.lat, point.lng], {
-                radius: 8,
-                fillColor: color,
-                color: "#fff",
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 0.8
-            }).addTo(mapInstance).bindPopup(`Visibility Rank: ${point.score}`);
+            const markerHtmlStyles = `
+                background-color: ${color};
+                width: 24px;
+                height: 24px;
+                display: block;
+                left: -12px;
+                top: -12px;
+                position: relative;
+                border-radius: 50%;
+                border: 2px solid #FFFFFF;
+                color: #FFFFFF;
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                font-size: 12px;
+                text-align: center;
+                line-height: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            `;
+
+            const icon = L.divIcon({
+                className: "custom-grid-pin",
+                html: `<span style="${markerHtmlStyles}">${point.score}</span>`
+            });
+
+            L.marker([point.lat, point.lng], { icon: icon })
+                .addTo(mapInstance)
+                .bindPopup(`Visibility Rank: ${point.score}`);
         });
 
         // Add business center
         const userEnteredBrand = document.getElementById('brandName') ? document.getElementById('brandName').value : '';
         const displayBrand = userEnteredBrand || data.brand_name;
         L.marker([data.center.lat, data.center.lng]).addTo(mapInstance)
-            .bindPopup(`<b>${displayBrand}</b><br>${data.center.address}`).openPopup();
+            .bindPopup(`<b>${displayBrand}</b><br>${data.center.address}<br><b>Actual Ranking: #${centerRank}</b>`).openPopup();
 
         // Fix map resize issue in hidden containers
         setTimeout(() => {

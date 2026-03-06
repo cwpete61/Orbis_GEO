@@ -34,14 +34,14 @@ function runScript(scriptPath, args, res) {
     let output = '';
     let error = '';
 
-    // Set a timeout of 120 seconds
+    // Set a timeout of 900 seconds (15 minutes)
     const timeout = setTimeout(() => {
         process.kill();
         console.error(`Script timed out: ${scriptPath}`);
         if (!res.headersSent) {
-            res.status(500).json({ status: 'error', error: `Script execution timed out (120s). Partial output: ${error}` });
+            res.status(500).json({ status: 'error', error: `Script execution timed out (900s). Partial output: ${error}` });
         }
-    }, 120000);
+    }, 900000);
 
     process.stdout.on('data', (data) => {
         output += data.toString();
@@ -56,6 +56,8 @@ function runScript(scriptPath, args, res) {
     process.on('close', (code) => {
         clearTimeout(timeout);
         const trimmedOutput = output.trim();
+        if (res.headersSent) return; // Prevent ERR_HTTP_HEADERS_SENT if timeout already handled it
+
         if (code === 0) {
             try {
                 const parsed = JSON.parse(trimmedOutput);
@@ -89,7 +91,7 @@ function runScript(scriptPath, args, res) {
 
 // API: Run Full Audit (Sequential)
 app.post('/api/audit', async (req, res) => {
-    const { url, brand, gbpUrl } = req.body;
+    const { url, brand, gbpUrl, targetKeyword } = req.body;
     if (!url || !brand) return res.status(400).json({ error: 'URL and Brand required' });
 
     console.log(`Starting Full Audit for ${url} (${brand})`);
@@ -133,8 +135,8 @@ app.post('/api/audit', async (req, res) => {
         await run('scripts/citability_scorer.py', [url]);
         await run('scripts/llmstxt_generator.py', [url]);
         if (gbpUrl) {
-            await run('scripts/gbp_analyzer.py', [gbpUrl]);
-            await run('scripts/gbp_grid.py', [brand, gbpUrl]);
+            await run('scripts/gbp_analyzer.py', [gbpUrl, brand]);
+            await run('scripts/gbp_grid.py', [brand, gbpUrl, targetKeyword || "Local SEO"]);
         }
         await run('scripts/generate_live_pdf.py', []);
 
@@ -174,18 +176,29 @@ async function triggerOutscraperTask(type, query) {
     }
 }
 
+// API: Trigger Outscraper
+app.post('/api/trigger-outscraper', async (req, res) => {
+    const { url, brand, gbpUrl } = req.body;
+    if (process.env.OUTSCRAPER_API_KEY) {
+        if (url || brand) await triggerOutscraperTask('contacts', url || brand);
+        if (gbpUrl) await triggerOutscraperTask('maps', gbpUrl);
+        return res.json({ status: 'triggered' });
+    }
+    return res.json({ status: 'skipped', reason: 'No OUTSCRAPER_API_KEY in .env' });
+});
+
 // API: Run Specific Step
 
 app.post('/api/step', (req, res) => {
-    const { step, brand, url, gbpUrl } = req.body;
+    const { step, brand, url, gbpUrl, targetKeyword } = req.body;
 
     const scripts = {
         'fetch': ['scripts/fetch_page.py', [url]],
         'score': ['scripts/citability_scorer.py', [url]],
         'brand': ['scripts/brand_scanner.py', [brand, url || '']],
         'crawlers': ['scripts/llmstxt_generator.py', [url]],
-        'gbp': ['scripts/gbp_analyzer.py', [gbpUrl]],
-        'grid': ['scripts/gbp_grid.py', [brand, gbpUrl]],
+        'gbp': ['scripts/gbp_analyzer.py', [gbpUrl, brand]],
+        'grid': ['scripts/gbp_grid.py', [brand, gbpUrl, targetKeyword || "Local SEO"]],
         'report': ['scripts/generate_live_pdf.py', []]
     };
 
@@ -205,12 +218,26 @@ app.post('/api/webhooks/outscraper', async (req, res) => {
 
     const taskId = payload.id;
     const taskStatus = payload.status;
-    const data = payload.data || [];
+    const resultsLocation = payload.results_location;
 
     console.log(`[Webhook] Received Outscraper data for task ${taskId} (Status: ${taskStatus})`);
 
+    if (taskStatus !== 'SUCCESS' || !resultsLocation) {
+        return res.json({ status: 'ignored', reason: 'Task not successful or missing results_location' });
+    }
+
     const fs = require('fs');
     const path = require('path');
+
+    let data = [];
+    try {
+        console.log(`[Webhook] Fetching results from ${resultsLocation}...`);
+        const response = await fetch(resultsLocation);
+        data = await response.json();
+    } catch (e) {
+        console.error(`[Webhook] Failed to fetch Outscraper results:`, e);
+        return res.status(500).json({ error: 'Failed to fetch results' });
+    }
 
     // Attempt to determine if this is Google Maps data or Emails & Contacts data
     // based on the structure of the returned objects in the first result
